@@ -25,7 +25,7 @@ services:
             - mariadb
             - redis
     mariadb:
-        image: 'mariadb:10'
+        image: 'mariadb:latest'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:

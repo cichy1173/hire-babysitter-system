@@ -11,6 +11,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{asset('images/niania-logo.avif')}}" />
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -32,23 +35,28 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
+                    
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto w-auto">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item px-4">
+                                <form class="form-inline">
+                                    <input type="search" class="form-control mr-sm-2" >
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__("Wyszukaj")}}</button>
+                                </form>
+                            </li>
+                        </ul>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Logowanie') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Rejstracja') }}</a>
                                 </li>
                             @endif
                         @else
@@ -78,6 +86,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="py-3 bg-dark fixed-bottom">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Inz 2021</p>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
