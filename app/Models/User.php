@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'surname',
+        'id_account_type',
+        'nickname',
     ];
 
     /**
@@ -31,7 +34,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        
     ];
+
+    
 
     /**
      * The attributes that should be cast.
