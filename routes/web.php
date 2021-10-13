@@ -28,6 +28,13 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
+Route::get('/advertisement/add', function (){
+    return view('advertisements.add');
+});
+
+Route::post('/advertisement/add', function (){
+    dd("...");
+})  -> name('add_advert');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
