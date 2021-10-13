@@ -24,6 +24,8 @@ services:
         depends_on:
             - mariadb
             - redis
+        restart: unless-stopped
+
     mariadb:
         image: 'mariadb:latest'
         ports:
@@ -42,6 +44,8 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+        restart: unless-stopped
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -54,6 +58,8 @@ services:
             test: ["CMD", "redis-cli", "ping"]
             retries: 3
             timeout: 5s
+        restart: unless-stopped
+
     phpmyadmin:
         image: 'phpmyadmin:latest'
         networks:
@@ -64,6 +70,7 @@ services:
             MYSQL_USERNAME: "${DB_USERNAME}"
             MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
             PMA_HOST: mariadb
+        restart: unless-stopped
 
 networks:
     sail:
