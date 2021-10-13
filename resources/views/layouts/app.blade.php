@@ -33,7 +33,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     
                     <!-- Right Side Of Navbar -->
@@ -47,37 +47,37 @@
                             </li>
                         </ul>
                         <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Logowanie') }}</a>
+
+                        @auth
+                              <li class="nav-item">
+                                    <a class="font-weight-bold nav-link" href="{{ route('dashboard') }}">{{ __(auth()->user()->name) }}</a>
                                 </li>
-                            @endif
 
-                            @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Rejestracja') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form action="{{ route('logout') }}" method="POST" class="text-center">
                                         @csrf
+                                        <button type="submit" class="btn nav-link text-center">Wyloguj się</button>
+
                                     </form>
-                                </div>
+                                </li>
+
+                        @endauth
+                        
+                        @guest
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Logowanie') }}</a>
                             </li>
+
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Rejestracja') }}</a>
+                            </li>
+
                         @endguest
+                        
+             
+  
                     </ul>
                 </div>
             </div>
