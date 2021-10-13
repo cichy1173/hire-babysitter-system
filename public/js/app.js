@@ -588,3 +588,31 @@ module.exports = JSON.parse('{"_args":[["axios@0.21.4","/mnt/d/niania_corp"]],"_
 /******/ 	
 /******/ })()
 ;
+
+function change_add_advert_form(x)
+{
+   if(document.getElementById("advert_type_select_1").checked)
+   {
+        document.getElementById("input_advert_title").value = "Opiekun";
+   }
+   else
+   {
+        document.getElementById("input_advert_title").value = "asodoas";
+   }
+}
+
+function change_hour_rate_label(x)
+{
+  if(document.getElementById(input_hour_rate).value < 2)
+  {
+    document.getElementById(label_zloty).innerHTML = "złoty/godzinę"
+  }
+  else if(document.getElementById(input_hour_rate).value >= 2 && document.getElementById(input_hour_rate).value < 5)
+  {
+    document.getElementById(label_zloty).innerHTML = "złote/godzinę"
+  }
+  else
+  {
+    document.getElementById(label_zloty).innerHTML = "złotych/godzinę"
+  }
+}

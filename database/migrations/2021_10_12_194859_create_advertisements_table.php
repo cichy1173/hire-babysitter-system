@@ -15,8 +15,8 @@ class CreateAdvertisementsTable extends Migration
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_account_type')
-                    ->constrained('account_types')
+            $table->foreignId('id_advertisement_type')
+                    ->constrained('advertisements_types')
                     ->onUpdate('cascade')
                     ->onDelete('restrict');
             $table->foreignId('id_user')
