@@ -48,9 +48,9 @@
                         </ul>
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
+                            @if (Route::has('dashboard'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Logowanie') }}</a>
+                                    <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Logowanie') }}</a>
                                 </li>
                             @endif
 
