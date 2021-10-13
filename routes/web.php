@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/advertisement/add', function (){
+    return view('advertisements.add');
+});
+
+Route::post('/advertisement/add', function (){
+    dd("...");
+})  -> name('add_advert');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
