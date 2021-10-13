@@ -29,7 +29,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')
                     ->nullable();
             $table->string('password', 128);
-            $table->string('salt', 128);
+            $table->string('salt', 128)
+                        ->default('12345');
             $table->string('photo', 50)
                     ->nullable();
             $table->float('reputation', 2, 1);
