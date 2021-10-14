@@ -27,6 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
+                <img src="{{ asset('images/niania-logo.avif') }}" width="45" alt="" class="d-inline-block align-middle mr-2">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
