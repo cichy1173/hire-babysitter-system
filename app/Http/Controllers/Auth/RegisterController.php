@@ -35,8 +35,10 @@ class RegisterController extends Controller
             
         ]);
 
-        auth()->attempt($request->only('email', 'password'));
+        return back()->with('registered', 'Pomyślnie zarejestrowano!');
 
-        return redirect()->route('dashboard');
+        //auth()->attempt($request->only('email', 'password'));
+
+        return redirect()->route('register');
     }
 }

@@ -4,6 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+         @if (session('registered'))
+                    <div class="text-center alert alert-success">
+                        {{ session('registered') }}  
+                    
+                    </div>
+
+                @endif
             <div class="card">
                 <div class="card-header">{{ __('Formularz rejestracji konta') }}</div>
 
