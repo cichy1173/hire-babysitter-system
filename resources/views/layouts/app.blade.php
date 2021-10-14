@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     
     <!-- Favicon-->
@@ -93,5 +94,6 @@
             </div>
         </footer>
     </div>
+    <script  src="{{asset('js/add_form.js')}}"></script>
 </body>
 </html>
