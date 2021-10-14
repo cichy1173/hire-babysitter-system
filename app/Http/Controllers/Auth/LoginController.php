@@ -29,6 +29,7 @@ class LoginController extends Controller
            return back()->with('status', 'Błędne dane logowania');
        }
 
+
        return redirect()->route('dashboard');
 
     }
