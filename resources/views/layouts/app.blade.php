@@ -50,8 +50,17 @@
 
                         @auth
                             <li class="nav-item mx-2">
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="{{ route('dashboard') }}">{{ __(auth()->user()->name) }}</button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->name) }}</button>
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
+                                        <a class="dropdown-item" href="#">Edytuj konto</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">8===D xDD</a>
+                                      </div>
                                 </div>
                             </li>
 

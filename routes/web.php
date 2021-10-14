@@ -30,7 +30,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/advertisement/add', function (){
     return view('advertisements.add');
-});
+})->name('add_advert');
 
 Route::post('/advertisement/add', function (){
     dd("...");
