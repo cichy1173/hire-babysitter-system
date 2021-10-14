@@ -13,7 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="{{asset('images/niania-logo.avif')}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('niania-logo.avif')}}" />
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,6 +26,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
+                <img src="{{ asset('niania-logo.avif') }}" width="45" alt="" class="d-inline-block align-middle mr-2">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -54,9 +55,9 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <form action="{{ route('logout') }}" method="POST" class="text-center">
+                                    <form id="my_form" action="{{ route('logout') }}" method="POST" class="text-center">
                                         @csrf
-                                        <button type="submit" class="btn nav-link text-center">{{ __('Wyloguj się') }}</button>
+                                        <button class="btn btn-outline-secondary font-weight-bold nav-link text-center">{{ __('Wyloguj się') }}</button>
 
                                     </form>
                                 </li>
