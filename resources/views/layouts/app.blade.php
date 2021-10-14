@@ -14,7 +14,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="{{asset('images/niania-logo.avif')}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('niania-logo.avif')}}" />
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -56,9 +56,9 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <form action="{{ route('logout') }}" method="POST" class="text-center">
+                                    <form id="my_form" action="{{ route('logout') }}" method="POST" class="text-center">
                                         @csrf
-                                        <button type="submit" class="btn nav-link text-center">Wyloguj się</button>
+                                        <button class="btn btn-outline-secondary font-weight-bold nav-link text-center">{{ __('Wyloguj się') }}</button>
 
                                     </form>
                                 </li>
