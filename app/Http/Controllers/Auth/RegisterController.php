@@ -17,10 +17,10 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',  
-            'surname' => 'required|max:255', 
+            'name' => 'required|max:128',  
+            'surname' => 'required|max:128', 
             'email' => 'required|email', 
-            'password' => 'required|confirmed|max:255',
+            'password' => 'required|confirmed|max:128|min:8',
             'id_account_type' => 'required',
             'nickname' => 'required|max:15'
         ]);
@@ -39,6 +39,6 @@ class RegisterController extends Controller
 
         //auth()->attempt($request->only('email', 'password'));
 
-        return redirect()->route('register');
+       // return redirect()->route('register');
     }
 }
