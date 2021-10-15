@@ -29,7 +29,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')
                     ->nullable();
             $table->string('password', 128);
-            $table->string('salt', 128);
+            $table->string('salt', 128)
+                        ->default('12345');
             $table->string('photo', 50)
                     ->nullable();
             $table->float('reputation', 2, 1);
@@ -37,11 +38,14 @@ class CreateUsersTable extends Migration
                     ->nullable();
             $table->string('schedule', 50)
                     ->nullable();
-            $table->binary('is_blocked');
+            $table->tinyInteger('is_blocked')
+                        ->default(0);
             $table->timestamp('blocked_to')
                     ->nullable();
-            $table->binary('is_deleted');
-            $table->binary('require_pass_reset');
+            $table->tinyInt('is_deleted')
+                        ->default(0);
+            $table->tinyInteger('require_pass_reset')
+                    ->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->index(['id', 'nickname', 'email']);
