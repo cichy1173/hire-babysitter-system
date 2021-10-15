@@ -97,6 +97,50 @@
                             </div>
                             <div class="mb-3 row">
                                 <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="country">Kraj</span>
+                                        <select class="form-control" id="input_country" aria-describedby="country">
+                                            <option value="1">Kluski</option>
+                                            <option value="2">Kluski2</option>
+                                            <option value="3">Kluski3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="voivodeship">Województwo</span>
+                                        <select class="form-control" id="input_voivodeship" aria-describedby="voivodeship" disabled>
+                                            <option value="1">Kluski</option>
+                                            <option value="2">Kluski2</option>
+                                            <option value="3">Kluski3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="city">Miasto</span>
+                                        <select class="form-control" id="input_city" aria-describedby="city" disabled>
+                                            <option value="1">Kluski</option>
+                                            <option value="2">Kluski2</option>
+                                            <option value="3">Kluski3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="district">Dzielnica</span>
+                                        <select class="form-control" id="input_district" aria-describedby="district" disabled>
+                                            <option value="1">Kluski</option>
+                                            <option value="2">Kluski2</option>
+                                            <option value="3">Kluski3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col">
                                     <span class="input-group-text" id="advert_content">Treść ogłoszenia</span>
                                     <textarea class="form-control" id="input_advert_content" cols="30" rows="10" aria-label="Treść ogłoszenia" aria-describedby="advert_content"></textarea>                                   
                                 </div>

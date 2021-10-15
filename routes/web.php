@@ -5,7 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-
+use App\Http\Controllers\AdvertisementController;
 
 
 
@@ -28,14 +28,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/advertisement/add', function (){
-    return view('advertisements.add');
-})->name('add_advert');
+Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->name('form_advert');
 
-Route::post('/advertisement/add', function (){
-    dd("...");
-})  -> name('add_advert');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('add_advert');
+Route::post('/advertisement/add', [AdvertisementController::class, 'store']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
