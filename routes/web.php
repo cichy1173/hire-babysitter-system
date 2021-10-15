@@ -38,4 +38,6 @@ Route::post('/advertisement/add', function (){
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/full-calender', [App\Http\Controllers\FullCalenderController::class, 'index'])->name('calendar');
 
+Route::post('/full-calender/action', [App\Http\Controllers\FullCalenderController::class, 'action']);
