@@ -13,7 +13,7 @@
                             <div class="mb-3 row">
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" checked>
+                                        <input class="form-check-input" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" value="1" checked>
                                         <label class="form-check-label" for="advert_type_select_1">
                                             Szukam opiekunki
                                         </label>
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2">
+                                        <input class="form-check-input" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2" value="2">
                                         <label class="form-check-label" for="advert_type_select_2">
                                             Jestem opiekunką
                                         </label>
@@ -49,7 +49,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="number_of_childs">Liczba dzieci</span>
-                                        <input class="form-control" style="text-align: right" type="number" id="input_number_of_childs" min="0" max="10" value="1" aria-label="Liczba dzieci" aria-describedby="number_of_childs">
+                                        <input class="form-control" style="text-align: right" type="number" name="input_number_of_childs" id="input_number_of_childs" min="0" max="10" value="1" aria-label="Liczba dzieci" aria-describedby="number_of_childs">
                                     </div>
                                 </div>
                             </div>
@@ -57,13 +57,13 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="min_child_age">Wiek najmłodoszego dziecka</span>
-                                        <input class="form-control" style="text-align: right" id="input_min_child_age" onchange="change_child_age()" min="0" max="18" type="number" value="1" aria-label="Najmłodsze dziecko" aria-describedby="min_child_age">
+                                        <input class="form-control" style="text-align: right" name="input_min_child_age" id="input_min_child_age" onchange="change_child_age()" min="0" max="18" type="number" value="1" aria-label="Najmłodsze dziecko" aria-describedby="min_child_age">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="max_child_number">Wiek najstarszego dziecka</span>
-                                        <input class="form-control" style="text-align: right" id="input_max_child_number" type="number" min="0" max="18" value="1" aria-label="Najstarsze dziecko" aria-describedby="max_child_number">
+                                        <input class="form-control" style="text-align: right" name="input_max_child_age" id="input_max_child_age" type="number" min="0" max="18" value="1" aria-label="Najstarsze dziecko" aria-describedby="max_child_number">
                                     </div>
                                 </div>
                             </div>
@@ -71,13 +71,13 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="supervise_from">Opieka od</span>
-                                        <input class="form-control" style="text-align: right" type="datetime-local" id="input_supervise_from" aria-label="Opieka od" aria-describedby="supervise_from">
+                                        <input class="form-control" style="text-align: right" type="datetime-local" name="input_supervise_from" id="input_supervise_from" aria-label="Opieka od" aria-describedby="supervise_from">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="supervise_to">Opieka do</span>
-                                        <input class="form-control" style="text-align: right" type="datetime-local" id="input_supervise_to" aria-label="Opieka do" aria-describedby="supervise_to">
+                                        <input class="form-control" style="text-align: right" type="datetime-local" name="input_supervise_to" id="input_supervise_to" aria-label="Opieka do" aria-describedby="supervise_to">
                                     </div>
                                 </div>
                             </div>
@@ -85,13 +85,13 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="advert_from">Ogłoszenie od</span>
-                                        <input class="form-control" style="text-align: right" type="datetime-local" id="input_advert_from" aria-label="Ogłoszenie od" aria-describedby="advert_from">
+                                        <input class="form-control" style="text-align: right" type="datetime-local" name="input_advert_from" id="input_advert_from" aria-label="Ogłoszenie od" aria-describedby="advert_from">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="advert_to">Ogłoszenie do</span>
-                                        <input class="form-control" style="text-align: right" type="datetime-local" id="input_advert_to" aria-label="Ogłoszenie do" aria-describedby="advert_to">
+                                        <input class="form-control" style="text-align: right" type="datetime-local" name="input_advert_to" id="input_advert_to" aria-label="Ogłoszenie do" aria-describedby="advert_to">
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="country">Kraj</span>
-                                        <select class="form-control" id="input_country" aria-describedby="country">
+                                        <select class="form-control" name="input_country" id="input_country" aria-describedby="country">
                                             <option value="1">Kluski</option>
                                             <option value="2">Kluski2</option>
                                             <option value="3">Kluski3</option>
@@ -109,7 +109,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="voivodeship">Województwo</span>
-                                        <select class="form-control" id="input_voivodeship" aria-describedby="voivodeship" disabled>
+                                        <select class="form-control" name="input_voivodeship" id="input_voivodeship" aria-describedby="voivodeship" disabled>
                                             <option value="1">Kluski</option>
                                             <option value="2">Kluski2</option>
                                             <option value="3">Kluski3</option>
@@ -121,7 +121,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="city">Miasto</span>
-                                        <select class="form-control" id="input_city" aria-describedby="city" disabled>
+                                        <select class="form-control" name="input_city" id="input_city" aria-describedby="city" disabled>
                                             <option value="1">Kluski</option>
                                             <option value="2">Kluski2</option>
                                             <option value="3">Kluski3</option>
@@ -131,7 +131,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="district">Dzielnica</span>
-                                        <select class="form-control" id="input_district" aria-describedby="district" disabled>
+                                        <select class="form-control" name="input_district" id="input_district" aria-describedby="district" disabled>
                                             <option value="1">Kluski</option>
                                             <option value="2">Kluski2</option>
                                             <option value="3">Kluski3</option>
@@ -142,7 +142,7 @@
                             <div class="mb-3 row">
                                 <div class="col">
                                     <span class="input-group-text" id="advert_content">Treść ogłoszenia</span>
-                                    <textarea class="form-control" id="input_advert_content" cols="30" rows="10" aria-label="Treść ogłoszenia" aria-describedby="advert_content"></textarea>                                   
+                                    <textarea class="form-control" name="input_advert_content" id="input_advert_content" cols="30" rows="10" aria-label="Treść ogłoszenia" aria-describedby="advert_content"></textarea>                                   
                                 </div>
                             </div>
                             <div class="mb-3 row">
