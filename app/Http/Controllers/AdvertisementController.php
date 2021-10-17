@@ -14,7 +14,18 @@ class AdvertisementController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'input_advert_title' => 'required'
+            'advert_type_select' => 'required|exists:advertisement_types,id|int',
+            'input_advert_title' => 'required|alpha_dash|max:50',
+            'input_advert_content' => 'required|alpha_dash|max:5000',
+            'input_hour_rate' => 'required|numeric|min:0',
+            'input_min_child_age' => 'required|numeric|min:0|max:18',
+            'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
+            'input_number_of_childs' => 'required|numeric|min:0|max:10',
+            'input_advert_from' => 'required|date|after_or_equal:now',
+            'input_advert_to' => 'required|date|after:input_advert_from',
+            'input_supervise_from' => 'required|date|after_or_equal:now',
+            'input_supervise_to' => 'required|date|after:input_supervise_from'
+
         ]);
         
         // dd($request);
