@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
@@ -16,7 +17,7 @@ class AdvertisementController extends Controller
         $this->validate($request, [
             'advert_type_select' => 'required|exists:advertisement_types,id|int',
             'input_advert_title' => 'required|alpha_dash|max:50',
-            'input_advert_content' => 'required|alpha_dash|max:5000',
+            'input_advert_content' => 'required|string|max:5000',
             'input_hour_rate' => 'required|numeric|min:0',
             'input_min_child_age' => 'required|numeric|min:0|max:18',
             'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
@@ -42,6 +43,16 @@ class AdvertisementController extends Controller
             'date_to' => $request->input_advert_to,
             'supervise_from' => $request->input_supervise_from,
             'supervise_to' => $request->input_supervise_to
+        ]);
+
+        route('show_advert');
+    }
+
+    public function show()
+    {
+        $adverts = Advertisement::all();
+        return view('advertisements.show', [
+            'adverts' => $adverts
         ]);
     }
 }

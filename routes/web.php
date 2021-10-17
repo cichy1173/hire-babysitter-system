@@ -30,8 +30,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->name('add_advert');
-Route::post('/advertisement/add', [AdvertisementController::class, 'store']);
+Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->middleware('auth')->name('add_advert');
+Route::post('/advertisement/add', [AdvertisementController::class, 'store'])->middleware('auth');
 
-
+Route::get('/advertisement/show', [AdvertisementController::class, 'show'])->middleware('auth')->name('show_advert');
 
