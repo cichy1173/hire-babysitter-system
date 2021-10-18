@@ -50,7 +50,7 @@ class AdvertisementController extends Controller
 
     public function show()
     {
-        $adverts = Advertisement::all();
+        $adverts = auth()->user()->advertisements()->get();
         return view('advertisements.show', [
             'adverts' => $adverts
         ]);
