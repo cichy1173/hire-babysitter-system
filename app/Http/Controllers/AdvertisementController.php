@@ -55,4 +55,11 @@ class AdvertisementController extends Controller
             'adverts' => $adverts
         ]);
     }
+
+    public function delete(Advertisement $advert)
+    {
+        $advert->delete();
+
+        return back();
+    }
 }
