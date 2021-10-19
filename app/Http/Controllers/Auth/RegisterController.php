@@ -26,19 +26,18 @@ class RegisterController extends Controller
         ]);
         
         User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'email' =>$request->email,
+            'name' => $request -> name,
+            'surname' => $request -> surname,
+            'email' => $request -> email,
             'nickname' => $request -> nickname,
             'password'=> Hash::make($request -> password),
-            'id_account_type' => $request ->id_account_type,
+            'id_account_type' => $request -> id_account_type,
             
         ]);
 
         return back()->with('registered', 'Pomyślnie zarejestrowano!');
 
-        //auth()->attempt($request->only('email', 'password'));
-
-       // return redirect()->route('register');
     }
 }
+
+

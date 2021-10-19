@@ -6,7 +6,7 @@ function change_add_advert_form(x)
    }
    else
    {
-        document.getElementById("input_advert_title").value = "asodoas";
+        document.getElementById("input_advert_title").value = "Zaopiekuję się";
    }
 }
 

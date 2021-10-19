@@ -45,7 +45,7 @@ class AdvertisementController extends Controller
             'supervise_to' => $request->input_supervise_to
         ]);
 
-        route('show_advert');
+        return redirect()->route('show_advert');
     }
 
     public function show()

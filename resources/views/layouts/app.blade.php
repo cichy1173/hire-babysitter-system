@@ -60,7 +60,7 @@
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="#">Edytuj konto</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">8===D xDD</a>
+                                        <a class="dropdown-item" href="#">Dodatki</a>
                                       </div>
                                 </div>
                             </li>
