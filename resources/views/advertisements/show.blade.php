@@ -16,8 +16,17 @@
                                                 <a href="" class="font-weight-bold">{{$advert->title}}</a>
                                                 <p class="text-right text-sm text-muted mb-0">{{$advert->updated_at}}</p>
                                             </div>
-                                            <div class="card-body">
-                                                <p class="mb-0">lasnidfas</p>
+                                            <div class="card-body ">
+                                                <div class="d-inline mb-0 text-muted">{{__('Stawka ')}}</div>
+                                                <div class="d-inline mb-0">{{$advert->hour_rate}}</div>
+                                                <div class="d-inline mb-0 text-muted">{{__(' zł/h')}}</div>
+                                                <form class="form-inline float-right mb-0" action="{{route('delete_advert', $advert)}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="form-group float-right mb-0">
+                                                        <button class="btn btn-sm btn-outline-danger" type="submit" id="button_delete">Usuń</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

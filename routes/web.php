@@ -34,4 +34,5 @@ Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->middl
 Route::post('/advertisement/add', [AdvertisementController::class, 'store'])->middleware('auth');
 
 Route::get('/advertisement/show', [AdvertisementController::class, 'show'])->middleware('auth')->name('show_advert');
+Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, 'delete'])->middleware('auth')->name('delete_advert');
 
