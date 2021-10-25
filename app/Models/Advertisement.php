@@ -28,4 +28,9 @@ class Advertisement extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function districts()
+    {
+        return $this->belongsToMany(District::class, 'districts_advertisements', 'id_advertisement', 'id_district');
+    }
 }
