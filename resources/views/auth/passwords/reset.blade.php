@@ -17,7 +17,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Twój adres e-mail') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') alert alert-danger is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') alert alert-danger is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" autocomplete="email" readonly autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback alert alert-warning" role="alert">
@@ -51,7 +51,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     {{ __('Zresetuj hasło') }}
                                 </button>
                             </div>
