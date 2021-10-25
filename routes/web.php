@@ -13,7 +13,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-//Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
