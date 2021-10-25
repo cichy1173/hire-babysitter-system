@@ -2,7 +2,7 @@ function change_add_advert_form(x)
 {
    if(document.getElementById("advert_type_select_1").checked)
    {
-        document.getElementById("input_advert_title").value = "Opiekun";
+        document.getElementById("input_advert_title").value = "Szukam opiekunki";
    }
    else
    {
