@@ -154,10 +154,10 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="country">Kraj</span>
-                                        <select class="form-control @error('input_country') alert alert-danger is-invalid @enderror" name="input_country" id="input_country" aria-describedby="country">
-                                            <option value="1">Kluski</option>
-                                            <option value="2">Kluski2</option>
-                                            <option value="3">Kluski3</option>
+                                        <select class="form-control @error('input_country') alert alert-danger is-invalid @enderror" onclick="selectVoivodeship()" name="input_country" id="input_country" aria-describedby="country">
+                                            @foreach ($countries as $country)
+                                                <option value="{{$country->id}}">{{$country->country_name}}</option>
+                                            @endforeach
                                         </select>
                                         @error('input_country')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
@@ -169,10 +169,8 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="voivodeship">Województwo</span>
-                                        <select class="form-control @error('input_voivodeship') alert alert-danger is-invalid @enderror" name="input_voivodeship" id="input_voivodeship" aria-describedby="voivodeship" disabled>
-                                            <option value="1">Kluski</option>
-                                            <option value="2">Kluski2</option>
-                                            <option value="3">Kluski3</option>
+                                        <select class="form-control @error('input_voivodeship') alert alert-danger is-invalid @enderror" onclick="selectCity()" name="input_voivodeship" id="input_voivodeship" aria-describedby="voivodeship">
+                                            <option value="-1">{{__('Brak danych')}}</option>
                                         </select>
                                         @error('input_voivodeship')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
@@ -186,10 +184,8 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="city">Miasto</span>
-                                        <select class="form-control @error('input_city') alert alert-danger is-invalid @enderror" name="input_city" id="input_city" aria-describedby="city" disabled>
-                                            <option value="1">Kluski</option>
-                                            <option value="2">Kluski2</option>
-                                            <option value="3">Kluski3</option>
+                                        <select class="form-control @error('input_city') alert alert-danger is-invalid @enderror" onclick="selectDistrict()" name="input_city" id="input_city" aria-describedby="city">
+                                            <option value="-1">{{__('Brak danych')}}</option>
                                         </select>
                                         @error('input_city')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
@@ -201,10 +197,8 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="district">Dzielnica</span>
-                                        <select class="form-control @error('input_district') alert alert-danger is-invalid @enderror" name="input_district" id="input_district" aria-describedby="district" disabled>
-                                            <option value="1">Kluski</option>
-                                            <option value="2">Kluski2</option>
-                                            <option value="3">Kluski3</option>
+                                        <select class="form-control @error('input_district') alert alert-danger is-invalid @enderror" name="input_district" id="input_district" aria-describedby="district">
+                                            <option value="-1">{{__('Brak danych')}}</option>
                                         </select>
                                         @error('input_district')
                                             <span class="invalid-feedback alert alert-warning " role="alert">

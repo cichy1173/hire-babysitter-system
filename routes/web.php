@@ -34,5 +34,8 @@ Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->middl
 Route::post('/advertisement/add', [AdvertisementController::class, 'store'])->middleware('auth');
 
 Route::get('/advertisement/show', [AdvertisementController::class, 'show'])->middleware('auth')->name('show_advert');
+Route::get('/advertisement/getvoivodeships/{id}', [AdvertisementController::class, 'getVoivodeships'])->middleware('auth');
+Route::get('/advertisement/getcities/{id}', [AdvertisementController::class, 'getCities'])->middleware('auth');
+Route::get('/advertisement/getdistricts/{id}', [AdvertisementController::class, 'getDistricts'])->middleware('auth');
 Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, 'delete'])->middleware('auth')->name('delete_advert');
 

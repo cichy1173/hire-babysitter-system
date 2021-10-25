@@ -2,21 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Advertisement;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\District;
+use App\Models\Voivodeship;
 use Illuminate\Http\Request;
+use App\Models\Advertisement;
 
 class AdvertisementController extends Controller
 {
     public function add()
     {
-        return view('advertisements.add');
+        $countries = Country::all()->sortBy('country_name');
+        $voivoideships = Voivodeship::all()->sortBy('voivodeship_name');
+        $cities = City::all()->sortBy('city_name');
+        $districts = District::all()->sortBy('district_name');
+
+
+        return view('advertisements.add', [
+            'countries' => $countries,
+            'voivodeships' => $voivoideships,
+            'cities' => $cities,
+            'districts' => $districts
+        ]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'advert_type_select' => 'required|exists:advertisement_types,id|int',
-            'input_advert_title' => 'required|alpha_dash|max:50',
+            'input_advert_title' => 'required|string|max:50',
             'input_advert_content' => 'required|string|max:5000',
             'input_hour_rate' => 'required|numeric|min:0',
             'input_min_child_age' => 'required|numeric|min:0|max:18',
@@ -61,5 +76,29 @@ class AdvertisementController extends Controller
         $advert->delete();
 
         return back();
+    }
+
+    public function getVoivodeships($id)
+    {
+        $voivoideships['data'] = Voivodeship::get()->where('id_country', $id)->sortBy('voivodeship_name');
+
+        echo json_encode($voivoideships);
+        exit;
+    }
+
+    public function getCities($id)
+    {
+        $cities['data'] = City::get()->where('id_voivodeship', $id)->sortBy('city_name');
+
+        echo json_encode($cities);
+        exit;
+    }
+
+    public function getDistricts ($id)
+    {
+        $districts['data'] = District::get()->where('id_city', $id)->sortBy('district_name');
+
+        echo json_encode($districts);
+        exit;
     }
 }
