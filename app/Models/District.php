@@ -23,7 +23,7 @@ class District extends Model
 
     public function advertisements()
     {
-        return $this->belongsToMany(Advertisement::class, 'districts_advertisements', 'id_ditrict', 'id_advertisement');
+        return $this->belongsToMany(Advertisement::class, 'districts_advertisements', 'id_district', 'id_advertisement');
     }
 
 }
