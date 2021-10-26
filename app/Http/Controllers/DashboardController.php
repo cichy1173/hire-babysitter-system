@@ -10,4 +10,10 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
+
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
 }
