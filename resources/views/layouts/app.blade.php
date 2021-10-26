@@ -62,10 +62,11 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
+                                        <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
+                                        <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="#">Edytuj konto</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{route('calendar')}}">8===D xDD</a>
+                                        <a class="dropdown-item" href="#">Dodatki</a>
                                       </div>
                                 </div>
                             </li>

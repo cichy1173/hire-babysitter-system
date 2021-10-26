@@ -97,20 +97,18 @@
                                 <input id="password_confirmation" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                             </div>
                         </div>
-
-                        <div class="form-group row p-2">
-                            <label for="id_account_type" class="col-md-4 col-form-label text-md-right">{{ __('Typ konta') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="id_account_type" type="text" class="form-control @error('id_account_type') alert alert-danger is-invalid @enderror" name="id_account_type" value="{{ old('id_account_type') }}"  autocomplete="id_account_type" autofocus>
-
-                                @error('id_account_type')
-                                    <span class="invalid-feedback alert alert-warning" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+         
+                        <div class="form-group row p-2 ">
+                            
+                            <label class=" col-md-4 col-form-label text-md-right " for="id_account_type">{{ __('Typ konta') }}</label>
+                            
+                            <div class="col-md-6"> 
+                            <select class=" required custom-select form-control" id="id_account_type" value="{{ old('id_account_type') }}" name="id_account_type"  autocomplete="id_account_type" >
+                              <option value="1">{{ __('Opiekun') }}</option>
+                              <option value="2">{{ __('Zwykły użytkownik') }}</option>
+                            </select>
                         </div>
+                          </div>
                       
 
                         <div class="form-group row p-2">
