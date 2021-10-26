@@ -8,6 +8,7 @@ use App\Models\District;
 use App\Models\Voivodeship;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
+use Carbon\Carbon;
 
 class AdvertisementController extends Controller
 {
@@ -37,9 +38,9 @@ class AdvertisementController extends Controller
             'input_min_child_age' => 'required|numeric|min:0|max:18',
             'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
             'input_number_of_childs' => 'required|numeric|min:0|max:10',
-            'input_advert_from' => 'required|date|after_or_equal:now',
+            'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
             'input_advert_to' => 'required|date|after:input_advert_from',
-            'input_supervise_from' => 'required|date|after_or_equal:now',
+            'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
             'input_supervise_to' => 'required|date|after:input_supervise_from'
 
         ]);
