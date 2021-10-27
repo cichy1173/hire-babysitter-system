@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class ResetPasswordController extends Controller
+class UserEditResetPasswordController extends Controller
 {
-
+    
     public function __construct()
     {
-        $this->middleware(['guest']);
+        $this->middleware(['auth']);
+    }
+
+    public function index()
+    {
+        return view('User.resetPassword');
     }
 
 
@@ -33,5 +38,5 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    
 }
