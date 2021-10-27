@@ -70,7 +70,7 @@
                                                 <div class="row">
                                                     <div class="col-xl-6 offset-xl-8">
                                                         <div class="d-inline mb-0 text-muted">{{__('Dodano ')}}</div>
-                                                        <div class="d-inline mb-0 text-info">{{$advert->created_at->format("d M Y G:i")}}</div>
+                                                        <div class="d-inline mb-0">{{$advert->created_at->format("d M Y G:i")}}</div>
                                                     </div>
                                                 </div>                                                
                                             </div>
