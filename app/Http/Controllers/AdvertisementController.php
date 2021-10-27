@@ -8,6 +8,8 @@ use App\Models\District;
 use App\Models\Voivodeship;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
+use App\Models\Skill;
+use Carbon\Carbon;
 
 class AdvertisementController extends Controller
 {
@@ -17,13 +19,15 @@ class AdvertisementController extends Controller
         $voivoideships = Voivodeship::all()->sortBy('voivodeship_name');
         $cities = City::all()->sortBy('city_name');
         $districts = District::all()->sortBy('district_name');
+        $skills = Skill::all()->sortBy('skill_name');
 
 
         return view('advertisements.add', [
             'countries' => $countries,
             'voivodeships' => $voivoideships,
             'cities' => $cities,
-            'districts' => $districts
+            'districts' => $districts,
+            'skills' => $skills
         ]);
     }
 
@@ -37,16 +41,18 @@ class AdvertisementController extends Controller
             'input_min_child_age' => 'required|numeric|min:0|max:18',
             'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
             'input_number_of_childs' => 'required|numeric|min:0|max:10',
-            'input_advert_from' => 'required|date|after_or_equal:now',
+            'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
             'input_advert_to' => 'required|date|after:input_advert_from',
-            'input_supervise_from' => 'required|date|after_or_equal:now',
-            'input_supervise_to' => 'required|date|after:input_supervise_from'
-
+            'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
+            'input_supervise_to' => 'required|date|after:input_supervise_from',
+            'input_country' => 'required|exists:countries,id',
+            'input_voivodeship' => 'required|exists:voivodeships,id',
+            'input_city' => 'required|exists:cities,id',
+            'input_district' => 'required|exists:districts,id',
+            'input_skill' => 'required|array|exists:skills,id'
         ]);
-        
-        // dd($request);
 
-        auth()->user()->advertisements()->create([
+        $advert_id = auth()->user()->advertisements()->create([
             'id_advertisement_type' => $request->advert_type_select,
             'title' => $request->input_advert_title,
             'content' => $request->input_advert_content,
@@ -58,7 +64,15 @@ class AdvertisementController extends Controller
             'date_to' => $request->input_advert_to,
             'supervise_from' => $request->input_supervise_from,
             'supervise_to' => $request->input_supervise_to
-        ]);
+        ])->id;
+
+        $district_id = District::find($request->input_district);
+        $district_id->advertisements()->attach($advert_id);
+
+        foreach ($request->input_skill as $key => $value) {
+            $skill_id = Skill::find($value);
+            $skill_id->advertisements()->attach($advert_id, ['is_deleted' => 0]);
+        }
 
         return redirect()->route('show_advert');
     }
@@ -73,6 +87,8 @@ class AdvertisementController extends Controller
 
     public function delete(Advertisement $advert)
     {
+        $advert->districts()->detach();
+        $advert->skills()->detach();
         $advert->delete();
 
         return back();
