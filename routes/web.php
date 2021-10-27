@@ -6,12 +6,11 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AdvertisementController;
+use Illuminate\Support\Facades\Auth;
 
 
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('homePage');
 
 Auth::routes(['verify' => true]);
 
