@@ -33,7 +33,8 @@ class CreateAdvertisementsTable extends Migration
                     ->useCurrent();
             $table->timestamp('date_to')
                     ->nullable();
-            $table->binary('is_deleted');
+            $table->tinyInteger('is_deleted')
+                    ->default(0);
             $table->timestamp('supervise_from')
                     ->useCurrent();
             $table->timestamp('supervise_to')

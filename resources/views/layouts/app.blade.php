@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     
     <!-- Favicon-->
@@ -26,7 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <img src="{{ asset('niania-logo.avif') }}" width="45" alt="" class="d-inline-block align-middle mr-2">
+                <img src="{{ asset('images/niania-logo.avif') }}"  width="45" alt="" class="d-inline-block align-middle mr-2">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -39,39 +40,49 @@
                     
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto w-auto">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item px-4">
-                                <form class="form-inline">
-                                    <input type="search" class="form-control mr-sm-2" >
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__("Wyszukaj")}}</button>
-                                </form>
-                            </li>
-                        </ul>
+                        <li class="nav-item mx-2">
+                            <form class="form-inline">
+                                <input type="search" class="form-control mr-1" >
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__("Wyszukaj")}}</button>
+                            </form>
+                        </li>
                         <!-- Authentication Links -->
 
                         @auth
-                              <li class="nav-item">
-                                    <a class="font-weight-bold nav-link" href="{{ route('dashboard') }}">{{ __(auth()->user()->name) }}</a>
-                                </li>
+                            <li class="nav-item mx-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->name) }}</button>
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
+                                        <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
+                                        <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Dodatki</a>
+                                      </div>
+                                </div>
+                            </li>
 
-                                <li class="nav-item">
-                                    <form id="my_form" action="{{ route('logout') }}" method="POST" class="text-center">
-                                        @csrf
-                                        <button class="btn btn-outline-secondary font-weight-bold nav-link text-center">{{ __('Wyloguj się') }}</button>
+                            <li class="nav-item mx-2">
+                                <form id="my_form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-outline-secondary font-weight-bold">{{ __('Wyloguj się') }}</button>
 
-                                    </form>
-                                </li>
+                                </form>
+                            </li>
 
                         @endauth
                         
                         @guest
 
-                            <li class="nav-item">
+                            <li class="nav-item mx-2">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Logowanie') }}</a>
                             </li>
 
                         
-                            <li class="nav-item">
+                            <li class="nav-item mx-2">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Rejestracja') }}</a>
                             </li>
 
@@ -93,5 +104,6 @@
             </div>
         </footer>
     </div>
+    <script  src="{{asset('js/add_form.js')}}"></script>
 </body>
 </html>
