@@ -85,6 +85,13 @@ class AdvertisementController extends Controller
         ]);
     }
 
+    public function showSingle(Advertisement $advert)
+    {
+        return view('advertisements.showSingle', [
+            'advert' => $advert
+        ]);
+    }
+
     public function delete(Advertisement $advert)
     {
         $advert->districts()->detach();

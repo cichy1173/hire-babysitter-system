@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header border-success">{{ __('Twoje ogłoszenia') }}</div>
                     <div class="card-body">
-                        @if ($adverts->count())
+                        @if (@isset($adverts))
                             @foreach ($adverts as $advert)
                                 <div class="row">
                                     <div class="col">
