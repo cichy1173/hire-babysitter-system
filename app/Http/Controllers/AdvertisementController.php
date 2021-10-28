@@ -37,7 +37,7 @@ class AdvertisementController extends Controller
             'advert_type_select' => 'required|exists:advertisement_types,id|int',
             'input_advert_title' => 'required|string|max:50',
             'input_advert_content' => 'required|string|max:5000',
-            'input_hour_rate' => 'required|numeric|min:0',
+            'input_hour_rate' => 'required|numeric|min:0|max:100',
             'input_min_child_age' => 'required|numeric|min:0|max:18',
             'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
             'input_number_of_childs' => 'required|numeric|min:0|max:10',
