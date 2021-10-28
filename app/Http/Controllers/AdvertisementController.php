@@ -9,6 +9,7 @@ use App\Models\Voivodeship;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
 use App\Models\Skill;
+use App\Models\User;
 use Carbon\Carbon;
 
 class AdvertisementController extends Controller
@@ -87,8 +88,15 @@ class AdvertisementController extends Controller
 
     public function showSingle(Advertisement $advert)
     {
+        $user = User::find($advert->id_user);
+        $district = $advert->districts[0];
+        $city = City::find($district->id_city);
+
         return view('advertisements.showSingle', [
-            'advert' => $advert
+            'advert' => $advert,
+            'user' => $user,
+            'district' => $district,
+            'city' => $city
         ]);
     }
 

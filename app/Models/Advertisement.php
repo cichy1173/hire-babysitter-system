@@ -24,6 +24,13 @@ class Advertisement extends Model
         'supervise_to'
     ];
 
+    protected $dates = [
+        'date_from',
+        'date_to',
+        'supervise_from',
+        'supervise_to'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

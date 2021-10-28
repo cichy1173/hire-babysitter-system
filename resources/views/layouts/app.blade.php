@@ -16,12 +16,16 @@
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{asset('niania-logo.avif')}}" />
 
+    <!-- Stars-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/stars.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
