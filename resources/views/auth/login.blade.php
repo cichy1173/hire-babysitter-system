@@ -15,6 +15,15 @@
 
                 @endif
 
+
+                @if (session('destroyed'))
+                    <div class="text-center alert alert-info">
+                        {{ session('destroyed') }}  
+                    
+                    </div>
+
+                @endif
+
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
