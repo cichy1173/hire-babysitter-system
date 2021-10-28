@@ -155,9 +155,11 @@
                                     <div class="input-group">
                                         <span class="input-group-text" id="country">Kraj</span>
                                         <select class="form-control @error('input_country') alert alert-danger is-invalid @enderror" onclick="selectVoivodeship()" name="input_country" id="input_country" aria-describedby="country">
-                                            @foreach ($countries as $country)
-                                                <option value="{{$country->id}}">{{$country->country_name}}</option>
-                                            @endforeach
+                                            @isset($countries)
+                                                @foreach ($countries as $country)
+                                                    <option value="{{$country->id}}">{{$country->country_name}}</option>
+                                                @endforeach
+                                            @endisset                                            
                                         </select>
                                         @error('input_country')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
@@ -206,6 +208,23 @@
                                             </span>
                                         @enderror
                                     </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    <span class="input-group-text" id="skills">Umiejętności</span>
+                                    <select class="form-control @error('input_skill') alert alert-danger is-invalid @enderror" name="input_skill[]" id="input_skill" multiple size="5">
+                                        @isset($skills)
+                                            @foreach ($skills as $item)
+                                                <option value="{{$item->id}}">{{$item->skill_name}}</option>
+                                            @endforeach
+                                        @endisset                                        
+                                    </select>
+                                    @error('input_skill')
+                                        <span class="invalid-feedback alert alert-warning" role="alert">
+                                            <strong>{{$message}}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">

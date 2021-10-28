@@ -33,7 +33,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <img src="{{ asset('images/niania-logo.avif') }}" width="45" alt="" class="d-inline-block align-middle mr-2">
+                <img src="{{ asset('images/niania-logo.avif') }}"  width="45" alt="" class="d-inline-block align-middle mr-2">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -64,7 +64,7 @@
                                     <div class="dropdown-menu">
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
-                                        <a class="dropdown-item" href="#">Edytuj konto</a>
+                                        <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Dodatki</a>
                                       </div>

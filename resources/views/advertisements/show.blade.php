@@ -11,7 +11,7 @@
                             @foreach ($adverts as $advert)
                                 <div class="row">
                                     <div class="col">
-                                        <div class="card">
+                                        <div class="card mb-3">
                                             <div class="card-header">
                                                 <p class="font-weight-bold mb-0">{{$advert->title}}</p>
                                                 <p class="text-right text-sm text-muted mb-0">{{$advert->updated_at->format("d M Y G:i")}}</p>
