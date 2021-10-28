@@ -44,6 +44,5 @@ Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, '
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');
-Route::get('/user/edit/resetpassword', [App\Http\Controllers\User\UserEditResetPasswordController::class, 'index'])->name('reset_password');
 Route::delete('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'destroy'])->name('userEdit');
-
+Route::post('/user/edit', [UserEditProfileController::class, 'resetPswd'])->name('reset_pswd');

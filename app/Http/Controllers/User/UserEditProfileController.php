@@ -34,5 +34,17 @@ class UserEditProfileController extends Controller
 
     }
 
+    public function resetPswd(User $user)
+    {
+        $user = Auth::user()->email;
+
+        
+
+        Auth::logout();
+
+        return redirect('/password/reset')->with('stat', $user);
+
+    }
+
 
 }

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Formularz przywracania hasła') }}</div>
+                <div class="card-header">{{ __('Formularz zmiany hasła') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
@@ -17,7 +17,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Twój adres e-mail') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') alert alert-danger is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" autocomplete="email" readonly autofocus>
+                                <input id="email"  type="email" class="form-control @error('email') alert alert-danger is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" autocomplete="email" readonly autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback alert alert-warning" role="alert">
