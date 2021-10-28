@@ -55,7 +55,7 @@
                         @auth
                             <li class="nav-item mx-2">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->name) }}</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->nickname) }}</button>
                                     <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
