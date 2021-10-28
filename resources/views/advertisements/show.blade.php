@@ -7,14 +7,14 @@
                 <div class="card">
                     <div class="card-header border-success">{{ __('Twoje ogłoszenia') }}</div>
                     <div class="card-body">
-                        @if ($adverts->count())
+                        @if (@isset($adverts))
                             @foreach ($adverts as $advert)
                                 <div class="row">
                                     <div class="col">
                                         <div class="card mb-3">
                                             <div class="card-header">
                                                 <p class="font-weight-bold mb-0">{{$advert->title}}</p>
-                                                <p class="text-right text-sm text-muted mb-0">{{$advert->updated_at->format("d M Y G:i")}}</p>
+                                                <p class="text-right text-sm text-muted mb-0">{{$advert->created_at->translatedFormat("d M Y G:i")}}</p>
                                             </div>
                                             <div class="card-body ">
                                                 <div class="d-inline mb-0 text-muted">{{__('Stawka ')}}</div>

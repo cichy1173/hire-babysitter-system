@@ -44,4 +44,9 @@ class HomePageController extends Controller
             'adverts' => $array
         ]);
     }
+
+    public function singleAdvert(Advertisement $advert)
+    {
+        return redirect()->route('showSingle', $advert);
+    }
 }
