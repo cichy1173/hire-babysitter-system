@@ -10,11 +10,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
 
-
-
-Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('homePage');
-Route::post('/{advert}', [App\Http\Controllers\HomePageController::class, 'singleAdvert'])->name('singleAdvert');
-
 Auth::routes(['verify' => true]);
 
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
@@ -32,6 +27,9 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('homePage');
+Route::post('/{advert}', [App\Http\Controllers\HomePageController::class, 'singleAdvert'])->name('singleAdvert');
 
 Route::get('/advertisement/add', [AdvertisementController::class, 'add'])->middleware('auth')->name('add_advert');
 Route::post('/advertisement/add', [AdvertisementController::class, 'store'])->middleware('auth');
