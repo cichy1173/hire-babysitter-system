@@ -117,7 +117,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="mb-0 text-muted">{{__('Treść ogłoszenia')}}</div>
-                                        <p class="card-text text-">{{$advert->content}}</p>
+                                        <p class="card-text text-justify">{{$advert->content}}</p>
                                     </div>
                                 </div>
                             </div>
