@@ -40,11 +40,12 @@
                                         <div class="d-inline mb-1 text-muted">{{__('Reputacja ')}}</div>
                                         <div class="d-inline mb-0">
                                             <div class="mx-auto">
-                                                <span class="fa fa-star star-checked"></span>
-                                                <span class="fa fa-star star-checked"></span>
-                                                <span class="fa fa-star star-checked"></span>
+                                                @for ($i = 0; $i < $user->reputation; $i++)
+                                                    <span class="fa fa-star star-checked"></span>
+                                                @endfor
+                                                @for ($i = $user->reputation; $i < 5; $i++)
                                                 <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
+                                                @endfor
                                             </div>
                                         </a></div>                                        
                                     </div>

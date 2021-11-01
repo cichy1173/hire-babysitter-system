@@ -31,11 +31,12 @@
                                             <div class="d-inline mb-0 text-muted">{{__('Opublikował ')}}</div>
                                             <button class="btn btn-link btn-sm mb-0 p-0" type="submit">{{$user->nickname}}</button>
                                             <div class="input-group flex-nowrap d-inline">
-                                                <span class="fa fa-star star-checked"></span>
-                                                <span class="fa fa-star star-checked"></span>
-                                                <span class="fa fa-star star-checked"></span>
+                                                @for ($i = 0; $i < $user->reputation; $i++)
+                                                    <span class="fa fa-star star-checked"></span>
+                                                @endfor
+                                                @for ($i = $user->reputation; $i < 5; $i++)
                                                 <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
+                                                @endfor
                                             </div>
                                         </form>
                                                                                 
