@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
 
@@ -39,7 +40,9 @@ Route::get('/advertisement/getvoivodeships/{id}', [AdvertisementController::clas
 Route::get('/advertisement/getcities/{id}', [AdvertisementController::class, 'getCities'])->middleware('auth');
 Route::get('/advertisement/getdistricts/{id}', [AdvertisementController::class, 'getDistricts'])->middleware('auth');
 Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, 'delete'])->middleware('auth')->name('delete_advert');
-Route::get('/advertisement/{advert}', [App\Http\Controllers\AdvertisementController::class, 'showSingle'])->name('showSingle');
+Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSingle'])->name('showSingle');
+//show another user profile
+Route::post('/user/{user}', [ShowUserController::class, 'index'])->name('showUser');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');

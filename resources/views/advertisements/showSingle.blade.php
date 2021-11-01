@@ -25,16 +25,20 @@
                             </div>
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-inline mb-0 text-muted">{{__('Opublikował ')}}</div>
-                                        <div class="d-inline mb-0"><a href="#">{{$user->nickname}}</a></div>
-                                        <div class="d-inline">
-                                            <span class="fa fa-star star-checked"></span>
-                                            <span class="fa fa-star star-checked"></span>
-                                            <span class="fa fa-star star-checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </div>                                        
+                                    <div class="card-body">                                        
+                                        <form class="form mb-0" method="POST" action="{{route('showUser', $user)}}">
+                                            @csrf
+                                            <div class="d-inline mb-0 text-muted">{{__('Opublikował ')}}</div>
+                                            <button class="btn btn-link btn-sm mb-0 p-0" type="submit">{{$user->nickname}}</button>
+                                            <div class="input-group flex-nowrap d-inline">
+                                                <span class="fa fa-star star-checked"></span>
+                                                <span class="fa fa-star star-checked"></span>
+                                                <span class="fa fa-star star-checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                            </div>
+                                        </form>
+                                                                                
                                     </div>
                                 </div>
                             </div>
