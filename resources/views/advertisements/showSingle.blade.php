@@ -116,6 +116,20 @@
                             <div class="col">
                                 <div class="card">
                                     <div class="card-body">
+                                        <div class="mb-1 text-muted">{{__('Umiejętności')}}</div>
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($skills as $item)
+                                                <li class="list-group-item" data-toggle="tooltip" data-placement="top" title="{{$item->skill_description}}">{{$item->skill_name}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
                                         <div class="mb-0 text-muted">{{__('Treść ogłoszenia')}}</div>
                                         <p class="card-text text-justify">{{$advert->content}}</p>
                                     </div>
@@ -139,4 +153,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 @endsection

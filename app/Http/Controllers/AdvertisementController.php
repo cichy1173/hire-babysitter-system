@@ -91,12 +91,14 @@ class AdvertisementController extends Controller
         $user = User::find($advert->id_user);
         $district = $advert->districts[0];
         $city = City::find($district->id_city);
+        $skills = $advert->skills;
 
         return view('advertisements.showSingle', [
             'advert' => $advert,
             'user' => $user,
             'district' => $district,
-            'city' => $city
+            'city' => $city,
+            'skills' => $skills
         ]);
     }
 

@@ -99,7 +99,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mb-4">
             @yield('content')
         </main>
         <footer class="py-3 bg-dark fixed-bottom">
