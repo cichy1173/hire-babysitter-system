@@ -42,7 +42,7 @@ Route::get('/advertisement/getdistricts/{id}', [AdvertisementController::class, 
 Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, 'delete'])->middleware('auth')->name('delete_advert');
 Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSingle'])->name('showSingle');
 //show another user profile
-Route::post('/user/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::post('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');
