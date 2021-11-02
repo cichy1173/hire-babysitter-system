@@ -63,6 +63,7 @@
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
+                                        <a class="dropdown-item" href="{{route('messageList', auth()->user())}}">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Dodatki</a>
                                       </div>

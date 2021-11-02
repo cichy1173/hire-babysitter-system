@@ -14,6 +14,10 @@ class MessageController extends Controller
             dd();
         }
 
-        
+        $messages = $user->sendMessages;
+        $messages = $messages->merge($user->recievedMessages);
+
+        $messages = $messages->sortByDesc('created_at');
+        dd($messages, $user);
     }
 }
