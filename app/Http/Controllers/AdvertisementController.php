@@ -80,7 +80,7 @@ class AdvertisementController extends Controller
 
     public function show()
     {
-        $adverts = auth()->user()->advertisements()->get();
+        $adverts = auth()->user()->advertisements()->orderByDesc('created_at')->paginate(5);
         return view('advertisements.show', [
             'adverts' => $adverts
         ]);

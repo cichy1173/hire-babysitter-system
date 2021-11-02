@@ -13,7 +13,7 @@
                                     <div class="col">
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                <p class="font-weight-bold mb-0">{{$advert->title}}</p>
+                                                <a href="{{route('showSingle', $advert)}}" class="font-weight-bold mb-0">{{$advert->title}}</a>
                                                 <p class="text-right text-sm text-muted mb-0">{{$advert->created_at->translatedFormat("d M Y G:i")}}</p>
                                             </div>
                                             <div class="card-body ">
@@ -55,6 +55,9 @@
                         @else
                             <p class="text-center">{{__('Nie masz żadnych ogłoszeń')}}</p>
                         @endif
+                        <div class="d-flex justify-content-end">
+                            {{ $adverts->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
