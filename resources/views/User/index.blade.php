@@ -9,8 +9,8 @@
                 <div class="card-body">
 
                     <div class="list-group p-2">
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-success">Dodaj zdjęcie profilowe</a>
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-success">Dodaj opis profilu</a>
+                        <a href=" # " class="list-group-item list-group-item-action list-group-item-success">Dodaj zdjęcie profilowe</a>
+                        <a href=" {{route('showDescriptionBlade')}} " class="list-group-item list-group-item-action list-group-item-success">Dodaj opis profilu</a>
 
                     </div>
                     
@@ -23,7 +23,7 @@
                          <div class=" p-2"> 
                             <form id="delete_account_form" class="mb-1" action=" {{route('reset_pswd')}} " method="post">
                                 @csrf
-                                <button type="button" data-toggle="modal" data-target="#changePasswordPopUp"  class="p-2 btn btn-outline-warning text-black-50 btn-lg btn-block font-weight-bold">{{ __('Zmień hasło') }}</button>
+                                <button type="button" data-toggle="modal" data-target="#changePasswordPopUp"  class="p-2 btn btn-outline-dark btn-lg btn-block font-weight-bold">{{ __('Zmień hasło') }}</button>
                                
                             </form>
                             <div class="modal fade" id="changePasswordPopUp" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="changePasswordPopUp">
@@ -55,7 +55,7 @@
                             <form id="delete_account_form" action=" {{route('userEdit')}} " method="post">
                                 @csrf
                                 
-                                <button type="button" data-toggle="modal" data-target="#deleteAccountPopUp" class="   p-2 btn btn-outline-danger btn-lg btn-block font-weight-bold">{{ __('Usuń konto') }}</button>
+                                <button type="button" data-toggle="modal" data-target="#deleteAccountPopUp" class=" p-2 btn btn-outline-danger btn-lg btn-block font-weight-bold">{{ __('Usuń konto') }}</button>
 
                             </form>
                         </div>

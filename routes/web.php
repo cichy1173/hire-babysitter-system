@@ -51,3 +51,6 @@ Route::post('/profile/{user}', [ShowUserController::class, 'index'])->name('show
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');
 Route::delete('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'destroy'])->name('userEdit');
 Route::post('/user/edit', [UserEditProfileController::class, 'resetPswd'])->name('reset_pswd');
+
+Route::get('/user/edit/description', [App\Http\Controllers\User\UserEditProfileController::class, 'showDescriptionBlade'])->name('showDescriptionBlade');
+Route::post('/user/edit/description', [UserEditProfileController::class, 'storeAbout'])->name('addAbout');

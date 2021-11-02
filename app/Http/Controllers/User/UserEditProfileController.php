@@ -46,5 +46,25 @@ class UserEditProfileController extends Controller
 
     }
 
+    //description
+
+    public function showDescriptionBlade(User $about)
+    {
+        $about = Auth::user()->about;
+        return view('User.description')->with('about', $about);
+    }
+
+    public function storeAbout(Request $request, User $user)
+    {
+        $user =Auth::user()->id;
+        User::find(Auth::user()->id)->update([
+            'about' => $request->about,
+           
+        ]);
+
+        return redirect('/user/edit');
+
+    }
+
 
 }
