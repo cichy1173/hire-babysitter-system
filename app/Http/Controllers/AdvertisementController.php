@@ -134,4 +134,9 @@ class AdvertisementController extends Controller
         echo json_encode($districts);
         exit;
     }
+
+    public function edit(Advertisement $advert)
+    {
+        dd($advert);
+    }
 }

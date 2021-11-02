@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
+use App\Models\Advertisement;
 
 Auth::routes(['verify' => true]);
 
@@ -40,6 +41,7 @@ Route::get('/advertisement/getvoivodeships/{id}', [AdvertisementController::clas
 Route::get('/advertisement/getcities/{id}', [AdvertisementController::class, 'getCities'])->middleware('auth');
 Route::get('/advertisement/getdistricts/{id}', [AdvertisementController::class, 'getDistricts'])->middleware('auth');
 Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, 'delete'])->middleware('auth')->name('delete_advert');
+Route::post('/advertisement/{advert}', [AdvertisementController::class, 'edit'])->middleware('auth')->name('edit_advert');
 Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSingle'])->name('showSingle');
 //show another user profile
 Route::post('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');

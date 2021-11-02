@@ -20,8 +20,12 @@
                                                 <div class="d-inline mb-0 text-muted">{{__('Stawka ')}}</div>
                                                 <div class="d-inline mb-0">{{$advert->hour_rate}}</div>
                                                 <div class="d-inline mb-0 text-muted">{{__(' zł/h')}}</div>
-                                                <div class="float-right mb-0">
-                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePopUp">{{__('Usuń')}}</button>
+                                                <div class="float-right">
+                                                    <form class="form" action="{{route('edit_advert', $advert)}}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-warning">{{__('Edytuj')}}</button>    
+                                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePopUp">{{__('Usuń')}}</button>
+                                                    </form>                                                    
                                                 </div>
                                                 <div class="modal fade" id="deletePopUp" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deletePopUpTitle">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
