@@ -11,13 +11,14 @@ use App\Models\Advertisement;
 use App\Models\Skill;
 use App\Models\User;
 use Carbon\Carbon;
+use PHPUnit\Framework\Constraint\Count;
 
 class AdvertisementController extends Controller
 {
     public function add()
     {
         $countries = Country::all()->sortBy('country_name');
-        $voivoideships = Voivodeship::all()->sortBy('voivodeship_name');
+        $voivodeships = Voivodeship::all()->sortBy('voivodeship_name');
         $cities = City::all()->sortBy('city_name');
         $districts = District::all()->sortBy('district_name');
         $skills = Skill::all()->sortBy('skill_name');
@@ -25,7 +26,7 @@ class AdvertisementController extends Controller
 
         return view('advertisements.add', [
             'countries' => $countries,
-            'voivodeships' => $voivoideships,
+            'voivodeships' => $voivodeships,
             'cities' => $cities,
             'districts' => $districts,
             'skills' => $skills
@@ -137,6 +138,42 @@ class AdvertisementController extends Controller
 
     public function editShow(Advertisement $advert)
     {
-        dd($advert);
+        $user = User::find($advert->id_user);
+        if(auth()->user() == $user)
+        {
+            $user = User::find($advert->id_user);
+            $district_choosen = $advert->districts[0];
+            $city_choosen = City::find($district_choosen->id_city);
+            $voivodeship_choosen = Voivodeship::find($city_choosen->id_voivodeship);
+            $country_choosen = Country::find($voivodeship_choosen->id_country);
+            $skills_choosen = $advert->skills;
+            $countries = Country::all()->sortBy('country_name');
+            $voivodeships = Voivodeship::all()->sortBy('voivodeship_name');
+            $cities = City::all()->sortBy('city_name');
+            $districts = District::all()->sortBy('district_name');
+            $skills = Skill::all()->sortBy('skill_name');
+
+            return view('advertisements.edit', [
+                'advert' => $advert,
+                'user' => $user,
+                'district_choosen' => $district_choosen,
+                'city_choosen' => $city_choosen,
+                'voivodeship_choosen' => $voivodeship_choosen,
+                'country_choosen' => $country_choosen,
+                'skills_choosen' => $skills_choosen,
+                'countries' => $countries,
+                'voivodeships' =>$voivodeships,
+                'cities' => $cities,
+                'districts' => $districts,
+                'skills' => $skills
+            ]);
+        }
+        else
+        {
+            return view('advertisements.edit', [
+                'error' => "Nie możesz edytować nie swoich ogłoszeń"
+            ]);
+        }
+        
     }
 }
