@@ -54,11 +54,36 @@
                          
                             <form id="delete_account_form" action=" {{route('userEdit')}} " method="post">
                                 @csrf
-                                @method('DELETE')
-                                <button class=" p-2 btn btn-outline-danger btn-lg btn-block font-weight-bold">{{ __('Usuń konto') }}</button>
+                                
+                                <button type="button" data-toggle="modal" data-target="#deleteAccountPopUp" class="   p-2 btn btn-outline-danger btn-lg btn-block font-weight-bold">{{ __('Usuń konto') }}</button>
 
                             </form>
                         </div>
+
+                        <div class="modal fade" id="deleteAccountPopUp" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deleteAccountPopUp">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteAccountPopUp">{{__('Czy jesteś pewien, że usunąć konto?')}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{__('Usunięcie konta jest bezpowrotne.')}}</p>
+                                        <p>{{__('Po usunięciu stracisz wszystkie swoje zapisane dane.')}}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
+                                        <form class="form-inline" action=" {{route('userEdit')}} "  method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn btn-danger" type="submit" id="button_delete_account">{{__('Usuń konto')}}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
 
 
 

@@ -70,7 +70,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
-                                                                <form class="form-inline float-right mb-0" action="{{route('delete_advert', $advert)}}" method="POST">
+                                                                <form class="form-inline" action="{{route('delete_advert', $advert)}}" method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btn btn-outline-danger" type="submit" id="button_delete">{{__('Usuń')}}</button>
