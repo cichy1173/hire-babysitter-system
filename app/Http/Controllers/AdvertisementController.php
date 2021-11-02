@@ -135,7 +135,7 @@ class AdvertisementController extends Controller
         exit;
     }
 
-    public function edit(Advertisement $advert)
+    public function editShow(Advertisement $advert)
     {
         dd($advert);
     }
