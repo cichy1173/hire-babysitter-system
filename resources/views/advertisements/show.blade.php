@@ -5,7 +5,35 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header border-success">{{ __('Twoje ogłoszenia') }}</div>
+                    <div class="card-header border-success">
+                        {{ __('Twoje ogłoszenia') }}
+                        @if (session('status'))
+                            <script>
+                                $(window).on('load', function() {
+                                    $('#exampleModal').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-success">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{__('Ogłoszenie edytowane pomyślnie')}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <p>{{__('Ogłoszenie zostało zapisane i jest już dostępne w zmienionej formie')}}</p>
+                                    </div>
+                                    <div class="modal-footer">                                    
+                                    <a class="btn btn-primary" href="{{route('homePage')}}">{{__('Strona główna')}}</a>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">{{__('OK')}}</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     <div class="card-body">
                         @if (@isset($adverts))
                             @foreach ($adverts as $advert)
