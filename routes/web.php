@@ -57,3 +57,6 @@ Route::post('/user/edit/description', [UserEditProfileController::class, 'storeA
 
 Route::get('/user/edit/nickname', [App\Http\Controllers\User\UserEditProfileController::class, 'showNicknameBlade'])->name('showNicknameBlade');
 Route::post('/user/edit/nickname', [UserEditProfileController::class, 'storeNickname'])->name('addNickname');
+
+Route::get('/user/edit/accountType', [App\Http\Controllers\User\UserEditProfileController::class, 'showAccountTypeBlade'])->name('showAccountTypeBlade');
+Route::post('/user/edit/accountType', [UserEditProfileController::class, 'storeAccountType'])->name('storeAccountType');

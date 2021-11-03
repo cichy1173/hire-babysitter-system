@@ -92,7 +92,31 @@ class UserEditProfileController extends Controller
            
         ]);
 
-        return redirect(route('userEdit'))->with('success', 'Nazwa użytkownika nickname została pomyślnie zaktualizowany!');
+        return redirect(route('userEdit'))->with('success', 'Nazwa użytkownika (nickname) została pomyślnie zaktualizowana!');
+
+    }
+
+    public function showAccountTypeBlade(User $id_account_type)
+    {
+        $id_account_type = Auth::user()->id_account_type;
+        return view('User.accountType')->with('id_account_type', $id_account_type);
+    }
+
+    public function storeAccountType(Request $request, User $user)
+    {
+
+        $this->validate($request, [
+            'id_account_type' => 'required',  
+            
+        ]);
+
+        $user =Auth::user()->id;
+        User::find(Auth::user()->id)->update([
+            'id_account_type' => $request->id_account_type,
+           
+        ]);
+
+        return redirect(route('userEdit'))->with('success', 'Typ konta został pomyślnie zmieniony!');
 
     }
 
