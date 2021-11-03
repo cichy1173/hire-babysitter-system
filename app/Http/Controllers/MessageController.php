@@ -14,7 +14,7 @@ class MessageController extends Controller
     {
         if(auth()->user() != $user)
         {
-            dd();
+            return redirect()->back();
         }
 
         $array = [];
