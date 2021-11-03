@@ -15,6 +15,63 @@
             }
         });
     }
+
+    function getConversation(button)
+    {
+        let messages = {!! json_encode($messages, JSON_HEX_TAG) !!};
+
+        let conversationDiv = $('#converwsationDiv');
+
+        let conversation; 
+
+        messages.forEach(element => {
+            if(element['otherUser_id'] == $(button).val())
+            {
+                conversation = element;
+            }
+        });
+
+        $('#selectedUser').html(conversation['otherUser_name']+' '+conversation['otherUser_surname']);
+
+        conversation = Object.entries(conversation);
+
+        let htmlToShow = '';
+
+        conversation.forEach(([index, element]) => {
+            if($.isNumeric(index))
+            {
+                if(element['from_id_user'] == $(button).val())
+                {
+                    htmlToShow +=   '<div class="card mb-3 list-group-item-success" style="width: 18rem">\
+                                        <div class="card-body">\
+                                            <p class="fs-6">\
+                                                '+element['content']+'\
+                                            </p> \
+                                        </div>\
+                                        <div class="card-footer text-muted">\
+                                            '+element['created_at']+'\
+                                        </div>\
+                                    </div>';
+                }
+                else
+                {
+                    htmlToShow +=   '<div class="card mb-3 float-right" style="width: 18rem">\
+                                        <div class="card-body">\
+                                            <p class="fs-6">\
+                                                '+element['content']+'\
+                                            </p> \
+                                        </div>\
+                                        <div class="card-footer text-muted">\
+                                            '+element['created_at']+'\
+                                        </div>\
+                                    </div>';
+                }
+            }
+        });
+
+        $('#conversationDiv').html(htmlToShow);
+        
+    }
 </script>
 @section('content')
 <div class="container">
@@ -25,7 +82,7 @@
 
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-4">
+                        <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">{{__('Lista konwersacji')}}</div>
                                 <div class="card-body">
@@ -33,7 +90,7 @@
                                         <div class="col">
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#newMessage">{{__('Nowa wiadomość')}}</button>
+                                                    <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="modal" data-target="#newMessage">{{__('Nowa konwersacja')}}</button>
                                                 </div>
                                             </div>
 
@@ -45,7 +102,7 @@
                                                             <div class="col">
                                                                 <div class="card">
                                                                     <div class="card-header">
-                                                                        <button class="btn btn-link m-0 p-0" type="button">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</button>
+                                                                        <button class="btn btn-link m-0 p-0" type="button" value="{{$message['otherUser_id']}}" onclick="getConversation(this)">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</button>
                                                                     </div>
                                                                     <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
                                                                         {{$message['lastMessage']->content}}
@@ -73,16 +130,23 @@
                                 </div>                                
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" id="selectedUser" name="selectedUser">{{__('Wybierz rozmowę z listy')}}</div>
                                 <div class="card-body">
+                                    <div class="card mb-3">
+                                        <div class="card-body" id="conversationDiv" name="conversationDiv">
+                                            {{__('Wybierz rozmowę z listy lub utwórz nową wiadomość')}}
+                                        </div>
+                                    </div>
                                     <form class="form mb-0" action="{{route('newMessage', auth()->user())}}" method="POST">
                                         @csrf
                                         <div class="input-group">
                                             <input type="text" name="userTo" id="userTo" value="-1" hidden>
-                                            <input class="form-control" type="text" id="userMessage" name="userMessage" required>
-                                            <button class="btn btn-success" type="submit">{{__('Wyślij')}}</button>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" id="userMessage" name="userMessage" required aria-describedby="buttonSend">
+                                                <button class="btn btn-dark" type="submit" id="buttonSend">{{__('Wyślij')}}</button>
+                                            </div>                                            
                                         </div>                                        
                                     </form>
                                 </div>                                
