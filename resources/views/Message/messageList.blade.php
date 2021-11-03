@@ -38,19 +38,35 @@
                                             </div>
 
                                             <div style="max-height: 30rem; overflow-y: auto; overflow-x: hidden;">
-                                                @foreach ($messages as $message)
-                                                {{-- {{dd($message)}} --}}
-                                                <div class="row mb-3">
-                                                    <div class="col">
-                                                        <div class="card">
-                                                            <div class="card-header">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</div>
-                                                            <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
-                                                                {{$message['lastMessage']->content}}
+                                                @if (count($messages) > 0)
+                                                    @foreach ($messages as $message)
+                                                        {{-- {{dd($message)}} --}}
+                                                        <div class="row mb-3">
+                                                            <div class="col">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <button class="btn btn-link m-0 p-0" type="button">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</button>
+                                                                    </div>
+                                                                    <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
+                                                                        {{$message['lastMessage']->content}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                                
+                                                    @endforeach
+                                                @else
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    {{__('Brak aktywnych konwersacji')}}
+                                                                </div>
+                                                                <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>                                                
-                                            @endforeach
+                                                    </div> 
+                                                @endif                                                
                                             </div>
                                         </div>
                                     </div>
