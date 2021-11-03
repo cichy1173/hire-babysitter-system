@@ -46,5 +46,55 @@ class UserEditProfileController extends Controller
 
     }
 
+    //description
+
+    public function showDescriptionBlade(User $about)
+    {
+        $about = Auth::user()->about;
+        return view('User.description')->with('about', $about);
+    }
+
+    public function storeAbout(Request $request, User $user)
+    {
+
+        $this->validate($request, [
+            'about' => 'max:5000',  
+            
+        ]);
+
+        $user =Auth::user()->id;
+        User::find(Auth::user()->id)->update([
+            'about' => $request->about,
+           
+        ]);
+
+        return redirect(route('userEdit'))->with('success', 'Opis został pomyślnie zaktualizowany!');
+
+    }
+
+    public function showNicknameBlade(User $nickname)
+    {
+        $nickname = Auth::user()->nickname;
+        return view('User.nickname')->with('nickname', $nickname);
+    }
+
+    public function storeNickname(Request $request, User $user)
+    {
+
+        $this->validate($request, [
+            'nickname' => 'required|max:15',  
+            
+        ]);
+
+        $user =Auth::user()->id;
+        User::find(Auth::user()->id)->update([
+            'nickname' => $request->nickname,
+           
+        ]);
+
+        return redirect(route('userEdit'))->with('success', 'Nazwa użytkownika nickname została pomyślnie zaktualizowany!');
+
+    }
+
 
 }
