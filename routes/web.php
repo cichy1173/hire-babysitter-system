@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
@@ -60,3 +61,8 @@ Route::post('/user/edit/nickname', [UserEditProfileController::class, 'storeNick
 
 Route::get('/user/edit/accountType', [App\Http\Controllers\User\UserEditProfileController::class, 'showAccountTypeBlade'])->name('showAccountTypeBlade');
 Route::post('/user/edit/accountType', [UserEditProfileController::class, 'storeAccountType'])->name('storeAccountType');
+
+//Messages
+Route::get('/profile/{user}/messages', [MessageController::class, 'index'])->middleware('auth')->name('messageList');
+Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage'])->middleware('auth')->name('newMessage');
+Route::get('/messages/getuser/{id}', [MessageController::class, 'getUser'])->middleware('auth');
