@@ -3,6 +3,8 @@
     function newMessage()
     {
         let id = $('#select_user').find(":selected").val();
+
+        $('#conversationDiv').html('');
         
         $.ajax({
             url: '/messages/getuser/'+id,
@@ -32,6 +34,7 @@
         });
 
         $('#selectedUser').html(conversation['otherUser_name']+' '+conversation['otherUser_surname']);
+        $('#userTo').val(conversation['otherUser_id']);
 
         conversation = Object.entries(conversation);
 
@@ -70,7 +73,10 @@
         });
 
         $('#conversationDiv').html(htmlToShow);
-        
+
+        var myDiv = document.getElementById("conversationDiv");
+        myDiv.scrollTop = myDiv.scrollHeight;     
+
     }
 </script>
 @section('content')
@@ -135,7 +141,7 @@
                                 <div class="card-header" id="selectedUser" name="selectedUser">{{__('Wybierz rozmowę z listy')}}</div>
                                 <div class="card-body">
                                     <div class="card mb-3">
-                                        <div class="card-body" id="conversationDiv" name="conversationDiv">
+                                        <div class="card-body scrollingContainer" id="conversationDiv" name="conversationDiv" style="max-height: 30rem; overflow-y: auto; overflow-x: hidden;">
                                             {{__('Wybierz rozmowę z listy lub utwórz nową wiadomość')}}
                                         </div>
                                     </div>
