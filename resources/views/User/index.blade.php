@@ -24,8 +24,8 @@
                     </div>
                     
                     <div class="list-group p-2"> 
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Zmień typ konta</a> 
-                        <a href=" {{ route('showNicknameBlade') }} " class="list-group-item list-group-item-action list-group-item-info">Zmień nazwę użytkownika nickname</a>
+                        <a href="{{ route('showAccountTypeBlade') }}" class="list-group-item list-group-item-action list-group-item-info">Zmień typ konta</a> 
+                        <a href=" {{ route('showNicknameBlade') }} " class="list-group-item list-group-item-action list-group-item-info">{{__('Zmień nazwę użytkownika (nickname)')}}</a>
 
                     </div>    
 
