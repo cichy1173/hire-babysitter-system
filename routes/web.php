@@ -62,6 +62,9 @@ Route::post('/user/edit/nickname', [UserEditProfileController::class, 'storeNick
 Route::get('/user/edit/accountType', [App\Http\Controllers\User\UserEditProfileController::class, 'showAccountTypeBlade'])->name('showAccountTypeBlade');
 Route::post('/user/edit/accountType', [UserEditProfileController::class, 'storeAccountType'])->name('storeAccountType');
 
+Route::get('/user/edit/photo', [App\Http\Controllers\User\UserEditProfileController::class, 'showPhotoBlade'])->name('showPhotoBlade');
+Route::post('/user/edit/photo', [UserEditProfileController::class, 'storePhoto'])->name('storePhoto');
+
 //Messages
 Route::get('/profile/{user}/messages', [MessageController::class, 'index'])->middleware('auth')->name('messageList');
 Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage'])->middleware('auth')->name('newMessage');

@@ -18,7 +18,7 @@
                 <div class="card-body">
 
                     <div class="list-group p-2">
-                        <a href=" # " class="list-group-item list-group-item-action list-group-item-success">Dodaj zdjęcie profilowe</a>
+                        <a href=" {{ route('showPhotoBlade') }} " class="list-group-item list-group-item-action list-group-item-success">Dodaj zdjęcie profilowe</a>
                         <a href=" {{route('showDescriptionBlade')}} " class="list-group-item list-group-item-action list-group-item-success">{{__("Zarządzaj opisem konta")}}</a>
 
                     </div>

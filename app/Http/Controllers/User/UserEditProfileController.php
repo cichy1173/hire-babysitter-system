@@ -121,4 +121,33 @@ class UserEditProfileController extends Controller
     }
 
 
+    public function showPhotoBlade(User $photo)
+    {
+        $photo = Auth::user()->photo;
+        return view('User.photo')->with('photo', $photo);
+    }
+
+    public function storePhoto(Request $request, User $user)
+    {
+
+       $path1 = 'storage/app/';
+
+       $path2 = $request->file('photo')->store('profilePhotos');
+
+       $path = $path1.$path2;
+
+      // dd($request->pathinfo());
+
+      $user =Auth::user()->id;
+        
+        User::find(Auth::user()->id)->update([
+            'photo' => $path,
+           
+        ]);
+
+        return redirect(route('userEdit'))->with('success', 'Zdjęcie zostało pomyślnie ustawione!');
+
+    }
+
+
 }
