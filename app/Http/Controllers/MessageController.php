@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -26,15 +27,22 @@ class MessageController extends Controller
                     ->where('to_id_user', auth()->id())
                     ->get();
 
-        foreach ($messagesSend as $key => $value) {
+        $merged = $messagesSend->merge($messagesReceived);
+
+        $merged = $merged->sortByDesc('created_at');
+
+        foreach ($merged as $key => $value) {
+            array_push($array, $value->from_id_user);
             array_push($array, $value->to_id_user);
         }
 
-        foreach ($messagesReceived as $key => $value) {
-            array_push($array, $value->from_id_user);
+        while (($key = array_search(auth()->id(), $array)) !== false) {
+            unset($array[$key]);
         }
         
         $array = array_unique($array);
+
+    
 
         $messages = [];
 

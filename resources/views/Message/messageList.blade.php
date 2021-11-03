@@ -36,20 +36,22 @@
                                                     <button class="btn btn-outline-primary float-right" type="button" data-toggle="modal" data-target="#newMessage">{{__('Nowa wiadomość')}}</button>
                                                 </div>
                                             </div>
-                                            
-                                            @foreach ($messages as $message)
+
+                                            <div style="max-height: 30rem; overflow-y: auto; overflow-x: hidden;">
+                                                @foreach ($messages as $message)
                                                 {{-- {{dd($message)}} --}}
                                                 <div class="row mb-3">
                                                     <div class="col">
                                                         <div class="card">
                                                             <div class="card-header">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</div>
-                                                            <div class="card-body">
+                                                            <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
                                                                 {{$message['lastMessage']->content}}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>                                                
                                             @endforeach
+                                            </div>
                                         </div>
                                     </div>
                                 </div>                                
