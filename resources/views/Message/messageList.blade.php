@@ -45,27 +45,36 @@
             {
                 if(element['from_id_user'] == $(button).val())
                 {
-                    htmlToShow +=   '<div class="card mb-3 list-group-item-success" style="width: 18rem">\
-                                        <div class="card-body">\
-                                            <p class="fs-6">\
-                                                '+element['content']+'\
-                                            </p> \
-                                        </div>\
-                                        <div class="card-footer text-muted">\
-                                            '+element['created_at']+'\
+                    htmlToShow +=   '<div class="row mb-3">\
+                                        <div class="col">\
+                                            <div class="card list-group-item-success" style="max-width: 15rem">\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
                                         </div>\
                                     </div>';
+
                 }
                 else
                 {
-                    htmlToShow +=   '<div class="card mb-3 float-right" style="width: 18rem">\
-                                        <div class="card-body">\
-                                            <p class="fs-6">\
-                                                '+element['content']+'\
-                                            </p> \
-                                        </div>\
-                                        <div class="card-footer text-muted">\
-                                            '+element['created_at']+'\
+                    htmlToShow +=   '<div class="row mb-3">\
+                                        <div class="col">\
+                                            <div class="card float-right" style="max-width: 15rem">\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
                                         </div>\
                                     </div>';
                 }
