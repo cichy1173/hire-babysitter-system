@@ -71,7 +71,7 @@ class UserEditProfileController extends Controller
            
         ]);
 
-        return redirect(route('userEdit'))->with('aboutAdded', 'Opis został pomyślnie zaktualizowany!');
+        return redirect(route('userEdit'))->with('success', 'Opis został pomyślnie zaktualizowany!');
 
     }
 

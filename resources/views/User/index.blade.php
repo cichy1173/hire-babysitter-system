@@ -5,10 +5,10 @@
     <div class="row justify-content-center">
 
         <div class="col-md-8">
-            
-            @if (session('aboutAdded'))
+
+            @if (session('success'))
             <div class="text-center alert alert-success">
-                {{ session('aboutAdded') }}       
+                {{ session('success') }}       
             </div>
             @endif
 
