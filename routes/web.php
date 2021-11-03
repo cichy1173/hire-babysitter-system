@@ -54,3 +54,6 @@ Route::post('/user/edit', [UserEditProfileController::class, 'resetPswd'])->name
 
 Route::get('/user/edit/description', [App\Http\Controllers\User\UserEditProfileController::class, 'showDescriptionBlade'])->name('showDescriptionBlade');
 Route::post('/user/edit/description', [UserEditProfileController::class, 'storeAbout'])->name('addAbout');
+
+Route::get('/user/edit/nickname', [App\Http\Controllers\User\UserEditProfileController::class, 'showNicknameBlade'])->name('showNicknameBlade');
+Route::post('/user/edit/nickname', [UserEditProfileController::class, 'storeNickname'])->name('addNickname');

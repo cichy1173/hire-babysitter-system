@@ -7,8 +7,9 @@
         <div class="col-md-8">
 
             @if (session('success'))
-            <div class="text-center alert alert-success">
-                {{ session('success') }}       
+            <div class="text-center alert alert-success ">
+                {{ session('success') }}    
+               
             </div>
             @endif
 
@@ -24,7 +25,7 @@
                     
                     <div class="list-group p-2"> 
                         <a href="#" class="list-group-item list-group-item-action list-group-item-info">Zmień typ konta</a> 
-                        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Zmień nick</a>
+                        <a href=" {{ route('showNicknameBlade') }} " class="list-group-item list-group-item-action list-group-item-info">Zmień nazwę użytkownika nickname</a>
 
                     </div>    
 
