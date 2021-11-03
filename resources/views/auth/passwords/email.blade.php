@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Przywracanie hasła') }}</div>
 
-                @if (session('stat'))
+             @if (session('stat'))
                 <div class="text-center alert alert-info">
                     {{ __('Po kliknięciu na poniższy przycisk zostanie wysłana wiadomość e-mail z linkiem do zmiany hasła.') }}  
                 

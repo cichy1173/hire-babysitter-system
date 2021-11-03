@@ -56,13 +56,22 @@ class UserEditProfileController extends Controller
 
     public function storeAbout(Request $request, User $user)
     {
+
+        $this->validate($request, [
+            'about' => 'max:5000',  
+            
+        ]);
+
+
+
+
         $user =Auth::user()->id;
         User::find(Auth::user()->id)->update([
             'about' => $request->about,
            
         ]);
 
-        return redirect('/user/edit');
+        return redirect(route('userEdit'))->with('aboutAdded', 'Opis został pomyślnie zaktualizowany!');
 
     }
 
