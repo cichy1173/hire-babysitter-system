@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -14,10 +16,82 @@ class MessageController extends Controller
             dd();
         }
 
-        $messages = $user->sendMessages;
-        $messages = $messages->merge($user->recievedMessages);
+        $array = [];
 
-        $messages = $messages->sortByDesc('created_at');
-        dd($messages, $user);
+        $messagesSend = DB::table('messages')
+                    ->where('from_id_user', auth()->id())
+                    ->get();
+        
+        $messagesReceived = DB::table('messages')
+                    ->where('to_id_user', auth()->id())
+                    ->get();
+
+        foreach ($messagesSend as $key => $value) {
+            array_push($array, $value->to_id_user);
+        }
+
+        foreach ($messagesReceived as $key => $value) {
+            array_push($array, $value->from_id_user);
+        }
+        
+        $array = array_unique($array);
+
+        $messages = [];
+
+        foreach ($array as $key => $value) {
+            $msg = DB::table('messages')
+                    ->where([
+                        ['from_id_user', auth()->id()],
+                        ['to_id_user', $value]])
+                    ->orWhere([
+                        ['to_id_user', auth()->id()],
+                        ['from_id_user', $value]])
+                    ->orderBy('created_at')
+                    ->get();
+
+            $usr = User::find($value);
+
+            $msg->put('lastMessage', $msg->last());
+            $msg->put('otherUser_id', $usr['id']);
+            $msg->put('otherUser_name', $usr['name']);
+            $msg->put('otherUser_surname', $usr['surname']);
+            $msg->put('otherUser_nickname', $usr['nickname']);
+            $msg->put('otherUser_photo', $usr['photo']);
+
+            array_push($messages, $msg); 
+        }
+
+        $users = User::all()->where('id', '!=', auth()->id()) ->sortBy('nickname');
+        
+        return view('Message.messageList', [
+            'messages' => $messages,
+            'users' => $users
+        ]);
+    }
+
+
+    public function newMessage(Request $request)
+    {
+        $this->validate($request, [
+            'userTo' => 'required|int|exists:users,id',
+            'userMessage' => 'required|string|max:2000'
+        ]);
+
+        Message::create([
+            'from_id_user' => auth()->user()->id,
+            'to_id_user' => $request->userTo,
+            'content' => $request->userMessage,
+            'send_date' => now()
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function getUser($id)
+    {
+        $user['data'] = User::find($id);
+        
+        echo json_encode($user);
+        exit;
     }
 }

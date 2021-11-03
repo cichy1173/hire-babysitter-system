@@ -68,11 +68,11 @@
                                                                 <p>{{__('Usunięcie ogłoszenia wiąże się z jego bezpowrotną utratą.')}}</p>
                                                                 <p>{{__('Przywrócenie usuniętego ogłoszenia jest niemożliwe.')}}</p>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
-                                                                <form class="form-inline float-right mb-0" action="{{route('delete_advert', $advert)}}" method="POST">
+                                                            <div class="modal-footer">                                                                
+                                                                <form class="form float-right mb-0" action="{{route('delete_advert', $advert)}}" method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
                                                                     <button class="btn btn-outline-danger" type="submit" id="button_delete">{{__('Usuń')}}</button>
                                                                 </form>
                                                             </div>
