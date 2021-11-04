@@ -28,6 +28,9 @@ class UserEditProfileController extends Controller
 
         $user = Auth::user()->id;
 
+        $user->sendMessages()->delete();
+        $user->recievedMessages()->delete();
+
         User::destroy($user);
 
         return redirect(route('login'))->with('destroyed', 'Konto usunięte');
