@@ -108,4 +108,12 @@ class MessageController extends Controller
     {
         Message::find($id)->update(['read' => 1]);
     }
+
+    public function countBadges()
+    {
+        $count['data'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+
+        echo json_encode($count);
+        exit;
+    }
 }

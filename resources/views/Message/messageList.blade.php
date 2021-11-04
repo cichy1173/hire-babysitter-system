@@ -217,7 +217,7 @@
                                             <div class="input-group">
                                                 <input class="form-control" type="text" id="userMessage" name="userMessage" required aria-describedby="buttonSend">
                                                 <button class="btn btn-dark" type="submit" id="buttonSend">{{__('Wyślij')}}</button>
-                                            </div>                                            
+                                            </div>
                                         </div>                                        
                                     </form>
                                 </div>                                

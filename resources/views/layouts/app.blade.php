@@ -55,7 +55,7 @@
                         @auth
                             <li class="nav-item mx-2">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->nickname) }}</button>
+                                    <button type="button" class="btn btn-outline-secondary" id="userButton" name="userButton" onclick="window.location = '{{ route("dashboard") }}'">{{auth()->user()->nickname}}</button>
                                     <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
@@ -63,7 +63,7 @@
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
-                                        <a class="dropdown-item" href="{{route('messageList', auth()->user())}}">{{__('Wiadomości')}}</a>
+                                        <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Dodatki</a>
                                       </div>
@@ -110,5 +110,26 @@
         </footer>
     </div>
     <script  src="{{asset('js/add_form.js')}}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $.ajax({
+                url: '/messages/badges',
+                type: 'get',
+                dataType: 'json',
+                success: function(response){
+                    if(response['data'] > 0)
+                    {
+                        let userButton = $('#userButton').html();
+                        let userMessages = $('#userMessages').html();
+                        let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+
+                        $('#userButton').html(userButton + ' ' + badge);
+                        $('#userMessages').html(userMessages + ' ' + badge);
+                    }                    
+                }
+            });
+        });
+    </script>
 </body>
 </html>

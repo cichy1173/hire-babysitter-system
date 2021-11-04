@@ -70,3 +70,4 @@ Route::get('/profile/{user}/messages', [MessageController::class, 'index'])->mid
 Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage'])->middleware('auth')->name('newMessage');
 Route::get('/messages/getuser/{id}', [MessageController::class, 'getUser'])->middleware('auth');
 Route::post('/messages/markread/{id}', [MessageController::class, 'markRead'])->middleware('auth');
+Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middleware('auth');
