@@ -20,6 +20,11 @@
 
     function getConversation(button)
     {
+        $.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
         let messages = {!! json_encode($messages, JSON_HEX_TAG) !!};
 
         let conversationDiv = $('#converwsationDiv');
@@ -30,6 +35,11 @@
             if(element['otherUser_id'] == $(button).val())
             {
                 conversation = element;
+                if(element['lastMessage'].read == 0)
+                {
+                    $(button).text(element['otherUser_name'] + ' ' + element['otherUser_surname']);
+                    $('#'+element['otherUser_id']).html(element['lastMessage'].content);
+                }
             }
         });
 
@@ -43,9 +53,18 @@
         conversation.forEach(([index, element]) => {
             if($.isNumeric(index))
             {
+                
                 if(element['from_id_user'] == $(button).val())
                 {
-                    htmlToShow +=   '<div class="row mb-3">\
+                    if(element['read'] == 0)
+                    {
+                        $.ajax({
+                            url: '/messages/markread/'+element['id'],
+                            method: "POST"
+                        });
+                    }
+
+                    htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card list-group-item-success" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -63,7 +82,32 @@
                 }
                 else
                 {
-                    htmlToShow +=   '<div class="row mb-3">\
+                    if(element['read'] == 1)
+                    {
+                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                                        <div class="col">\
+                                            <div class="card float-right" style="max-width: 15rem">\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                    <div class="float-right">\
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">\
+  <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>\
+  <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>\
+</svg>\
+                                                    </div>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                    }
+                    else
+                    {
+                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card float-right" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -77,6 +121,7 @@
                                             </div>\
                                         </div>\
                                     </div>';
+                    }
                 }
             }
         });
@@ -117,10 +162,21 @@
                                                             <div class="col">
                                                                 <div class="card">
                                                                     <div class="card-header">
-                                                                        <button class="btn btn-link m-0 p-0" type="button" value="{{$message['otherUser_id']}}" onclick="getConversation(this)">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</button>
+                                                                        <button class="btn btn-link m-0 p-0" type="button" value="{{$message['otherUser_id']}}" onclick="getConversation(this)">
+                                                                            @if ($message['lastMessage']->read == 1)
+                                                                                {{$message['otherUser_name']}} {{$message['otherUser_surname']}}
+                                                                            @else
+                                                                                <strong>{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</strong>
+                                                                            @endif                                                                            
+                                                                        </button>
                                                                     </div>
-                                                                    <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
-                                                                        {{$message['lastMessage']->content}}
+                                                                    <div class="card-body" id="{{$message['otherUser_id']}}" style="max-height: 6rem; overflow-y: hidden;">
+                                                                        @if ($message['lastMessage']->read == 1)
+                                                                            {{$message['lastMessage']->content}}
+                                                                        @else
+                                                                            <strong>{{$message['lastMessage']->content}}</strong>
+                                                                        @endif
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -161,7 +217,7 @@
                                             <div class="input-group">
                                                 <input class="form-control" type="text" id="userMessage" name="userMessage" required aria-describedby="buttonSend">
                                                 <button class="btn btn-dark" type="submit" id="buttonSend">{{__('Wyślij')}}</button>
-                                            </div>                                            
+                                            </div>
                                         </div>                                        
                                     </form>
                                 </div>                                

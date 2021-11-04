@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class MessageController extends Controller
 {
@@ -100,6 +101,19 @@ class MessageController extends Controller
         $user['data'] = User::find($id);
         
         echo json_encode($user);
+        exit;
+    }
+
+    public function markRead($id)
+    {
+        Message::find($id)->update(['read' => 1]);
+    }
+
+    public function countBadges()
+    {
+        $count['data'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+
+        echo json_encode($count);
         exit;
     }
 }
