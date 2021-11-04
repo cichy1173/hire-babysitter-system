@@ -12,12 +12,15 @@
                     <div class="card-header">{{ __('Ustawianie zdjęcia profilowego') }}</div>
                    
                     <div class="card-body">
+                    <div  class="alert alert-info" role="alert">
+                        {{__('Twoje aktualne zdjęcie profilowe to:  ') }}
+                        </div> 
                         <img class="card-img" src="{{asset(Auth::user()->photo)}}" alt="User image">
                        
                         <form method="POST" action=" {{route('storePhoto')}} " enctype="multipart/form-data">
                            
                             @csrf
-                            <div class="form-group alert alert-primary">
+                            <div class="form-group alert alert-dark">
                                     
                                     <input type="file" name="photo" accept="image/png, image/jpeg, image/jpg, image/gif" class="form-control-file" id="photo">
                                   
