@@ -30,6 +30,13 @@
                                       <option value="1">{{ __('Opiekun') }}</option>
                                       <option value="2">{{ __('Zwykły użytkownik') }}</option>
                                     </select>
+
+                                     
+                                @error('id_account_type')
+                                    <span class="invalid-feedback alert alert-warning" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                                   
                                 
