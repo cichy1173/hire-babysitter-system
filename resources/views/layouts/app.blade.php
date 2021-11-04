@@ -113,22 +113,27 @@
     <script>
         $(document).ready(function()
         {
-            $.ajax({
-                url: '/messages/badges',
-                type: 'get',
-                dataType: 'json',
-                success: function(response){
-                    if(response['data'] > 0)
-                    {
-                        let userButton = $('#userButton').html();
-                        let userMessages = $('#userMessages').html();
-                        let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+            var AuthUser = "{{{ (Auth::user()) ? Auth::user() : null }}}";
 
-                        $('#userButton').html(userButton + ' ' + badge);
-                        $('#userMessages').html(userMessages + ' ' + badge);
-                    }                    
-                }
-            });
+            if( AuthUser != null)
+            {
+                $.ajax({
+                    url: '/messages/badges',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response){
+                        if(response['data'] > 0)
+                        {
+                            let userButton = $('#userButton').html();
+                            let userMessages = $('#userMessages').html();
+                            let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+
+                            $('#userButton').html(userButton + ' ' + badge);
+                            $('#userMessages').html(userMessages + ' ' + badge);
+                        }                    
+                    }
+                });
+            }            
         });
     </script>
 </body>
