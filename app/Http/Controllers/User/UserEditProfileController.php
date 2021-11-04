@@ -130,24 +130,27 @@ class UserEditProfileController extends Controller
     public function storePhoto(Request $request, User $user)
     {
 
-      // $path1 = 'storage/';
+       $path1 = 'storage/';
 
-       $path = $request->file('photo')->store('profilePhotos');
+       $path = $request->file('photo')->store('public/profilePhotos');
 
-       dd($path);
+      //dd($path);
 
-      // $path = $path1.$path2;
+      $pathDatabase = str_replace('public', 'storage', $path);
+
+      //dd($pathDatabase);
+       //$path2 = $path1.$path;
 
       // dd($request->pathinfo());
 
-    //   $user =Auth::user()->id;
+       $user =Auth::user()->id;
         
-    //     User::find(Auth::user()->id)->update([
-    //         'photo' => $path,
+        User::find(Auth::user()->id)->update([
+            'photo' => $pathDatabase,
            
-    //     ]);
+       ]);
 
-    //     return redirect(route('userEdit'))->with('success', 'Zdjęcie zostało pomyślnie ustawione!');
+       return redirect(route('userEdit'))->with('success', 'Zdjęcie zostało pomyślnie ustawione!');
 
     }
 
