@@ -69,3 +69,4 @@ Route::post('/user/edit/photo', [UserEditProfileController::class, 'storePhoto']
 Route::get('/profile/{user}/messages', [MessageController::class, 'index'])->middleware('auth')->name('messageList');
 Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage'])->middleware('auth')->name('newMessage');
 Route::get('/messages/getuser/{id}', [MessageController::class, 'getUser'])->middleware('auth');
+Route::post('/messages/markread/{id}', [MessageController::class, 'markRead'])->middleware('auth');

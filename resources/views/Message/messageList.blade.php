@@ -20,6 +20,11 @@
 
     function getConversation(button)
     {
+        $.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
         let messages = {!! json_encode($messages, JSON_HEX_TAG) !!};
 
         let conversationDiv = $('#converwsationDiv');
@@ -30,6 +35,11 @@
             if(element['otherUser_id'] == $(button).val())
             {
                 conversation = element;
+                if(element['lastMessage'].read == 0)
+                {
+                    $(button).text(element['otherUser_name'] + ' ' + element['otherUser_surname']);
+                    $('#'+element['otherUser_id']).html(element['lastMessage'].content);
+                }
             }
         });
 
@@ -43,9 +53,17 @@
         conversation.forEach(([index, element]) => {
             if($.isNumeric(index))
             {
+                if(element['read'] == 0)
+                {
+                    $.ajax({
+                        url: '/messages/markread/'+element['id'],
+                        method: "POST"
+                    });
+                }
+                
                 if(element['from_id_user'] == $(button).val())
                 {
-                    htmlToShow +=   '<div class="row mb-3">\
+                    htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card list-group-item-success" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -63,7 +81,7 @@
                 }
                 else
                 {
-                    htmlToShow +=   '<div class="row mb-3">\
+                    htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card float-right" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -117,10 +135,21 @@
                                                             <div class="col">
                                                                 <div class="card">
                                                                     <div class="card-header">
-                                                                        <button class="btn btn-link m-0 p-0" type="button" value="{{$message['otherUser_id']}}" onclick="getConversation(this)">{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</button>
+                                                                        <button class="btn btn-link m-0 p-0" type="button" value="{{$message['otherUser_id']}}" onclick="getConversation(this)">
+                                                                            @if ($message['lastMessage']->read == 1)
+                                                                                {{$message['otherUser_name']}} {{$message['otherUser_surname']}}
+                                                                            @else
+                                                                                <strong>{{$message['otherUser_name']}} {{$message['otherUser_surname']}}</strong>
+                                                                            @endif                                                                            
+                                                                        </button>
                                                                     </div>
-                                                                    <div class="card-body" style="max-height: 6rem; overflow-y: hidden;">
-                                                                        {{$message['lastMessage']->content}}
+                                                                    <div class="card-body" id="{{$message['otherUser_id']}}" style="max-height: 6rem; overflow-y: hidden;">
+                                                                        @if ($message['lastMessage']->read == 1)
+                                                                            {{$message['lastMessage']->content}}
+                                                                        @else
+                                                                            <strong>{{$message['lastMessage']->content}}</strong>
+                                                                        @endif
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>

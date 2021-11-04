@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class MessageController extends Controller
 {
@@ -101,5 +102,10 @@ class MessageController extends Controller
         
         echo json_encode($user);
         exit;
+    }
+
+    public function markRead($id)
+    {
+        Message::find($id)->update(['read' => 1]);
     }
 }
