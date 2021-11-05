@@ -25,6 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'surname',
         'id_account_type',
         'nickname',
+        'about',
+        'photo',
     ];
 
     /**
@@ -34,8 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password',
-        'remember_token',
-        
+        'remember_token',        
     ];
 
     
@@ -52,5 +53,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function advertisements()
     {
         return $this -> hasMany(Advertisement::class, 'id_user');
+    }
+
+    public function sendMessages()
+    {
+        return $this->hasMany(Message::class, 'from_id_user');
+    }
+
+    public function recievedMessages()
+    {
+        return $this->hasMany(Message::class, 'to_id_user');
     }
 }

@@ -24,6 +24,7 @@ class HomePageController extends Controller
             $array[$key]['city'] = $city['city_name'];
             $array[$key]['district'] = $district['district_name'];
             $array[$key]['user_nick'] = $user->nickname;
+            $array[$key]['user'] = $user;
         }
 
         $total = count($results);
@@ -43,5 +44,10 @@ class HomePageController extends Controller
         return view('index', [
             'adverts' => $array
         ]);
+    }
+
+    public function singleAdvert(Advertisement $advert)
+    {
+        return redirect()->route('showSingle', $advert);
     }
 }

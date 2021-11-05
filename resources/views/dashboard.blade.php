@@ -19,6 +19,16 @@
                               Twój email: <div class="font-weight-bold"> {{ __(auth()->user()->email) }} </div>
                             
                              </div>
+
+                             <div class="text-justify text-center">
+                                Wybrany typ konta: <div class="font-weight-bold"> 
+                                    @if (Auth::user()->id_account_type == '1')
+                                        {{__('Opiekun')}}
+                                    @elseif (Auth::user()->id_account_type == '2')
+                                        {{__('Zwykły użytkownik')}}   
+                                    @endif</div>
+                              
+                               </div>
                         @endauth
 
                         @guest

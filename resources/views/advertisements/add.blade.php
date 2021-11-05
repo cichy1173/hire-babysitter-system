@@ -93,7 +93,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="max_child_number">Wiek najstarszego dziecka</span>
-                                        <input class="form-control @error('input_max_child_age') alert alert-danger is-invalid @enderror" style="text-align: right" name="input_max_child_age" id="input_max_child_age" type="number" min="0" max="18" value=" {{ old('input_max_child_age') }} " aria-label="Najstarsze dziecko" aria-describedby="max_child_number">
+                                        <input class="form-control @error('input_max_child_age') alert alert-danger is-invalid @enderror" style="text-align: right" name="input_max_child_age" id="input_max_child_age" type="number" min="0" max="18" value="{{ old('input_max_child_age') }}" aria-label="Najstarsze dziecko" aria-describedby="max_child_number">
                                         @error('input_max_child_age')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
                                                 <strong>{{$message}}</strong>
@@ -106,7 +106,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="supervise_from">Opieka od</span>
-                                        <input class="form-control @error('input_supervise_from') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_supervise_from" id="input_supervise_from" aria-label="Opieka od" aria-describedby="supervise_from" value=" {{old('input_supervise_from')}} ">
+                                        <input class="form-control @error('input_supervise_from') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_supervise_from" id="input_supervise_from" aria-label="Opieka od" aria-describedby="supervise_from" value="{{old('input_supervise_from')}}">
                                         @error('input_supervise_from')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
                                                 <strong>{{$message}}</strong>
@@ -117,7 +117,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="supervise_to">Opieka do</span>
-                                        <input class="form-control @error('input_supervise_to') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_supervise_to" id="input_supervise_to" aria-label="Opieka do" aria-describedby="supervise_to" value=" {{old('input_supervise_to')}} ">
+                                        <input class="form-control @error('input_supervise_to') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_supervise_to" id="input_supervise_to" aria-label="Opieka do" aria-describedby="supervise_to" value="{{old('input_supervise_to')}}">
                                         @error('input_supervise_to')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
                                                 <strong>{{$message}}</strong>
@@ -130,7 +130,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="advert_from">Ogłoszenie od</span>
-                                        <input class="form-control @error('input_advert_from') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_advert_from" id="input_advert_from" aria-label="Ogłoszenie od" aria-describedby="advert_from" value=" {{old('input_advert_from')}} ">
+                                        <input class="form-control @error('input_advert_from') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_advert_from" id="input_advert_from" aria-label="Ogłoszenie od" aria-describedby="advert_from" value="{{old('input_advert_from')}}">
                                         @error('input_advert_from')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
                                                 <strong>{{$message}}</strong>
@@ -141,7 +141,7 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text" id="advert_to">Ogłoszenie do</span>
-                                        <input class="form-control @error('input_advert_to') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_advert_to" id="input_advert_to" aria-label="Ogłoszenie do" aria-describedby="advert_to" value=" {{old('input_advert_to')}} ">
+                                        <input class="form-control @error('input_advert_to') alert alert-danger is-invalid @enderror" style="text-align: right" type="datetime-local" name="input_advert_to" id="input_advert_to" aria-label="Ogłoszenie do" aria-describedby="advert_to" value="{{old('input_advert_to')}}">
                                         @error('input_advert_to')
                                             <span class="invalid-feedback alert alert-warning " role="alert">
                                                 <strong>{{$message}}</strong>

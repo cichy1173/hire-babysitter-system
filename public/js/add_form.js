@@ -25,7 +25,7 @@ function selectVoivodeship()
   let id = $('#input_country').find(":selected").val();
   
   $.ajax({
-    url: 'getvoivodeships/'+id,
+    url: '/advertisement/getvoivodeships/'+id,
     type: 'get',
     dataType: 'json',
     success: function(response){
@@ -58,7 +58,7 @@ function selectCity()
   let id = $('#input_voivodeship').find(":selected").val();
 
   $.ajax({
-    url: 'getcities/'+id,
+    url: '/advertisement/getcities/'+id,
     type: 'get',
     dataType: 'json',
     success: function(response){
@@ -91,7 +91,7 @@ function selectDistrict()
   let id = $('#input_city').find(":selected").val();
 
   $.ajax({
-    url: 'getdistricts/'+id,
+    url: '/advertisement/getdistricts/'+id,
     type: 'get',
     dataType: 'json',
     success: function(response){

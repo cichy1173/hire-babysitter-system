@@ -4,31 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-        <title>{{ config('app.name', 'Laravel') }}</title>
-    
-        <!-- Scripts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{asset('niania-logo.avif')}}" />
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js" defer></script>
-        
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{{asset('niania-logo.avif')}}" />
-    
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    
-        <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css"/>
-    </head>
-    
-    
+    <!-- Stars-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/stars.css') }}" rel="stylesheet">
+</head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
@@ -57,7 +46,7 @@
                         @auth
                             <li class="nav-item mx-2">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="window.location = '{{ route("dashboard") }}'">{{ __(auth()->user()->name) }}</button>
+                                    <button type="button" class="btn btn-outline-secondary" id="userButton" name="userButton" onclick="window.location = '{{ route("dashboard") }}'">{{auth()->user()->nickname}}</button>
                                     <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
@@ -65,6 +54,7 @@
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
+                                        <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('calendar') }}">Dodatki</a>
                                       </div>
@@ -101,7 +91,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mb-4">
             @yield('content')
         </main>
         <footer class="py-3 bg-dark fixed-bottom">
@@ -111,5 +101,31 @@
         </footer>
     </div>
     <script  src="{{asset('js/add_form.js')}}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            var AuthUser = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+
+            if( AuthUser != null)
+            {
+                $.ajax({
+                    url: '/messages/badges',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response){
+                        if(response['data'] > 0)
+                        {
+                            let userButton = $('#userButton').html();
+                            let userMessages = $('#userMessages').html();
+                            let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+
+                            $('#userButton').html(userButton + ' ' + badge);
+                            $('#userMessages').html(userMessages + ' ' + badge);
+                        }                    
+                    }
+                });
+            }            
+        });
+    </script>
 </body>
 </html>

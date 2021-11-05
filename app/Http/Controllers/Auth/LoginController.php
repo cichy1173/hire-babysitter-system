@@ -25,6 +25,7 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request);
 
         $this->validate($request, [
             
@@ -32,6 +33,8 @@ class LoginController extends Controller
             'password' => 'required',
             
         ]);
+
+        
 
 
        if (!(auth()->attempt($request->only('email', 'password'), $request->remember))) {

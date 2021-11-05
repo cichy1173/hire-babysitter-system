@@ -20,7 +20,7 @@
                                     <div class="col">
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                <form class="form-inline" action="" method="POST">
+                                                <form class="form-inline" action="{{route('singleAdvert', $advert)}}" method="POST">
                                                     @csrf
                                                     <button class="btn btn-lg btn-link m-0 py-0 pl-0" type="submit" id="button_title">{{$advert->title}}</button>
                                                 </form>
@@ -29,7 +29,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         
-                                                        <form class="form-inline" action="" method="POST">
+                                                        <form class="form-inline" action="{{route('showUser', $advert->user)}}" method="POST">
                                                             @csrf
                                                             <div class="d-inline mb-0 text-muted">{{__('Opublikował ')}}</div>
                                                             <button class="btn btn-link btn-sm" type="submit" id="button_user">{{$advert->user_nick}}</button>
