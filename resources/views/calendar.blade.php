@@ -12,23 +12,25 @@
                         @auth (session('status'))
                          <div class="">      
                         <table class="table table-bordered " style="width:100%;table-layout:fixed;">
-                            <thead align="center" vlign="middle">
+                            <thead class="table table-borderless" align="center" vlign="middle">
                                 <tr class="table-primary">
                                 
                                     
                                     <td align="center" vlign="middle" > <button type="button" class="btn btn-primary"><</button></td>
-                                    <th  colspan="5">{{now()->translatedFormat('F')}}</th>
+                                    <th  colspan="5">{{ucfirst(trans(now()->translatedFormat('F')))}}</th>
                                     <td align="center" vlign="middle" > <button type="button" class="btn btn-primary">></button> </td>
                                     
                                 </tr>
-
-                            </thead>
-                            <tbody align="center" vlign="middle">
-                                <tr class="">
+                                
+                                <tr class="tabel-light">
                                     <td align="center" vlign="middle" > <button type="button" class="btn btn-secondary"><</button></td>
-                                    <td align="center" vlign="middle" colspan="5"> Data tygodnia </td>
+                                    <td align="center" vlign="middle" colspan="5">{{now()->startOfWeek()->translatedFormat('d-m-Y')}} -/- {{now()->endOfWeek()->translatedFormat('d-m-Y')}} </td>
                                     <td align="center" vlign="middle" > <button type="button" class="btn btn-secondary">></button> </td>
                                 </tr> 
+
+                            </thead>
+                            <tbody   align="center" vlign="middle">
+                                
                                 <tr class="table-primary">
                                     <td align="center" vlign="middle"> Poniedziałek </td>
                                     <td align="center" vlign="middle"> Wtorek</td>
