@@ -38,7 +38,7 @@
                 if(element['lastMessage'].read == 0)
                 {
                     $(button).text(element['otherUser_name'] + ' ' + element['otherUser_surname']);
-                    $('#'+element['otherUser_id']).html(element['lastMessage'].content);
+                    $('#'+element['otherUser_id']).html(element['lastMessage_user'] + ': ' + element['lastMessage'].content);
                 }
             }
         });
@@ -172,9 +172,9 @@
                                                                     </div>
                                                                     <div class="card-body" id="{{$message['otherUser_id']}}" style="max-height: 6rem; overflow-y: hidden;">
                                                                         @if ($message['lastMessage']->read == 1)
-                                                                            {{$message['lastMessage']->content}}
+                                                                            {{$message['lastMessage_user']}}{{__(': ')}}{{$message['lastMessage']->content}}
                                                                         @else
-                                                                            <strong>{{$message['lastMessage']->content}}</strong>
+                                                                            <strong>{{$message['lastMessage_user']}}{{__(': ')}}{{$message['lastMessage']->content}}</strong>
                                                                         @endif
                                                                         
                                                                     </div>

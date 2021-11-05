@@ -61,6 +61,8 @@ class MessageController extends Controller
             $usr = User::find($value);
 
             $msg->put('lastMessage', $msg->last());
+            $user = User::find($msg->last()->from_id_user);
+            $msg->put('lastMessage_user', $user->name);
             $msg->put('otherUser_id', $usr['id']);
             $msg->put('otherUser_name', $usr['name']);
             $msg->put('otherUser_surname', $usr['surname']);
