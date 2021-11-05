@@ -12,16 +12,26 @@
                     <div class="card-header">{{ __('Ustawianie zdjęcia profilowego') }}</div>
                    
                     <div class="card-body">
+                    <div  class="alert alert-info  " role="alert">
+                        {{__('Twoje aktualne zdjęcie profilowe to:  ') }}
+                         
                         <img class="card-img" src="{{asset(Auth::user()->photo)}}" alt="User image">
-                       
+                       </div>
+
+                        @error('photo')
+                              <div class="alert alert-danger" role="alert">
+                                <strong>{{$message}}</strong>
+                              </div>
+                              @enderror
                         <form method="POST" action=" {{route('storePhoto')}} " enctype="multipart/form-data">
                            
                             @csrf
-                            <div class="form-group alert alert-primary">
-                                    
-                                    <input type="file" name="photo" accept="image/png, image/jpeg, image/jpg, image/gif" class="form-control-file" id="photo">
-                                  
+                            <div class="form-group alert alert-warning @error('photo') alert alert-danger @enderror ">                                    
+                                <input class="file" type="file" name="photo" accept="image/png, image/jpeg, image/jpg, image/gif" class="form-control-file" id="photo">
+                       
                             </div>
+                            
+                                     
 
                             <div class="mb-1 row">
                                 <div class="col">

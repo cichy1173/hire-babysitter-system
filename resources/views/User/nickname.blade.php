@@ -20,6 +20,13 @@
                             @csrf
                             <div class="form-group">
                                 <input id="nickname" type="nickname" class="form-control" value="{{  Auth::user()->nickname }}"  name="nickname" autocomplete="nickname" autofocus>
+                             
+                                @error('nickname')
+                                    <span class="invalid-feedback alert alert-warning" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            
                             </div>
 
                             <div class="mb-1 row">

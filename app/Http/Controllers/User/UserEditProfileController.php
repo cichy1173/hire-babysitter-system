@@ -132,19 +132,18 @@ class UserEditProfileController extends Controller
 
     public function storePhoto(Request $request, User $user)
     {
-
-       $path1 = 'storage/';
+        $this->validate($request, [
+            'photo' => 'required|mimes:jpg,jpeg,gif,png|file|max:4096',  
+            
+        ]);
 
        $path = $request->file('photo')->store('public/profilePhotos');
 
-      //dd($path);
+      
 
       $pathDatabase = str_replace('public', 'storage', $path);
 
-      //dd($pathDatabase);
-       //$path2 = $path1.$path;
-
-      // dd($request->pathinfo());
+    
 
        $user =Auth::user()->id;
         
