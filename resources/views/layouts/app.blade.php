@@ -66,7 +66,7 @@
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Dodatki</a>
+                                        <a class="dropdown-item" href="{{ route('calendar') }}">Dodatki</a>
                                       </div>
                                 </div>
                             </li>

@@ -9,7 +9,7 @@ use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
-
+use App\Http\Controllers\CalendarController;
 
 
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('homePage');
@@ -47,4 +47,5 @@ Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::c
 Route::get('/user/edit/resetpassword', [App\Http\Controllers\User\UserEditResetPasswordController::class, 'index'])->name('reset_password');
 Route::delete('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'destroy'])->name('userEdit');
 
-
+//calendar
+Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
