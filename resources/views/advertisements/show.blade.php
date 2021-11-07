@@ -51,8 +51,8 @@
                                                 <div class="float-right">
                                                     <form class="form" action="{{route('edit_advert', $advert)}}" method="GET">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-sm btn-outline-warning">{{__('Edytuj')}}</button>    
-                                                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#deletePopUp">{{__('Usuń')}}</button>
+                                                        <button type="submit" class="btn btn-sm btn-warning">{{__('Edytuj')}}</button>    
+                                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deletePopUp">{{__('Usuń')}}</button>
                                                     </form>                                                    
                                                 </div>
                                                 <div class="modal fade" id="deletePopUp" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deletePopUpTitle">
