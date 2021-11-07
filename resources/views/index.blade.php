@@ -29,7 +29,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         
-                                                        <form class="form-inline" action="{{route('showUser', $advert->user)}}" method="POST">
+                                                        <form class="form-inline" action="{{route('showUser', $advert->user)}}" method="GET">
                                                             @csrf
                                                             <div class="d-inline mb-0 text-muted">{{__('Opublikował ')}}</div>
                                                             <button class="btn btn-link btn-sm" type="submit" id="button_user">{{$advert->user_nick}}</button>
