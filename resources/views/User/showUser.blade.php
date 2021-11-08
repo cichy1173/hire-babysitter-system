@@ -70,16 +70,16 @@
                                     <div class="col">
                                         <div class="float-right">
                                             <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
-                                            <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Wystaw opinię')}}</button>
+                                            <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
                                         </div>
                                     </div>                            
                                 </div>
 
-                                <div class="modal fade" id="sendToUser" tabindex="-1" role="dialog" aria-labelledby="senToUserTitle" aria-hidden="true">
+                                <div class="modal fade" id="sendToUser" tabindex="-1" role="dialog" aria-labelledby="sendToUserTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="senToUserTitle">{{__('Wyślij wiadomość')}}</h5>
+                                                <h5 class="modal-title" id="sendToUserTitle">{{__('Wyślij wiadomość')}}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>

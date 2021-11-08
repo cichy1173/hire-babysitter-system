@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Message;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use SebastianBergmann\Environment\Console;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class MessageController extends Controller
 {
@@ -57,6 +59,14 @@ class MessageController extends Controller
                         ['from_id_user', $value]])
                     ->orderBy('created_at')
                     ->get();
+            
+            foreach ($msg as $key2 => $one_msg) {
+                try {
+                    $one_msg->content = Crypt::decryptString($one_msg->content);
+                } catch (DecryptException $e) {
+                    $one_msg->content = Crypt::decryptString($one_msg->content);
+                }
+            }
 
             $usr = User::find($value);
 
@@ -88,10 +98,12 @@ class MessageController extends Controller
             'userMessage' => 'required|string|max:2000'
         ]);
 
+        $content = Crypt::encryptString($request->userMessage);
+
         Message::create([
             'from_id_user' => auth()->user()->id,
             'to_id_user' => $request->userTo,
-            'content' => $request->userMessage,
+            'content' =>  $content,
             'send_date' => now()
         ]);
 
