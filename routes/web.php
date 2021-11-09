@@ -46,7 +46,7 @@ Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSing
 Route::get('/advertisement/edit/{advert}', [AdvertisementController::class, 'editShow'])->middleware('auth')->name('edit_advert');
 Route::post('/advertisement/edit/{advert}', [AdvertisementController::class, 'editSave'])->middleware('auth');
 //show another user profile
-Route::post('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');

@@ -62,15 +62,46 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <form class="form float-right" method="POST" action="">
-                                    @csrf
-                                    <button class="btn btn-outline-primary" type="submit" id="button_message">{{__('Wyślij wiadomość')}}</button>
-                                    <button class="btn btn-outline-dark" type="submit" id="button_message">{{__('Wystaw opinię')}}</button>
-                                </form>
-                            </div>                            
-                        </div>
+                        @auth
+                            @if (auth()->id() == $user->id)
+                                
+                            @else
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="float-right">
+                                            <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
+                                            <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
+                                        </div>
+                                    </div>                            
+                                </div>
+
+                                <div class="modal fade" id="sendToUser" tabindex="-1" role="dialog" aria-labelledby="sendToUserTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="sendToUserTitle">{{__('Wyślij wiadomość')}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form class="form mb-0" action="{{route('newMessage', auth()->user())}}" method="POST">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="input-group">
+                                                        <input type="text" name="userTo" id="userTo" value="{{$user->id}}" hidden>
+                                                        <input class="form-control" type="text" id="userMessage" name="userMessage" required aria-describedby="buttonSend">                                                        
+                                                    </div>
+                                                </div> 
+                                                <div class="modal-footer">
+                                                    <button type="submit" id="buttonSend" class="btn btn-outline-success">{{__('Wyślij')}}</button>
+                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Anuluj')}}</button>
+                                                </div>                                       
+                                            </form>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif      
+                        @endauth     
                     </div>                        
                 @else
                     <p class="text-center">{{__('Nie ma takiego użytkownika')}}</p>
