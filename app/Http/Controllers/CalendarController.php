@@ -16,4 +16,5 @@ class CalendarController extends Controller
     {
         return view('calendar');
     }
+
 }

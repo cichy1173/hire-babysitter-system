@@ -1,6 +1,22 @@
 @extends('layouts.app')
-
+<?php
+    $a=0;    
+    if(array_key_exists('button1', $_POST)) {
+            button1();
+        }
+    else if(array_key_exists('button2', $_POST)) {
+            button2();
+        }
+        function button1() {
+            return $a--;
+        }
+        function button2() {
+            return $a++;
+        }
+    
+?> 
 @section('content')
+
 <div>
     <div class="container">
         <div class="row justify-content-center">
@@ -13,19 +29,16 @@
                          <div class="">      
                         <table class="table table-bordered " style="width:100%;table-layout:fixed;">
                             <thead class="table table-borderless" align="center" vlign="middle">
-                                <tr class="table-primary">
-                                
-                                    
-                                    <td align="center" vlign="middle" > <button type="button" class="btn btn-primary"><</button></td>
-                                    <th  colspan="5">{{ucfirst(trans(now()->translatedFormat('F')))}}</th>
-                                    <td align="center" vlign="middle" > <button type="button" class="btn btn-primary">></button> </td>
-                                    
+                                <tr class="table-primary">   
+                                                                    
+                                    <th  colspan="7">{{ucfirst(trans(now()->addWeek("$a")->translatedFormat('F')))}}</th>
+                                                                        
                                 </tr>
                                 
                                 <tr class="tabel-light">
-                                    <td align="center" vlign="middle" > <button type="button" class="btn btn-secondary"><</button></td>
-                                    <td align="center" vlign="middle" colspan="5">{{now()->startOfWeek()->translatedFormat('d-m-Y')}} -/- {{now()->endOfWeek()->translatedFormat('d-m-Y')}} </td>
-                                    <td align="center" vlign="middle" > <button type="button" class="btn btn-secondary">></button> </td>
+                                    <td align="center" vlign="middle" > <input type="submit" class="btn btn-secondary" name="button1" class="button" value="<" onclick=";window.location.reload();" /></td>
+                                    <td align="center" vlign="middle" colspan="5">{{now()->addWeek("$a")->startOfWeek()->translatedFormat('d-m-Y')}} -/- {{now()->addWeek("$a")->endOfWeek()->translatedFormat('d-m-Y')}} </td>
+                                    <td align="center" vlign="middle" > <input type="submit" class="btn btn-secondary" name="button2" class="button" value="<" onclick="window.location.reload();" /> </td>
                                 </tr> 
 
                             </thead>
