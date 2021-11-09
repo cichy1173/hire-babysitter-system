@@ -71,3 +71,7 @@ Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage']
 Route::get('/messages/getuser/{id}', [MessageController::class, 'getUser'])->middleware('auth');
 Route::post('/messages/markread/{id}', [MessageController::class, 'markRead'])->middleware('auth');
 Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middleware('auth');
+
+
+//calendar
+Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
