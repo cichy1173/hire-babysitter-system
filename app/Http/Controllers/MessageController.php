@@ -82,7 +82,7 @@ class MessageController extends Controller
             array_push($messages, $msg); 
         }
 
-        $users = User::all()->where('id', '!=', auth()->id()) ->sortBy('nickname');
+        $users = User::all()->where('id', '!=', auth()->id())->where('id', '!=', 1) ->sortBy('nickname');
         
         return view('Message.messageList', [
             'messages' => $messages,
@@ -94,7 +94,7 @@ class MessageController extends Controller
     public function newMessage(Request $request)
     {
         $this->validate($request, [
-            'userTo' => 'required|int|exists:users,id',
+            'userTo' => 'required|int|exists:users,id|different:1',
             'userMessage' => 'required|string|max:2000'
         ]);
 

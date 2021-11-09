@@ -16,22 +16,29 @@ class UserEditProfileController extends Controller
         $this->middleware(['auth']);
     }
 
-
     public function index()
     {
         return view('User.index');
     }
 
 
-    public function destroy(User $user)
+    public function destroy()
     {
+        $user = auth()->user();
+        //$user->sendMessages
+        foreach ($user->sendMessages as $key => $value) {
+            $value->from_id_user = 1;
+            $value->save();
+        }
+        //$user->recievedMessages()->delete();
+        foreach ($user->recievedMessages as $key => $value) {
+            $value->to_id_user = 1;
+            $value->save();
+        }
 
-        $user = Auth::user()->id;
+        //TODO: dodać usuwanie zdjęcia użytkownika z pamięci
 
-        $user->sendMessages()->delete();
-        $user->recievedMessages()->delete();
-
-        User::destroy($user);
+        User::destroy($user->id);
 
         return redirect(route('login'))->with('destroyed', 'Konto usunięte');
 
