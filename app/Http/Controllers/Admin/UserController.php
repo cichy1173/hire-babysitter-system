@@ -84,7 +84,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::destroy($id);
-        return back()->with('success', 'Użytkownik został usunięty');
+        $user = User::find($id);
+
+        foreach ($user->sendMessages as $key => $value) {
+            $value->from_id_user = 1;
+            $value->save();
+        }
+        //$user->recievedMessages()->delete();
+        foreach ($user->recievedMessages as $key => $value) {
+            $value->to_id_user = 1;
+            $value->save();
+        }
+
+        
+         User::destroy($id);
+         return back()->with('success', 'Użytkownik został usunięty');
     }
 }
