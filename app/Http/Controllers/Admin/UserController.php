@@ -100,4 +100,41 @@ class UserController extends Controller
          User::destroy($id);
          return back()->with('success', 'Użytkownik został usunięty');
     }
+
+    /**
+     * Block the specified user 
+     * '0' means unblocked user
+     * '1' means blocked user
+     * @param int $id
+     */
+
+    public function block($id)
+    {
+        $user = User::find($id);
+
+       $user->is_blocked = '1';
+       $user->save();
+
+       return back()->with('success', "Użytkownik pomyślnie zablokowany");
+
+    }
+
+      /**
+     * Unblock the specified user 
+     * '0' means unblocked user
+     * '1' means blocked user
+     * @param int $id
+     */
+
+    public function unblock($id)
+    {
+       
+        $user = User::find($id);
+            
+       $user->is_blocked = '0';
+       $user->save();
+
+       return back()->with('success', "Użytkownik pomyślnie odblokowany");
+
+    }
 }
