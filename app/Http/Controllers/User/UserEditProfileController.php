@@ -92,7 +92,7 @@ class UserEditProfileController extends Controller
     {
 
         $this->validate($request, [
-            'nickname' => 'required|max:15',  
+            'nickname' => 'required|unique:users|max:15',  
             
         ]);
 
