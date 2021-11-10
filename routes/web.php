@@ -1,17 +1,18 @@
 <?php
 
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
-use App\Models\Advertisement;
 
 Auth::routes(['verify' => true]);
 
@@ -71,3 +72,7 @@ Route::post('/profile/{user}/messages', [MessageController::class, 'newMessage']
 Route::get('/messages/getuser/{id}', [MessageController::class, 'getUser'])->middleware('auth');
 Route::post('/messages/markread/{id}', [MessageController::class, 'markRead'])->middleware('auth');
 Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middleware('auth');
+
+
+//Administator
+Route::get('/admin', [App\Http\Controllers\AdministratorController::class, 'index'])->name('administatorView');
