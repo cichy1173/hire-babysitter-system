@@ -142,14 +142,14 @@
                             </div>
                         </div>
                         @auth
-                            @if (auth()->id() == $advert->id_user)
+                            @if ((auth()->id() == $advert->id_user) || (auth()->user()->id_account_type == 1 && $advert->id_advertisement_type == 2) || (auth()->user()->id_account_type == 2 && $advert->id_advertisement_type == 1))
                                 
                             @else
                                 <div class="row">
                                     <div class="col">
                                         <div class="float-right">
                                             <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
-                                            <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Zaakceptuj ogłoszenie')}}</button>
+                                            <button class="btn btn-outline-success" type="button" id="button_accept" data-toggle="modal" data-target="#acceptAdvert">{{__('Zaakceptuj ogłoszenie')}}</button>
                                         </div>
                                     </div>                            
                                 </div>
@@ -174,6 +174,29 @@
                                                 <div class="modal-footer">
                                                     <button type="submit" id="buttonSend" class="btn btn-outline-success">{{__('Wyślij')}}</button>
                                                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Anuluj')}}</button>
+                                                </div>                                       
+                                            </form>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="acceptAdvert" tabindex="-1" role="dialog" aria-labelledby="acceptAdvertTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="acceptAdvertTitle">{{__('Zaakceptuj ogłoszenie')}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form class="form mb-0" action="{{route('addApplication', $advert)}}" method="POST">
+                                                @csrf
+                                                <div class="modal-body bg-warning">
+                                                    <p>{{__('Czy jesteś pewien, że chcesz zaakceptować to ogłoszenie?')}}</p>
+                                                    <p>{{__('Twoje zgłoszenie zostanie przekazane do autora ogłoszenia.')}}</p>
+                                                </div> 
+                                                <div class="modal-footer">
+                                                    <button type="submit" id="buttonSend" class="btn btn-outline-success">{{__('Tak')}}</button>
+                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Nie')}}</button>
                                                 </div>                                       
                                             </form>                                            
                                         </div>

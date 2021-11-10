@@ -62,6 +62,11 @@
                                     <div class="dropdown-menu">
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
+                                        @if (auth()->user()->id_account_type == 1)
+                                            <a class="dropdown-item" href="{{route('sendApplications')}}">Wysłane zgłoszenia</a>
+                                        @else
+                                            <a class="dropdown-item" href="{{route('receivedApplications')}}">Otrzymane zgłoszenia</a>
+                                        @endif
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>

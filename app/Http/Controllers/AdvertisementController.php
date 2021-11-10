@@ -225,4 +225,21 @@ class AdvertisementController extends Controller
 
         return redirect()->route('show_advert')->with('status', 'true');
     }
+
+    public function addApplication(Advertisement $advert)
+    {
+        auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);
+
+        return redirect()->back();
+    }
+
+    public function sendApplications()
+    {
+        dd();
+    }
+
+    public function receivedApplications()
+    {
+        dd();
+    }
 }

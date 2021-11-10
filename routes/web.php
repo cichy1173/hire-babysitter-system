@@ -45,6 +45,9 @@ Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, '
 Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSingle'])->name('showSingle');
 Route::get('/advertisement/edit/{advert}', [AdvertisementController::class, 'editShow'])->middleware('auth')->name('edit_advert');
 Route::post('/advertisement/edit/{advert}', [AdvertisementController::class, 'editSave'])->middleware('auth');
+Route::post('/advertisement/accept/{advert}', [AdvertisementController::class, 'addApplication'])->middleware('auth')->name('addApplication');
+Route::get('/advertisements/sendApplications', [AdvertisementController::class, 'sendApplications'])->middleware('auth')->name('sendApplications');
+Route::get('/advertisements/receivedApplications', [AdvertisementController::class, 'receivedApplications'])->middleware('auth')->name('receivedApplications');
 //show another user profile
 Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
 
