@@ -69,7 +69,7 @@
                                                     <div class="col">
                                                         <div class="card">
                                                             @if ($item['accepted'] == 1)
-                                                                <div class="card-body bg-succes">
+                                                                <div class="card-body bg-success">
                                                                     {{__('Aplikacja zaakceptowana')}}
                                                                 </div>
                                                             @else
