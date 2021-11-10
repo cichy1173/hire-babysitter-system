@@ -6,7 +6,7 @@
 <div>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">{{ __('Panel administratora') }}</div>
     
@@ -21,7 +21,7 @@
                         @endif
 
                         <div class="float-right mb-2 px-2"> 
-                            <a class="btn btn-outline-success float-right" href="{{ route('admin.users.create') }}"
+                            <a class="btn btn-info float-right" href="{{ route('admin.users.create') }}"
                                 role="button">Dodaj użytkownika</a>
                         </div>
                         
@@ -41,9 +41,66 @@
                                     <td>{{ $user->nickname }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                       <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.users.edit', $user->id) }}"
-                                        role="button">Edytuj</a>
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                        @if ($user->id_account_type != '3')  <a class="btn btn-sm btn-primary m-1" href="{{ route('admin.users.edit', $user->id) }}"
+                                        role="button">Edytuj</a> @else
+                                        <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Edytuj</button> @endif
+
+
+                                        @if ($user->id_account_type != '3')
+                                        <button type="button" class="btn btn-sm btn-success m-1"
+                                        onclick="event.preventDefault();  document.getElementById('makeadmin-user-form-{{ $user->id }}').submit() " >
+                                           Mianuj administratorem
+                                       </button> 
+ 
+                                       <form id="makeadmin-user-form-{{ $user->id }}" action="{{ route('admin.users.makeadmin', $user->id) }}" method="POST" style="display: none">
+                                           @csrf
+                                           @method('PUT')
+                                       </form>
+
+                                       @else
+                                       <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Mianuj administratorem</button> 
+                                       @endif
+
+
+                                        @if ($user->id_account_type != '3')
+
+                                        @if ($user->is_blocked == 0)
+
+                                        <button type="button" class="btn btn-sm btn-warning m-1"
+                                        onclick="event.preventDefault();  document.getElementById('block-user-form-{{ $user->id }}').submit() " >
+                                           Zablokuj
+                                       </button> 
+
+                                       <form id="block-user-form-{{ $user->id }}" action="{{ route('admin.users.block', $user->id) }}" method="POST" style="display: none">
+                                           @csrf
+                                       </form>
+
+                                       @else
+                                       <button type="button" class="btn btn-sm btn-success m-1"
+                                       onclick="event.preventDefault();  document.getElementById('unblock-user-form-{{ $user->id }}').submit() " >
+                                          Odblokuj
+                                      </button> 
+
+                                      <form id="unblock-user-form-{{ $user->id }}" action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display: none">
+                                          @csrf
+                                          @method('PUT')
+                                      </form>
+                                      @endif
+
+
+                                      @else
+                                      <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Zablokuj</button>
+                                            
+                                            
+                                        @endif
+
+
+
+                                        @if($user->id_account_type != '3')
+
+                                  
+
+                                        <button type="button" class="btn btn-sm btn-danger m-1"
                                          onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
                                             Usuń
                                         </button> 
@@ -52,6 +109,13 @@
                                             @csrf
                                             @method('DELETE')
                                         </form>
+
+                                        @else
+                                        <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Usuń</button>
+
+                                        @endif
+
+
                                     </td>
                                   </tr> 
                                 @endforeach

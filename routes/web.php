@@ -80,4 +80,9 @@ Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middl
 //Administator
 Route::prefix('admin')->name('admin.')->group(function (){
     Route::resource('/users', UserController::class);
+    
 });
+
+Route::post('admin/users/{user}', [UserController::class, 'block'])->name('admin.users.block');
+Route::put('admin/users/{user}', [UserController::class, 'unblock'])->name('admin.users.unblock');
+Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');
