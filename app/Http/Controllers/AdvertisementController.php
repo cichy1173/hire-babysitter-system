@@ -244,6 +244,7 @@ class AdvertisementController extends Controller
             $item['advert'] = $application;
             $item['advert_user'] = User::find($application->id_user);
             $pivot = DB::table('users_advertisements')->where('id_advertisement', $application->id)->where('id_user', auth()->id())->get();
+            DB::table('users_advertisements')->where([['id_advertisement', $application->id], ['id_user', auth()->id()], ['read_by_nanny', 0]])->update(['read_by_nanny' => 1]);
             $item['accepted'] = $pivot[0]->accepted;
 
             array_push($items, $item);
@@ -269,6 +270,7 @@ class AdvertisementController extends Controller
                 $item['accepted'] = 0;
                 foreach ($item['applications'] as $key => $value) {
                     $pivot = DB::table('users_advertisements')->where('id_advertisement', $item['advert']->id)->where('id_user', $value->id)->get();
+                    DB::table('users_advertisements')->where([['id_advertisement', $item['advert']->id], ['id_user', $value->id], ['read_by_parent', 0]])->update(['read_by_parent' => 1]);
                     $value['accepted'] = $pivot[0]->accepted;
                     if($value['accepted'] == 1)
                     {

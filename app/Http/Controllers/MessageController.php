@@ -125,7 +125,21 @@ class MessageController extends Controller
 
     public function countBadges()
     {
-        $count['data'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+        $count['messages'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+
+        $applicationCounter = 0;
+
+        if(auth()->user()->id_account_type == 2)
+        {
+            foreach (auth()->user()->advertisements as $key => $advertisement) {
+                $applicationCounter += DB::table('users_advertisements')->where([['id_advertisement', $advertisement->id], ['accepted', 0], ['read_by_parent', 0]])->count();
+            }
+        }
+        elseif(auth()->user()->id_account_type == 1)
+        {
+            $applicationCounter = DB::table('users_advertisements')->where([['id_user', auth()->id()], ['accepted', 1], ['read_by_nanny', 0]])->count();
+        }
+        $count['applications'] = $applicationCounter;
 
         echo json_encode($count);
         exit;

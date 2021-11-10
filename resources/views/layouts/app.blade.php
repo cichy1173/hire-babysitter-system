@@ -63,9 +63,9 @@
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
                                         @if (auth()->user()->id_account_type == 1)
-                                            <a class="dropdown-item" href="{{route('sendApplications')}}">Wysłane zgłoszenia</a>
+                                            <a class="dropdown-item" href="{{route('sendApplications')}}" id="applications" name="applications">Wysłane zgłoszenia</a>
                                         @else
-                                            <a class="dropdown-item" href="{{route('receivedApplications')}}">Otrzymane zgłoszenia</a>
+                                            <a class="dropdown-item" href="{{route('receivedApplications')}}" id="applications" name="applications">Otrzymane zgłoszenia</a>
                                         @endif
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
@@ -136,14 +136,32 @@
                     type: 'get',
                     dataType: 'json',
                     success: function(response){
-                        if(response['data'] > 0)
+                        if(Object.keys(response).length > 0)
                         {
                             let userButton = $('#userButton').html();
                             let userMessages = $('#userMessages').html();
-                            let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+                            let userApplications = $('#applications').html();
+                            let countAll = response['messages'] + response['applications'];
+                            
+                            
 
-                            $('#userButton').html(userButton + ' ' + badge);
-                            $('#userMessages').html(userMessages + ' ' + badge);
+                            if(countAll > 0)
+                            {
+                                let badgeMain = '<span class="badge badge-danger">'+ countAll +'</span>';
+                                $('#userButton').html(userButton + ' ' + badgeMain);
+                            }
+
+                            if(response['messages'] > 0)
+                            {
+                                let badgeMessages = '<span class="badge badge-danger">'+ response['messages'] +'</span>';
+                                $('#userMessages').html(userMessages + ' ' + badgeMessages);
+                            }
+                            
+                            if(response['applications'] > 0)
+                            {
+                                let badgeApplications = '<span class="badge badge-danger">'+ response['applications'] +'</span>';
+                                $('#applications').html(userApplications + ' ' + badgeApplications);
+                            }
                         }                    
                     }
                 });
