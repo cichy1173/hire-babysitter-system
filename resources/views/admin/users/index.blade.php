@@ -13,6 +13,13 @@
                     <div class="card-body">
                         @if (Auth::user()->id_account_type == '3')
 
+                        @if (session('success'))
+                        <div class="text-center alert alert-success ">
+                            {{ session('success') }}    
+                           
+                        </div>
+                        @endif
+
                         <div class="float-right mb-2 px-2"> 
                             <a class="btn btn-outline-success float-right" href="{{ route('admin.users.create') }}"
                                 role="button">Dodaj użytkownika</a>
@@ -37,14 +44,13 @@
                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.users.edit', $user->id) }}"
                                         role="button">Edytuj</a>
                                         <button type="button" class="btn btn-sm btn-outline-danger"
-                                         onclick="event.preventDefault(); document.getElementyById('delete-user-form-{{ $user->id }}).submit()')" >
+                                         onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
                                             Usuń
                                         </button> 
 
                                         <form id="delete-user-form-{{ $user->id }}" action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: none">
                                             @csrf
-                                            @method("DELETE")
-
+                                            @method('DELETE')
                                         </form>
                                     </td>
                                   </tr> 
@@ -52,7 +58,10 @@
                               
                             </tbody>
                           </table>
-           
+
+                          <div class="float-right">
+                            {{ $users->links() }}
+                          </div>
 
 
                         @endif
