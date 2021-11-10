@@ -6,7 +6,7 @@
 <div>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">{{ __('Panel administratora') }}</div>
     
@@ -41,8 +41,28 @@
                                     <td>{{ $user->nickname }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                       <a class="btn btn-sm btn-primary m-1" href="{{ route('admin.users.edit', $user->id) }}"
-                                        role="button">Edytuj</a>
+                                        @if ($user->id_account_type != '3')  <a class="btn btn-sm btn-primary m-1" href="{{ route('admin.users.edit', $user->id) }}"
+                                        role="button">Edytuj</a> @else
+                                        <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Edytuj</button> @endif
+
+
+                                        @if ($user->id_account_type != '3')
+                                        <button type="button" class="btn btn-sm btn-success m-1"
+                                        onclick="event.preventDefault();  document.getElementById('makeadmin-user-form-{{ $user->id }}').submit() " >
+                                           Mianuj administratorem
+                                       </button> 
+ 
+                                       <form id="makeadmin-user-form-{{ $user->id }}" action="{{ route('admin.users.makeadmin', $user->id) }}" method="POST" style="display: none">
+                                           @csrf
+                                           @method('PUT')
+                                       </form>
+
+                                       @else
+                                       <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Mianuj administratorem</button> 
+                                       @endif
+
+
+                                        @if ($user->id_account_type != '3')
 
                                         @if ($user->is_blocked == 0)
 
@@ -65,8 +85,18 @@
                                           @csrf
                                           @method('PUT')
                                       </form>
+                                      @endif
+
+
+                                      @else
+                                      <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Zablokuj</button>
+                                            
                                             
                                         @endif
+
+
+
+                                        @if($user->id_account_type != '3')
 
                                   
 
@@ -79,6 +109,13 @@
                                             @csrf
                                             @method('DELETE')
                                         </form>
+
+                                        @else
+                                        <button type="button" class="btn btn-sm btn-secondary m-1" disabled>Usuń</button>
+
+                                        @endif
+
+
                                     </td>
                                   </tr> 
                                 @endforeach

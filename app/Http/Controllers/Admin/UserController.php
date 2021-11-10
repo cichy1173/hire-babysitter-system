@@ -115,7 +115,9 @@ class UserController extends Controller
        $user->is_blocked = '1';
        $user->save();
 
-       return back()->with('success', "Użytkownik pomyślnie zablokowany");
+       
+
+       return back()->with('success', "Użytkownik pomyślnie zablokowany!");
 
     }
 
@@ -134,7 +136,17 @@ class UserController extends Controller
        $user->is_blocked = '0';
        $user->save();
 
-       return back()->with('success', "Użytkownik pomyślnie odblokowany");
+       return back()->with('success', "Użytkownik pomyślnie odblokowany!");
 
+    }
+
+    public function makeAdmin($id)
+    {
+        $user = User::find($id);
+
+        $user->id_account_type = '3';
+        $user->save();
+
+        return back()->with('success', "Użytkownik pomyślnie mianowany administratorem!");
     }
 }
