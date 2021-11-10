@@ -75,6 +75,15 @@
                                 </div>
                             </li>
 
+                            @if (Auth::user()->id_account_type == '3')
+
+                            <li class="nav-item mx-2">
+                                <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('admin.users.index') }}">{{ __('Administrator') }}</a>
+                            </li>
+
+                            @endif
+
+
                             <li class="nav-item mx-2">
                                 <form id="my_form" action="{{ route('logout') }}" method="POST">
                                     @csrf
