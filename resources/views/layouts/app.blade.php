@@ -73,7 +73,7 @@
                             @if (Auth::user()->id_account_type == '3')
 
                             <li class="nav-item mx-2">
-                                <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('administatorView') }}">{{ __('Administrator') }}</a>
+                                <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('admin.users.index') }}">{{ __('Administrator') }}</a>
                             </li>
 
                             @endif

@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\ShowUserController;
@@ -75,4 +75,6 @@ Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middl
 
 
 //Administator
-Route::get('/admin', [App\Http\Controllers\AdministratorController::class, 'index'])->name('administatorView');
+Route::prefix('admin')->name('admin.')->group(function (){
+    Route::resource('/users', UserController::class);
+});
