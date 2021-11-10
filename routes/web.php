@@ -49,6 +49,7 @@ Route::post('/advertisement/edit/{advert}', [AdvertisementController::class, 'ed
 Route::post('/advertisement/accept/{advert}', [AdvertisementController::class, 'addApplication'])->middleware('auth')->name('addApplication');
 Route::get('/advertisements/sendApplications', [AdvertisementController::class, 'sendApplications'])->middleware('auth')->name('sendApplications');
 Route::get('/advertisements/receivedApplications', [AdvertisementController::class, 'receivedApplications'])->middleware('auth')->name('receivedApplications');
+Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
 Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
 

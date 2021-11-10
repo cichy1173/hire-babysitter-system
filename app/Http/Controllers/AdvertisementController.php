@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\City;
+use App\Models\User;
+use App\Models\Skill;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Voivodeship;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
-use App\Models\Skill;
-use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Application;
 use PHPUnit\Framework\Constraint\Count;
 
 class AdvertisementController extends Controller
@@ -235,11 +237,65 @@ class AdvertisementController extends Controller
 
     public function sendApplications()
     {
-        dd();
+        $applications = auth()->user()->myApplications;
+
+        $items = array();
+        foreach ($applications as $key => $application) {
+            $item['advert'] = $application;
+            $item['advert_user'] = User::find($application->id_user);
+            $pivot = DB::table('users_advertisements')->where('id_advertisement', $application->id)->where('id_user', auth()->id())->get();
+            $item['accepted'] = $pivot[0]->accepted;
+
+            array_push($items, $item);
+        }
+
+        return view('advertisements.sendApplications', [
+            'items' => $items
+        ]);
+
     }
 
     public function receivedApplications()
     {
-        dd();
+        $adverts = auth()->user()->advertisements;
+
+        $advertsWithApplications = array();
+
+        foreach ($adverts as $key => $advert) {
+            if( count($advert->applications) > 0 )
+            {
+                $item['advert'] = $advert;
+                $item['applications'] = $advert->applications;
+                $item['accepted'] = 0;
+                foreach ($item['applications'] as $key => $value) {
+                    $pivot = DB::table('users_advertisements')->where('id_advertisement', $item['advert']->id)->where('id_user', $value->id)->get();
+                    $value['accepted'] = $pivot[0]->accepted;
+                    if($value['accepted'] == 1)
+                    {
+                        $item['accepted'] = 1;
+                    }
+                }
+                array_push($advertsWithApplications, $item);
+            }
+        }
+
+        //dd($advertsWithApplications);
+
+        return view('advertisements.receivedApplications', [
+            'items' => $advertsWithApplications
+        ]);
+    }
+
+    public function acceptUser(Request $request)
+    {
+        //dd($request);
+
+        $this->validate($request, [
+            'advert' => 'required|exists:advertisements,id|int',
+            'user' => 'required|exists:users,id|int'
+        ]);
+
+        DB::table('users_advertisements')->where('id_advertisement', $request->advert)->where('id_user', $request->user)->update(['accepted' => 1]);
+        return redirect()->back();
     }
 }
