@@ -123,6 +123,7 @@
             </div>
         </footer>
     </div>
+
     <script  src="{{asset('js/add_form.js')}}"></script>
     <script>
         $(document).ready(function()
