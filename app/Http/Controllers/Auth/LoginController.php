@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginController extends Controller
 {
@@ -25,7 +28,7 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
+        
 
         $this->validate($request, [
             
@@ -34,12 +37,20 @@ class LoginController extends Controller
             
         ]);
 
-        
+
+
+
+
 
 
        if (!(auth()->attempt($request->only('email', 'password'), $request->remember))) {
            return back()->with('status', 'Błędne dane logowania');
        }
+
+       if((Auth::user()->is_blocked) == '1') {
+            auth()->logout();
+            return back()->with('status', 'Twoje konto jest zablokowane');
+       } 
 
 
        return redirect()->route('dashboard');
