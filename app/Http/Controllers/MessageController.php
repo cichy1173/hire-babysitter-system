@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use SebastianBergmann\Environment\Console;
 use Illuminate\Contracts\Encryption\DecryptException;
