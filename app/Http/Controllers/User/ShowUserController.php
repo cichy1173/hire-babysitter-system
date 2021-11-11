@@ -13,6 +13,7 @@ class ShowUserController extends Controller
     public function index(User $user)
     {
         $opinionAvailable = 0;
+        $blocked = $user->is_blocked;
 
         if(auth()->user()->id_account_type == 1)
         {
@@ -38,7 +39,8 @@ class ShowUserController extends Controller
                         ->where('id', $user->id)->get();
         return view('User.showUser', [
             'user' => $user[0],
-            'opinionAvailable' => $opinionAvailable
+            'opinionAvailable' => $opinionAvailable,
+            'blocked' => $blocked
         ]);
     }
 }

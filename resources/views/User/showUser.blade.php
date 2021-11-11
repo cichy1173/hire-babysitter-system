@@ -5,7 +5,18 @@
         <div class="col-md-8">
             <div class="card text-center">
                 @if (@isset($user))
-                    <div class="card-body">
+                    <div class="card-body @if($blocked == 1) bg-danger @endif">
+                        @if ($blocked == 1)
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="card bg-warning">
+                                        <div class="card-body">
+                                            {{__('Użytkownik zablokwany')}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="card mb-3">
@@ -69,12 +80,15 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="float-right">
-                                            <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
-                                            @if ($opinionAvailable > 0)
-                                                <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
-                                            @else
-                                                <button class="btn btn-outline-success" type="button" id="button_accept" title="{{__('Nie masz zaakceptowanych zgłoszeń z użytkownikiem '.$user->name.' lub zaakceptowane zgłoszenie jeszcze nie dobiegło końca')}}" disabled>{{__('Dodaj opinię')}}</button>
+                                            @if ($blocked == 0)
+                                                <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
+                                                @if ($opinionAvailable > 0)
+                                                    <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
+                                                @else
+                                                    <button class="btn btn-outline-success" type="button" id="button_accept" title="{{__('Nie masz zaakceptowanych zgłoszeń z użytkownikiem '.$user->name.' lub zaakceptowane zgłoszenie jeszcze nie dobiegło końca')}}" disabled>{{__('Dodaj opinię')}}</button>
+                                                @endif
                                             @endif
+                                            
                                         </div>
                                     </div>                            
                                 </div>
