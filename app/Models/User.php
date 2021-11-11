@@ -57,7 +57,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function myApplications()
     {
-        return $this -> belongsToMany(Advertisement::class, 'users_advertisements', 'id_user', 'id_advertisement')->withPivot('time_from', 'time_to', 'accepted', 'read_by_parent', 'read_by_nanny');
+        return $this -> belongsToMany(Advertisement::class, 'users_advertisements', 'id_user', 'id_advertisement')
+            ->withPivot('time_from', 
+                        'time_to', 
+                        'accepted', 
+                        'read_by_parent', 
+                        'read_by_nanny', 
+                        'created_user_opinion', 
+                        'created_supervisor_opinion');
     }
 
     public function sendMessages()

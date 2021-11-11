@@ -239,19 +239,33 @@ class AdvertisementController extends Controller
     {
         $applications = auth()->user()->myApplications;
 
+        $notifications = 0;
+        
         $items = array();
         foreach ($applications as $key => $application) {
             $item['advert'] = $application;
             $item['advert_user'] = User::find($application->id_user);
             $pivot = DB::table('users_advertisements')->where('id_advertisement', $application->id)->where('id_user', auth()->id())->get();
             DB::table('users_advertisements')->where([['id_advertisement', $application->id], ['id_user', auth()->id()], ['read_by_nanny', 0]])->update(['read_by_nanny' => 1]);
+
             $item['accepted'] = $pivot[0]->accepted;
 
             array_push($items, $item);
+
+            $notifications += DB::table('users_advertisements')->where([
+                ['id_advertisement', $application->id],
+                ['id_user', auth()->id()],
+                ['accepted', 1], 
+                ['read_by_parent', 1], 
+                ['read_by_nanny', 1], 
+                ['created_supervisor_opinion', 0], 
+                ['time_to', '<', now()]
+            ])->count();
         }
 
         return view('advertisements.sendApplications', [
-            'items' => $items
+            'items' => $items,
+            'notifications' => $notifications
         ]);
 
     }
@@ -262,6 +276,8 @@ class AdvertisementController extends Controller
 
         $advertsWithApplications = array();
 
+        $notifications = 0;
+
         foreach ($adverts as $key => $advert) {
             if( count($advert->applications) > 0 )
             {
@@ -269,22 +285,39 @@ class AdvertisementController extends Controller
                 $item['applications'] = $advert->applications;
                 $item['accepted'] = 0;
                 foreach ($item['applications'] as $key => $value) {
-                    $pivot = DB::table('users_advertisements')->where('id_advertisement', $item['advert']->id)->where('id_user', $value->id)->get();
-                    DB::table('users_advertisements')->where([['id_advertisement', $item['advert']->id], ['id_user', $value->id], ['read_by_parent', 0]])->update(['read_by_parent' => 1]);
+                    $pivot = DB::table('users_advertisements')
+                        ->where('id_advertisement', $item['advert']->id)
+                        ->where('id_user', $value->id)->get();
+                    DB::table('users_advertisements')->where([
+                        ['id_advertisement', $item['advert']->id], 
+                        ['id_user', $value->id], 
+                        ['read_by_parent', 0]
+                    ])->update(['read_by_parent' => 1]);
+
                     $value['accepted'] = $pivot[0]->accepted;
+
                     if($value['accepted'] == 1)
                     {
                         $item['accepted'] = 1;
                     }
                 }
                 array_push($advertsWithApplications, $item);
+
+                $notifications += DB::table('users_advertisements')->where([
+                    ['id_advertisement', $advert->id], 
+                    ['accepted', 1], 
+                    ['read_by_parent', 1], 
+                    ['read_by_nanny', 1], 
+                    ['created_user_opinion', 0], 
+                    ['time_to', '<', now()]
+                ])->count();
             }
         }
-
         //dd($advertsWithApplications);
 
         return view('advertisements.receivedApplications', [
-            'items' => $advertsWithApplications
+            'items' => $advertsWithApplications,
+            'notifications' => $notifications
         ]);
     }
 
