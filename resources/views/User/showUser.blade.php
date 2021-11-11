@@ -70,7 +70,11 @@
                                     <div class="col">
                                         <div class="float-right">
                                             <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
-                                            <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
+                                            @if ($opinionAvailable > 0)
+                                                <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
+                                            @else
+                                                <button class="btn btn-outline-success" type="button" id="button_accept" title="{{__('Nie masz zaakceptowanych zgłoszeń z użytkownikiem '.$user->name.' lub zaakceptowane zgłoszenie jeszcze nie dobiegło końca')}}" disabled>{{__('Dodaj opinię')}}</button>
+                                            @endif
                                         </div>
                                     </div>                            
                                 </div>
