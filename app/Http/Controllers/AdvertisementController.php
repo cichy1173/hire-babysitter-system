@@ -323,14 +323,22 @@ class AdvertisementController extends Controller
 
     public function acceptUser(Request $request)
     {
-        //dd($request);
 
         $this->validate($request, [
             'advert' => 'required|exists:advertisements,id|int',
             'user' => 'required|exists:users,id|int'
         ]);
 
-        DB::table('users_advertisements')->where('id_advertisement', $request->advert)->where('id_user', $request->user)->update(['accepted' => 1]);
-        return redirect()->back();
+        $user = User::find($request['user']);
+
+        if($user->is_blocked == 1)
+        {
+            return redirect()->back()->with('status', 'Użytkownik został zablokowany, niestety nie możesz akceptować tego zgłoszenia');
+        }
+        else
+        {
+            DB::table('users_advertisements')->where('id_advertisement', $request->advert)->where('id_user', $request->user)->update(['accepted' => 1]);
+            return redirect()->back();
+        }
     }
 }
