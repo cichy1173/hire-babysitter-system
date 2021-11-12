@@ -8,9 +8,9 @@
                 {{ session('success') }}    
                
             </div>
+            @endif
             <div class="card text-center">
              
-                @endif
                 @if (@isset($user))
                     <div class="card-body">
                         <div class="row mb-3">
