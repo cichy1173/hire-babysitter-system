@@ -81,16 +81,35 @@
 
                                         @if(auth()->user()->id_account_type == '3')
                                         <div class="float-left">
-                                            
-                                        <button type="button" class="btn btn-outline-danger"
-                                        onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
-                                           Usuń użytkownika
-                                       </button> 
+                                            <button type="button" data-toggle="modal" data-target="#deleteAccountPopUp" class=" btn btn-outline-danger">{{ __('Usuń użytkownika') }}</button>
 
-                                       <form id="delete-user-form-{{ $user->id }}" action="{{ route('showUser.destroy', $user->id) }}" method="POST" style="display: none">
-                                           @csrf
-                                           @method('DELETE')
-                                       </form>
+                                       <div class="modal fade" id="deleteAccountPopUp" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deleteAccountPopUp">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteAccountPopUp">{{__('Czy jesteś pewien, że usunąć użytkownika?')}}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>{{__('Czy jesteś pewien, że chcesz usunąć tego użytkownika?')}}</p>
+                                                    <p>{{__('Usunięcie użytkownika jest bezpowrotne')}}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
+                                                    <button type="button" class="btn btn-outline-danger"
+                                                    onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
+                                                       Usuń użytkownika
+                                                   </button> 
+                                                    <form id="delete-user-form-{{ $user->id }}" action="{{ route('showUser.destroy', $user->id) }}" method="POST" style="display: none">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
 
                                        @if ($user->is_blocked == 0)
 
