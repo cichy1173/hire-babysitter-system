@@ -41,6 +41,18 @@ class OpinionController extends Controller
             'to_id_user' => $user->id
         ]);
 
+        $opinions = $user->recievedOpinions();
+        $counter = $opinions->count();
+        $sum = 0;
+
+        foreach ($opinions as $key => $item) {
+            $sum += $item->grade;
+        }
+
+        $user->update([
+            'reputation' => round($sum / $counter)
+        ]);
+
         return redirect()->back()->with('status', 'Pomyślnie dodano opinię');
     }
 }
