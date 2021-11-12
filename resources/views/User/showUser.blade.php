@@ -72,6 +72,44 @@
                                             <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
                                             <button class="btn btn-outline-success" type="button" id="button_accept">{{__('Dodaj opinię')}}</button>
                                         </div>
+
+                                        @if(auth()->user()->id_account_type == '3')
+                                        <div class="float-left">
+                                            
+                                        <button type="button" class="btn btn-outline-danger"
+                                        onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
+                                           Usuń użytkownika
+                                       </button> 
+
+                                       <form id="delete-user-form-{{ $user->id }}" action="{{ route('showUser.destroy', $user->id) }}" method="POST" style="display: none">
+                                           @csrf
+                                           @method('DELETE')
+                                       </form>
+
+                                       @if ($user->is_blocked == 0)
+
+                                       <button type="button" class="btn btn-outline-warning"
+                                       onclick="event.preventDefault();  document.getElementById('block-user-form-{{ $user->id }}').submit() " >
+                                          Zablokuj
+                                      </button> 
+
+                                      <form id="block-user-form-{{ $user->id }}" action="{{ route('admin.users.block', $user->id) }}" method="POST" style="display: none">
+                                          @csrf
+                                      </form>
+
+                                      @elseif ($user->is_blocked == 1)
+                                      <button type="button" class="btn btn-outline-success"
+                                      onclick="event.preventDefault();  document.getElementById('unblock-user-form-{{ $user->id }}').submit() " >
+                                         Odblokuj
+                                     </button> 
+
+                                     <form id="unblock-user-form-{{ $user->id }}" action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display: none">
+                                         @csrf
+                                         @method('PUT')
+                                     </form>
+                                     @endif
+                                        </div>
+                                        @endif
                                     </div>                            
                                 </div>
 

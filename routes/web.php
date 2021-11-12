@@ -52,6 +52,7 @@ Route::get('/advertisements/receivedApplications', [AdvertisementController::cla
 Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
 Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::delete('/profile/{user}', [ShowUserController::class, 'destroy'])->name('showUser.destroy');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');

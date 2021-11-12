@@ -26,6 +26,8 @@
                                         {{__('Opiekun')}}
                                     @elseif (Auth::user()->id_account_type == '2')
                                         {{__('Zwykły użytkownik')}}   
+                                    @elseif(Auth::user()->id_account_type == '3')
+                                        {{ __('Administrator') }}
                                     @endif</div>
                               
                                </div>
