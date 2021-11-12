@@ -12,7 +12,7 @@ class ShowUserController extends Controller
     public function index(User $user)
     {
    
-            $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about', 'is_blocked')
+            $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about', 'is_blocked', 'id_account_type')
                             ->where('id', $user->id)->get();
             return view('User.showUser', [
                 'user' => $user[0]
