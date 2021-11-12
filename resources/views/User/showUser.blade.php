@@ -64,7 +64,7 @@
                                                 <span class="fa fa-star"></span>
                                                 @endfor
                                             </div>
-                                        </a></div>                                        
+                                        </div>                                        
                                     </div>
                                 </div>
                             </div>

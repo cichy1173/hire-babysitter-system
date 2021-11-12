@@ -11,13 +11,36 @@ class OpinionController extends Controller
     public function index()
     {
         $opinions = Opinion::where('to_id_user', auth()->id())->get();
+
+        $array = array();
+        
+        foreach ($opinions as $key => $value) {
+            $item['user'] = User::find($value->from_id_user);
+            $item['opinion'] = $value;
+            array_push($array, $item);
+        }
+
         return view('User.userOpinion', [
-            'opinions' => $opinions
+            'opinions' => $array
         ]);
     }
 
-    public function addOpinion(User $user)
+    public function addOpinion(User $user, Request $request)
     {
+
+        $this->validate($request, [
+            'opinionGradeRadio' => 'required|int|min:0|max:5',
+            'opinionContent' => 'required|string|max:500'
+        ]);
+
+        auth()->user()->sendOpinions()->create([
+            'content' => $request->opinionContent,
+            'grade' => $request->opinionGradeRadio,
+            'create_date' => now(),
+            'from_id_user' => auth()->id(),
+            'to_id_user' => $user->id
+        ]);
+
         return redirect()->back()->with('status', 'Pomyślnie dodano opinię');
     }
 }
