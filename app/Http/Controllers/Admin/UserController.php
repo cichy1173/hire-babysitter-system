@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create'); 
     }
 
     /**
@@ -39,7 +40,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:128',  
+            'surname' => 'required|max:128', 
+            'email' => 'required|email', 
+            'password' => 'required|max:128|min:8',
+            'id_account_type' => 'required',
+            'nickname' => 'required|max:15'
+        ]);
+
+        $user =  User::create([
+            'name' => $request -> name,
+            'surname' => $request -> surname,
+            'email' => $request -> email,
+            'nickname' => $request -> nickname,
+            'password'=> Hash::make($request -> password),
+            'id_account_type' => $request -> id_account_type,
+            
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', "Użytkownik został pomyślnie utworzony!");
     }
 
     /**
@@ -117,6 +137,7 @@ class UserController extends Controller
 
        
 
+       //return redirect()->route('admin.users.index')->with('success', "Użytkownik pomyślnie zablokowany!");
        return back()->with('success', "Użytkownik pomyślnie zablokowany!");
 
     }
@@ -136,7 +157,9 @@ class UserController extends Controller
        $user->is_blocked = '0';
        $user->save();
 
-       return back()->with('success', "Użytkownik pomyślnie odblokowany!");
+      // return redirect()->route('admin.users.index')->with('success', "Użytkownik pomyślnie odblokowany!");
+
+      return back()->with('success', "Użytkownik pomyślnie odblokowany!");
 
     }
 

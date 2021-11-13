@@ -89,6 +89,6 @@ Route::prefix('admin')->name('admin.')->group(function (){
     
 });
 
-Route::post('admin/users/{user}', [UserController::class, 'block'])->name('admin.users.block');
-Route::put('admin/users/{user}', [UserController::class, 'unblock'])->name('admin.users.unblock');
+Route::post('admin/users/{user}/block', [UserController::class, 'block'])->name('admin.users.block');
+Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->name('admin.users.unblock');
 Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');

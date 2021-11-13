@@ -28,10 +28,10 @@ class RegisterController extends Controller
         $this->validate($request, [
             'name' => 'required|max:128',  
             'surname' => 'required|max:128', 
-            'email' => 'required|email', 
+            'email' => 'required|unique:users|email', 
             'password' => 'required|confirmed|max:128|min:8',
             'id_account_type' => 'required',
-            'nickname' => 'required|max:15'
+            'nickname' => 'required|unique:users|max:15'
         ]);
         
         User::create([
