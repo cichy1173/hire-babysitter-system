@@ -90,18 +90,18 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteAccountPopUp">{{__('Czy jesteś pewien, że usunąć użytkownika?')}}</h5>
+                                                            <h5 class="modal-title" id="deleteAccountPopUp">{{__('Czy jesteś pewien, że chcesz usunąć użytkownika?')}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <p>{{__('Czy jesteś pewien, że chcesz usunąć tego użytkownika?')}}</p>
-                                                            <p>{{__('Usunięcie użytkownika jest bezpowrotne')}}</p>
+                                                            <p>{{__('Usunięcie użytkownika jest bezpowrotne!')}}</p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
-                                                            <button type="button" class="btn btn-outline-danger"
+                                                            <button type="button" class="btn btn-danger"
                                                             onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
                                                             Usuń użytkownika
                                                         </button> 
