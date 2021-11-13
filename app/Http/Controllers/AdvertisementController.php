@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\City;
+use App\Models\User;
+use App\Models\Skill;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Voivodeship;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
-use App\Models\Skill;
-use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Application;
 use PHPUnit\Framework\Constraint\Count;
 
 class AdvertisementController extends Controller
@@ -224,5 +226,119 @@ class AdvertisementController extends Controller
         }
 
         return redirect()->route('show_advert')->with('status', 'true');
+    }
+
+    public function addApplication(Advertisement $advert)
+    {
+        auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);
+
+        return redirect()->back();
+    }
+
+    public function sendApplications()
+    {
+        $applications = auth()->user()->myApplications;
+
+        $notifications = 0;
+        
+        $items = array();
+        foreach ($applications as $key => $application) {
+            $item['advert'] = $application;
+            $item['advert_user'] = User::find($application->id_user);
+            $pivot = DB::table('users_advertisements')->where('id_advertisement', $application->id)->where('id_user', auth()->id())->get();
+            DB::table('users_advertisements')->where([['id_advertisement', $application->id], ['id_user', auth()->id()], ['read_by_nanny', 0]])->update(['read_by_nanny' => 1]);
+
+            $item['accepted'] = $pivot[0]->accepted;
+
+            array_push($items, $item);
+
+            $notifications += DB::table('users_advertisements')->where([
+                ['id_advertisement', $application->id],
+                ['id_user', auth()->id()],
+                ['accepted', 1], 
+                ['read_by_parent', 1], 
+                ['read_by_nanny', 1], 
+                ['created_supervisor_opinion', 0], 
+                ['time_to', '<', now()]
+            ])->count();
+        }
+
+        return view('advertisements.sendApplications', [
+            'items' => $items,
+            'notifications' => $notifications
+        ]);
+
+    }
+
+    public function receivedApplications()
+    {
+        $adverts = auth()->user()->advertisements;
+
+        $advertsWithApplications = array();
+
+        $notifications = 0;
+
+        foreach ($adverts as $key => $advert) {
+            if( count($advert->applications) > 0 )
+            {
+                $item['advert'] = $advert;
+                $item['applications'] = $advert->applications;
+                $item['accepted'] = 0;
+                foreach ($item['applications'] as $key => $value) {
+                    $pivot = DB::table('users_advertisements')
+                        ->where('id_advertisement', $item['advert']->id)
+                        ->where('id_user', $value->id)->get();
+                    DB::table('users_advertisements')->where([
+                        ['id_advertisement', $item['advert']->id], 
+                        ['id_user', $value->id], 
+                        ['read_by_parent', 0]
+                    ])->update(['read_by_parent' => 1]);
+
+                    $value['accepted'] = $pivot[0]->accepted;
+
+                    if($value['accepted'] == 1)
+                    {
+                        $item['accepted'] = 1;
+                    }
+                }
+                array_push($advertsWithApplications, $item);
+
+                $notifications += DB::table('users_advertisements')->where([
+                    ['id_advertisement', $advert->id], 
+                    ['accepted', 1], 
+                    ['read_by_parent', 1], 
+                    ['read_by_nanny', 1], 
+                    ['created_user_opinion', 0], 
+                    ['time_to', '<', now()]
+                ])->count();
+            }
+        }
+        //dd($advertsWithApplications);
+
+        return view('advertisements.receivedApplications', [
+            'items' => $advertsWithApplications,
+            'notifications' => $notifications
+        ]);
+    }
+
+    public function acceptUser(Request $request)
+    {
+
+        $this->validate($request, [
+            'advert' => 'required|exists:advertisements,id|int',
+            'user' => 'required|exists:users,id|int'
+        ]);
+
+        $user = User::find($request['user']);
+
+        if($user->is_blocked == 1)
+        {
+            return redirect()->back()->with('status', 'Użytkownik został zablokowany, niestety nie możesz akceptować tego zgłoszenia');
+        }
+        else
+        {
+            DB::table('users_advertisements')->where('id_advertisement', $request->advert)->where('id_user', $request->user)->update(['accepted' => 1]);
+            return redirect()->back();
+        }
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use SebastianBergmann\Environment\Console;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -82,7 +83,7 @@ class MessageController extends Controller
             array_push($messages, $msg); 
         }
 
-        $users = User::all()->where('id', '!=', auth()->id()) ->sortBy('nickname');
+        $users = User::all()->where('id', '!=', auth()->id())->where('id', '!=', 1) ->sortBy('nickname');
         
         return view('Message.messageList', [
             'messages' => $messages,
@@ -94,7 +95,7 @@ class MessageController extends Controller
     public function newMessage(Request $request)
     {
         $this->validate($request, [
-            'userTo' => 'required|int|exists:users,id',
+            'userTo' => 'required|int|exists:users,id|different:1',
             'userMessage' => 'required|string|max:2000'
         ]);
 
@@ -125,7 +126,21 @@ class MessageController extends Controller
 
     public function countBadges()
     {
-        $count['data'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+        $count['messages'] = Message::where([['to_id_user', auth()->id()], ['read', 0]])->count();
+
+        $applicationCounter = 0;
+
+        if(auth()->user()->id_account_type == 2)
+        {
+            foreach (auth()->user()->advertisements as $key => $advertisement) {
+                $applicationCounter += DB::table('users_advertisements')->where([['id_advertisement', $advertisement->id], ['accepted', 0], ['read_by_parent', 0]])->count();
+            }
+        }
+        elseif(auth()->user()->id_account_type == 1)
+        {
+            $applicationCounter = DB::table('users_advertisements')->where([['id_user', auth()->id()], ['accepted', 1], ['read_by_nanny', 0]])->count();
+        }
+        $count['applications'] = $applicationCounter;
 
         echo json_encode($count);
         exit;

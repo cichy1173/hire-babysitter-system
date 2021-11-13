@@ -1,17 +1,19 @@
 <?php
 
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
-use App\Models\Advertisement;
 
 Auth::routes(['verify' => true]);
 
@@ -45,8 +47,15 @@ Route::delete('/advertisement/show/{advert}', [AdvertisementController::class, '
 Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSingle'])->name('showSingle');
 Route::get('/advertisement/edit/{advert}', [AdvertisementController::class, 'editShow'])->middleware('auth')->name('edit_advert');
 Route::post('/advertisement/edit/{advert}', [AdvertisementController::class, 'editSave'])->middleware('auth');
+Route::post('/advertisement/accept/{advert}', [AdvertisementController::class, 'addApplication'])->middleware('auth')->name('addApplication');
+Route::get('/advertisements/sendApplications', [AdvertisementController::class, 'sendApplications'])->middleware('auth')->name('sendApplications');
+Route::get('/advertisements/receivedApplications', [AdvertisementController::class, 'receivedApplications'])->middleware('auth')->name('receivedApplications');
+Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
 Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+//User opinions
+Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->name('userOpinions');
+Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');
@@ -73,5 +82,12 @@ Route::post('/messages/markread/{id}', [MessageController::class, 'markRead'])->
 Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middleware('auth');
 
 
-//calendar
-Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
+//Administator
+Route::prefix('admin')->name('admin.')->group(function (){
+    Route::resource('/users', UserController::class);
+    
+});
+
+Route::post('admin/users/{user}', [UserController::class, 'block'])->name('admin.users.block');
+Route::put('admin/users/{user}', [UserController::class, 'unblock'])->name('admin.users.unblock');
+Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');

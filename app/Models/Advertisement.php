@@ -45,4 +45,9 @@ class Advertisement extends Model
     {
         return $this->belongsToMany(Skill::class, 'skills_advertisements', 'id_advertisement', 'id_skill');
     }
+
+    public function applications()
+    {
+        return $this -> belongsToMany(User::class, 'users_advertisements', 'id_advertisement', 'id_user');
+    }
 }

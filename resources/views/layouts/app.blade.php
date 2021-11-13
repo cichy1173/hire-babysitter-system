@@ -60,15 +60,30 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="bg-info dropdown-item" href="{{route('add_advert')}}">Dodaj ogłoszenie</a>
-                                        <a class="dropdown-item" href="{{route('show_advert')}}">Moje ogłoszenia</a>
-                                        <a class="dropdown-item" href="{{ route('userEdit') }}">Edytuj konto</a>
+                                        <a class="bg-info dropdown-item" href="{{route('add_advert')}}">{{__('Dodaj ogłoszenie')}}</a>
+                                        <a class="dropdown-item" href="{{route('show_advert')}}">{{__('Moje ogłoszenia')}}</a>
+                                        <a class="dropdown-item" href="{{route('userOpinions', auth()->user())}}">{{__('Moje opinie')}}</a>
+                                        @if (auth()->user()->id_account_type == 1)
+                                            <a class="dropdown-item" href="{{route('sendApplications')}}" id="applications" name="applications">{{__('Wysłane zgłoszenia')}}</a>
+                                        @else
+                                            <a class="dropdown-item" href="{{route('receivedApplications')}}" id="applications" name="applications">{{__('Otrzymane zgłoszenia')}}</a>
+                                        @endif
+                                        <a class="dropdown-item" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('calendar') }}">Dodatki</a>
+                                        <a class="dropdown-item" href="#">{{__('Dodatki')}}</a>
                                       </div>
                                 </div>
                             </li>
+
+                            @if (Auth::user()->id_account_type == '3')
+
+                            <li class="nav-item mx-2">
+                                <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('admin.users.index') }}">{{ __('Administrator') }}</a>
+                            </li>
+
+                            @endif
+
 
                             <li class="nav-item mx-2">
                                 <form id="my_form" action="{{ route('logout') }}" method="POST">
@@ -109,6 +124,7 @@
             </div>
         </footer>
     </div>
+
     <script  src="{{asset('js/add_form.js')}}"></script>
     <script>
         $(document).ready(function()
@@ -122,14 +138,32 @@
                     type: 'get',
                     dataType: 'json',
                     success: function(response){
-                        if(response['data'] > 0)
+                        if(Object.keys(response).length > 0)
                         {
                             let userButton = $('#userButton').html();
                             let userMessages = $('#userMessages').html();
-                            let badge = '<span class="badge badge-danger">'+ response['data'] +'</span>';
+                            let userApplications = $('#applications').html();
+                            let countAll = response['messages'] + response['applications'];
+                            
+                            
 
-                            $('#userButton').html(userButton + ' ' + badge);
-                            $('#userMessages').html(userMessages + ' ' + badge);
+                            if(countAll > 0)
+                            {
+                                let badgeMain = '<span class="badge badge-danger">'+ countAll +'</span>';
+                                $('#userButton').html(userButton + ' ' + badgeMain);
+                            }
+
+                            if(response['messages'] > 0)
+                            {
+                                let badgeMessages = '<span class="badge badge-danger">'+ response['messages'] +'</span>';
+                                $('#userMessages').html(userMessages + ' ' + badgeMessages);
+                            }
+                            
+                            if(response['applications'] > 0)
+                            {
+                                let badgeApplications = '<span class="badge badge-danger">'+ response['applications'] +'</span>';
+                                $('#applications').html(userApplications + ' ' + badgeApplications);
+                            }
                         }                    
                     }
                 });
