@@ -35,12 +35,32 @@ class ShowUserController extends Controller
             }
         }
    
-        $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about')
+        $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about', 'is_blocked', 'id_account_type')
                         ->where('id', $user->id)->get();
         return view('User.showUser', [
             'user' => $user[0],
             'opinionAvailable' => $opinionAvailable,
             'blocked' => $blocked
         ]);
+    }
+
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        foreach ($user->sendMessages as $key => $value) {
+            $value->from_id_user = 1;
+            $value->save();
+        }
+        //$user->recievedMessages()->delete();
+        foreach ($user->recievedMessages as $key => $value) {
+            $value->to_id_user = 1;
+            $value->save();
+        }
+
+        
+         User::destroy($id);
+         return redirect()->route('homePage')->with('status', 'Użytkownik został usunięty');
     }
 }
