@@ -72,6 +72,7 @@
                                        </button> 
 
                                        <form id="block-user-form-{{ $user->id }}" action="{{ route('admin.users.block', $user->id) }}" method="POST" style="display: none">
+                                        
                                            @csrf
                                        </form>
 
