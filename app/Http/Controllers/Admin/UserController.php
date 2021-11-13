@@ -81,7 +81,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+
+        return view('admin.users.edit', [
+            'user' => User::find($id)
+        ]);
     }
 
     /**
@@ -93,7 +97,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $this->validate($request, [
+            'name' => 'required|max:128',  
+            'surname' => 'required|max:128', 
+            'email' => 'required|email', 
+            'id_account_type' => 'required',
+            'nickname' => 'required|max:15',
+            'about' => 'max:5000'
+        ]);
+
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->id_account_type = $request->id_account_type;
+        $user->nickname = $request->nickname;
+        $user->about = $request->about;
+
+
+        $user->save();
+
+        return back()->with('success', 'Użytkownik wyedytowany pomyślnie');
     }
 
     /**
