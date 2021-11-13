@@ -13,7 +13,7 @@
                             <div class="mb-3 row">
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" value="1" checked>
+                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" value="1" @if(auth()->user()->id_account_type == 2 ) checked @endif disabled>
                                         <label class="form-check-label" for="advert_type_select_1">
                                             Szukam opiekunki
                                         </label>
@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2" value="2">
+                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2" value="2" @if(auth()->user()->id_account_type == 1 ) checked @endif disabled> 
                                         <label class="form-check-label" for="advert_type_select_2">
                                             Jestem opiekunką
                                         </label>
