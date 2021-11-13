@@ -14,6 +14,22 @@
                         </div>
                     @endif
 
+                    @if ($notifications > 0)
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="card text-center">
+                                    <div class="card-body bg-info">
+                                        @if ($notifications == 1)
+                                            {{__('Masz '.$notifications.' użytkownika, któremu możesz wystawić opinię')}}
+                                        @else
+                                            {{__('Masz '.$notifications.' użytkowników, którym możesz wystawić opinię')}}
+                                        @endif                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if (count($items) > 0)
                             @foreach ($items as $item)
                                 <div class="row mb-3">

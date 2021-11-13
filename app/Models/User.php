@@ -57,7 +57,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function myApplications()
     {
-        return $this -> belongsToMany(Advertisement::class, 'users_advertisements', 'id_user', 'id_advertisement');
+        return $this -> belongsToMany(Advertisement::class, 'users_advertisements', 'id_user', 'id_advertisement')
+            ->withPivot('time_from', 
+                        'time_to', 
+                        'accepted', 
+                        'read_by_parent', 
+                        'read_by_nanny', 
+                        'created_user_opinion', 
+                        'created_supervisor_opinion');
     }
 
     public function sendMessages()
@@ -68,5 +75,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function recievedMessages()
     {
         return $this->hasMany(Message::class, 'to_id_user');
+    }
+
+    public function sendOpinions()
+    {
+        return $this->hasMany(Opinion::class, 'from_id_user');
+    }
+
+    public function recievedOpinions()
+    {
+        return $this->hasMany(Opinion::class, 'to_id_user');
     }
 }
