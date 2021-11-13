@@ -38,7 +38,50 @@
                                 @foreach ($users as $user)
                                 <tr>
                                     <th scope="row">{{ $user->id }}</th>
-                                    <td>{{ $user->nickname }}</td>
+                                    <td><button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#showUserinfo-{{ $user->id }}" >{{ $user->nickname }}</button></td>
+
+                                    <div class="modal fade" id="showUserinfo-{{ $user->id }}" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="showUserinfo">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title font-weight-bold" id="showUserinfo-{{ $user->id }}">{{__('Dane użytkownika ')}} {{$user->nickname}}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if ($user->id_account_type == '3')
+                                                    <div class="alert alert-info text-center" role="alert">
+                                                        Ten użytkownik jest adminem
+                                                      </div>
+                                                    @endif
+
+                                                    @if ($user->is_blocked == '1')
+                                                    <div class="alert alert-warning text-center" role="alert">
+                                                        Ten użytkownik jest zablokowany
+                                                      </div>
+
+                                                      @elseif ($user->is_blocked == '0')
+                                                      <div class="alert alert-success text-center" role="alert">
+                                                        Ten użytkownik jest odblokowany
+                                                      </div>
+                                                    @endif
+                                                  
+                                                    <p><b>Imię:</b> {{ $user->name }}</p>
+                                                    <p><b>Nazwisko:</b> {{ $user->surname }}</p>
+                                                    <p><b>Nazwa użytkownika:</b> {{ $user->nickname }}</p>
+                                                    <p><b>Adres e-mail:</b> {{ $user->email }}</p>
+                                                    <p><b>Typ konta:</b> @if ( $user->id_account_type == '1' ) Opiekun 
+                                                        @elseif ($user->id_account_type == '2') Zwykły użytkownik 
+                                                        @elseif ($user->id_account_type == '3') Administrator</p> @endif
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @if ($user->id_account_type != '3')  <a class="btn btn-sm btn-primary m-1" href="{{ route('admin.users.edit', $user->id) }}"
