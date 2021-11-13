@@ -52,9 +52,9 @@ Route::get('/advertisements/sendApplications', [AdvertisementController::class, 
 Route::get('/advertisements/receivedApplications', [AdvertisementController::class, 'receivedApplications'])->middleware('auth')->name('receivedApplications');
 Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
-Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::get('/profile/{user}', [ShowUserController::class, 'index'])->middleware('auth')->name('showUser');
 //User opinions
-Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->name('userOpinions');
+Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->middleware('auth')->name('userOpinions');
 Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
 
 //editing user profile
