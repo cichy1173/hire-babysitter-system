@@ -111,7 +111,7 @@
                                                                                                                     <input type="text" name="user" id="user" value="{{$application->id}}" hidden>
                                                                                                                     <div class="modal-body bg-warning">
                                                                                                                         <p>{{__('Czy jesteś pewien, że chcesz zaakceptować tego użytkownika?')}}</p>
-                                                                                                                        <p>{{__('Odpołanie akceptacji jest niemożliwe.')}}</p>
+                                                                                                                        <p>{{__('Odwołanie akceptacji jest niemożliwe.')}}</p>
                                                                                                                         <p>{{__('Wybrany użytkownik zostanie powiadomiony o wyborze.')}}</p>
                                                                                                                     </div> 
                                                                                                                     <div class="modal-footer">
