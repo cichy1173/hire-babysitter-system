@@ -53,6 +53,7 @@ Route::get('/advertisements/receivedApplications', [AdvertisementController::cla
 Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
 Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::delete('/profile/{user}', [ShowUserController::class, 'destroy'])->name('showUser.destroy');
 //User opinions
 Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->name('userOpinions');
 Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
