@@ -23,7 +23,7 @@
                                 <div class="col">
                                     <div class="card bg-warning">
                                         <div class="card-body">
-                                            {{__('Użytkownik zablokwany')}}
+                                            {{__('Użytkownik zablokowany')}}
                                         </div>
                                     </div>
                                 </div>
