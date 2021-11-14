@@ -38,6 +38,7 @@ class AdvertisementController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         if(auth()->user()->id_account_type == 2)
         {
             $this->validate($request, [

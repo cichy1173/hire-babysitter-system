@@ -5,15 +5,23 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header border-success">{{ __('Dodaj ogłoszenie') }}</div>
+                    <div class="card-header border-success">
+                        @if(auth()->user()->id_account_type == 2)
+                            <p class="d-inline text-muted">{{__('Dodajesz ogłoszenie typu')}}</p>
+                            <p class="d-inline">{{__('POSZUKUJĘ OPIEKUNA ')}}</p>
+                        @else
+                            <p class="d-inline text-muted">{{__('Dodajesz ogłoszenie typu')}}</p>
+                            <p class="d-inline">{{__('JESTEM OPIEKUNEM ')}}</p>
+                        @endif
+                    </div>
 
                     <div class="card-body">
                         <form action="{{ route('add_advert') }}" method="post">
                             @csrf
-                            <div class="mb-3 row">
+                            <div class="mb-3 row" hidden>
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" value="1" @if(auth()->user()->id_account_type == 2 ) checked @endif disabled>
+                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_1" value="1" @if(auth()->user()->id_account_type == 2 ) checked @endif>
                                         <label class="form-check-label" for="advert_type_select_1">
                                             Szukam opiekunki
                                         </label>
@@ -26,7 +34,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-control">
-                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2" value="2" @if(auth()->user()->id_account_type == 1 ) checked @endif disabled> 
+                                        <input class="form-check-input @error('advert_type_select') alert alert-danger is-invalid @enderror" type="radio" onchange="change_add_advert_form(this)" name="advert_type_select" id="advert_type_select_2" value="2" @if(auth()->user()->id_account_type == 1 ) checked @endif> 
                                         <label class="form-check-label" for="advert_type_select_2">
                                             Jestem opiekunką
                                         </label>
