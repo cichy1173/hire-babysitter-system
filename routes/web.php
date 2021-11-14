@@ -84,11 +84,11 @@ Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middl
 
 
 //Administator
-Route::prefix('admin')->name('admin.')->group(function (){
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
     Route::resource('/users', UserController::class);
     
 });
 
-Route::post('admin/users/{user}/block', [UserController::class, 'block'])->name('admin.users.block');
-Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->name('admin.users.unblock');
-Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');
+Route::post('admin/users/{user}/block', [UserController::class, 'block'])->middleware('admin')->name('admin.users.block');
+Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->middleware('admin')->name('admin.users.unblock');
+Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->middleware('admin')->name('admin.users.makeadmin');

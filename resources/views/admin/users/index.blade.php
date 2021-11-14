@@ -11,7 +11,7 @@
                     <div class="card-header">{{ __('Panel administratora') }}</div>
     
                     <div class="card-body">
-                        @if (Auth::user()->id_account_type == '3')
+                        @admin
 
                         @if (session('success'))
                         <div class="text-center alert alert-success ">
@@ -172,7 +172,7 @@
                           </div>
 
 
-                        @endif
+                        @endadmin
 
                        
                        
