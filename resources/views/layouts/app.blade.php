@@ -63,11 +63,7 @@
                                         <a class="bg-info dropdown-item" href="{{route('add_advert')}}">{{__('Dodaj ogłoszenie')}}</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">{{__('Moje ogłoszenia')}}</a>
                                         <a class="dropdown-item" href="{{route('userOpinions', auth()->user())}}">{{__('Moje opinie')}}</a>
-                                        @if (auth()->user()->id_account_type == 1)
-                                            <a class="dropdown-item" href="{{route('sendApplications')}}" id="applications" name="applications">{{__('Zgłoszenia')}}</a>
-                                        @else
-                                            <a class="dropdown-item" href="{{route('receivedApplications')}}" id="applications" name="applications">{{__('Zgłoszenia')}}</a>
-                                        @endif
+                                        <a class="dropdown-item" href="{{route('showApplications')}}" id="applications" name="applications">{{__('Zgłoszenia')}}</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>

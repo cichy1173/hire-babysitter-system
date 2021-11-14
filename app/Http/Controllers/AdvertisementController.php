@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\Advertisement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Application;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use PHPUnit\Framework\Constraint\Count;
 
 class AdvertisementController extends Controller
@@ -102,8 +103,8 @@ class AdvertisementController extends Controller
         $district_id = District::find($request->input_district);
         $district_id->advertisements()->attach($advert_id);
 
-        foreach ($request->input_skill as $key => $value) {
-            $skill_id = Skill::find($value);
+        foreach ($request->input_skill as $key => $advert) {
+            $skill_id = Skill::find($advert);
             $skill_id->advertisements()->attach($advert_id, ['is_deleted' => 0]);
         }
 
@@ -249,8 +250,8 @@ class AdvertisementController extends Controller
         $district_id = District::find($request->input_district);
         $district_id->advertisements()->attach($advert->id);
 
-        foreach ($request->input_skill as $key => $value) {
-            $skill_id = Skill::find($value);
+        foreach ($request->input_skill as $key => $advert) {
+            $skill_id = Skill::find($advert);
             $skill_id->advertisements()->attach($advert->id, ['is_deleted' => 0]);
         }
 
@@ -259,101 +260,144 @@ class AdvertisementController extends Controller
 
     public function addApplication(Advertisement $advert)
     {
-        if(auth()->user()->id_account_type == 2)
+
+        if(DB::table('users_advertisements')->where([
+            ['id_user', auth()->id()],
+            ['id_advertisement', $advert->id]
+            ])->exists())
         {
-            $advert->applications()->attach(auth()->user()->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);
+            return redirect()->route('showApplications')->with('error', 'Takie zgłoszenie już istnieje');
         }
-        elseif(auth()->user()->id_account_type == 1 )
+        else
         {
-            auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);
+            auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);       
+
+            return redirect()->route('showApplications')->with('status', 'Pomyślnie dodano zgłoszenie');
         }
         
-
-        return redirect()->back();
     }
 
-    public function sendApplications()
+    public function showApplications(Request $request)
     {
-        $applications = auth()->user()->myApplications;
-
+        $USER_ID = auth()->id();
+        $myAdverts = auth()->user()->advertisements;
+        $myApplications = auth()->user()->myApplications;
         $notifications = 0;
-        
+        $merge = $myAdverts -> merge($myApplications);
+
+        $merge = $merge->sortByDesc('created_at');
+
         $items = array();
-        foreach ($applications as $key => $application) {
-            $item['advert'] = $application;
-            $item['advert_user'] = User::find($application->id_user);
-            $pivot = DB::table('users_advertisements')->where('id_advertisement', $application->id)->where('id_user', auth()->id())->get();
-            DB::table('users_advertisements')->where([['id_advertisement', $application->id], ['id_user', auth()->id()], ['read_by_nanny', 0]])->update(['read_by_nanny' => 1]);
 
-            $item['accepted'] = $pivot[0]->accepted;
-
-            array_push($items, $item);
-
-            $notifications += DB::table('users_advertisements')->where([
-                ['id_advertisement', $application->id],
-                ['id_user', auth()->id()],
-                ['accepted', 1], 
-                ['read_by_parent', 1], 
-                ['read_by_nanny', 1], 
-                ['created_supervisor_opinion', 0], 
-                ['time_to', '<', now()]
-            ])->count();
-        }
-
-        return view('advertisements.sendApplications', [
-            'items' => $items,
-            'notifications' => $notifications
-        ]);
-
-    }
-
-    public function receivedApplications()
-    {
-        $adverts = auth()->user()->advertisements;
-
-        $advertsWithApplications = array();
-
-        $notifications = 0;
-
-        foreach ($adverts as $key => $advert) {
-            if( count($advert->applications) > 0 )
+        foreach ($merge as $key => $advert) {
+            if(count($advert->applications) > 0) 
             {
+                $item = array();
                 $item['advert'] = $advert;
-                $item['applications'] = $advert->applications;
-                $item['accepted'] = 0;
-                foreach ($item['applications'] as $key => $value) {
-                    $pivot = DB::table('users_advertisements')
-                        ->where('id_advertisement', $item['advert']->id)
-                        ->where('id_user', $value->id)->get();
-                    DB::table('users_advertisements')->where([
-                        ['id_advertisement', $item['advert']->id], 
-                        ['id_user', $value->id], 
-                        ['read_by_parent', 0]
-                    ])->update(['read_by_parent' => 1]);
 
-                    $value['accepted'] = $pivot[0]->accepted;
+                if($USER_ID == $advert->id_user)
+                {
+                    $item['application_type'] = 'R';
+                    $item['applications'] = $advert->applications;
+                    $item['accepted'] = 0;
+                    foreach ($item['applications'] as $key => $application) {
+                        if(auth()->user()->id_account_type == 1)
+                        {
+                            if($application->pivot->read_by_nanny == 0)
+                            {
+                                $application->pivot->read_by_nanny = 1;
+                                $application->pivot->save();
+                            }                            
 
-                    if($value['accepted'] == 1)
-                    {
-                        $item['accepted'] = 1;
+                            $notifications += $application->pivot->where([
+                                ['accepted', 1],
+                                ['read_by_parent', 1],
+                                ['read_by_nanny', 1],
+                                ['created_supervisor_opinion', 0],
+                                ['time_to', '<', now()]
+                                ])->count();
+                        }
+                        elseif(auth()->user()->id_account_type == 2)
+                        {
+                            if($application->pivot->read_by_parent == 0)
+                            {
+                                $application->pivot->read_by_parent = 1;
+                                $application->pivot->save();
+                            }                            
+
+                            $notifications += $application->pivot->where([
+                                ['accepted', 1],
+                                ['read_by_parent', 1],
+                                ['read_by_nanny', 1],
+                                ['created_user_opinion', 0],
+                                ['time_to', '<', now()]
+                                ])->count();
+                        }
+                        if($application->pivot->accepted == 1)
+                        {
+                            $item['accepted'] = 1;
+                        }
                     }
                 }
-                array_push($advertsWithApplications, $item);
+                else
+                {
+                    $item['application_type'] = 'S';
+                    $item['application'] = $advert->applications->where('id', $USER_ID)[0];
 
-                $notifications += DB::table('users_advertisements')->where([
-                    ['id_advertisement', $advert->id], 
-                    ['accepted', 1], 
-                    ['read_by_parent', 1], 
-                    ['read_by_nanny', 1], 
-                    ['created_user_opinion', 0], 
-                    ['time_to', '<', now()]
-                ])->count();
+                    if(auth()->user()->id_account_type == 1)
+                        {
+                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny == 0)
+                            {
+                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny = 1;
+                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                            }                            
+
+                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                                ['accepted', 1],
+                                ['read_by_parent', 1],
+                                ['read_by_nanny', 1],
+                                ['created_supervisor_opinion', 0],
+                                ['time_to', '<', now()]
+                                ])->count();
+                        }
+                        elseif(auth()->user()->id_account_type == 2)
+                        {
+                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent == 0)
+                            {
+                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent = 1;
+                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                            }                            
+
+                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                                ['accepted', 1],
+                                ['read_by_parent', 1],
+                                ['read_by_nanny', 1],
+                                ['created_user_opinion', 0],
+                                ['time_to', '<', now()]
+                                ])->count();
+                        }
+                }
+
+                array_push($items, $item);
             }
         }
-        //dd($advertsWithApplications);
 
-        return view('advertisements.receivedApplications', [
-            'items' => $advertsWithApplications,
+        $total = count($items);
+        $per_page = 5;
+        $current_page = $request->input('page') ?? 1;
+        $starting_point = ($current_page * $per_page) - $per_page;
+
+        $items = array_slice($items, $starting_point, $per_page, true);
+
+        $items = new Paginator($items, $total, $per_page, $current_page, [
+            'path' => $request->url(),
+            'query' => $request->query()
+        ]);
+
+        //dd($items, $notifications);
+
+        return view('advertisements.showApplications', [
+            'items' => $items,
             'notifications' => $notifications
         ]);
     }
