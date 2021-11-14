@@ -4,14 +4,15 @@ use App\Models\Advertisement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\User\ShowUserController;
+use App\Http\Controllers\UsersAdvertismentController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
 
@@ -91,3 +92,7 @@ Route::prefix('admin')->name('admin.')->group(function (){
 Route::post('admin/users/{user}', [UserController::class, 'block'])->name('admin.users.block');
 Route::put('admin/users/{user}', [UserController::class, 'unblock'])->name('admin.users.unblock');
 Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');
+
+
+//Calendar
+Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->name('calendar');

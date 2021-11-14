@@ -71,7 +71,7 @@
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">{{__('Dodatki')}}</a>
+                                        <a class="dropdown-item" href="{{ route('calendar') }}">{{__('Dodatki')}}</a>
                                       </div>
                                 </div>
                             </li>
