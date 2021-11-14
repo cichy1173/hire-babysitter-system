@@ -103,8 +103,8 @@
                                             
                                         </div>
                                         
-                                        @if(!($user->id_account_type == '3'))
-                                                @if(auth()->user()->id_account_type == '3')
+                                    @if(!($user->id_account_type == '3'))
+                                        @admin
                                                 
                                                 <div class="float-left">
                                                     <button type="button" data-toggle="modal" data-target="#deleteAccountPopUp" class=" btn btn-outline-danger">{{ __('Usuń użytkownika') }}</button>
@@ -139,30 +139,30 @@
 
                                             @if ($user->is_blocked == 0)
 
-                                            <button type="button" class="btn btn-outline-warning"
-                                            onclick="event.preventDefault();  document.getElementById('block-user-form-{{ $user->id }}').submit() " >
-                                                Zablokuj
-                                            </button> 
+                                                <button type="button" class="btn btn-outline-warning"
+                                                onclick="event.preventDefault();  document.getElementById('block-user-form-{{ $user->id }}').submit() " >
+                                                    Zablokuj
+                                                </button> 
 
-                                            <form id="block-user-form-{{ $user->id }}" action="{{ route('admin.users.block', $user->id) }}" method="POST" style="display: none">
-                                                @csrf
-                                            </form>
+                                                <form id="block-user-form-{{ $user->id }}" action="{{ route('admin.users.block', $user->id) }}" method="POST" style="display: none">
+                                                    @csrf
+                                                </form>
 
                                             @elseif ($user->is_blocked == 1)
-                                            <button type="button" class="btn btn-outline-success"
-                                            onclick="event.preventDefault();  document.getElementById('unblock-user-form-{{ $user->id }}').submit() " >
-                                                Odblokuj
-                                            </button> 
+                                                <button type="button" class="btn btn-outline-success"
+                                                onclick="event.preventDefault();  document.getElementById('unblock-user-form-{{ $user->id }}').submit() " >
+                                                    Odblokuj
+                                                </button> 
 
-                                            <form id="unblock-user-form-{{ $user->id }}" action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display: none">
-                                                @csrf
-                                                @method('PUT')
-                                            </form>
+                                                <form id="unblock-user-form-{{ $user->id }}" action="{{ route('admin.users.unblock', $user->id) }}" method="POST" style="display: none">
+                                                    @csrf
+                                                    @method('PUT')
+                                                </form>
                                             @endif
                                                 </div>
                                         
-                                        @endif
-                                        @endif
+                                        @endadmin
+                                    @endif
                                     </div>                            
                                 </div>
 

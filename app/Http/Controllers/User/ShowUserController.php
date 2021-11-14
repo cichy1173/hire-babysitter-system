@@ -15,7 +15,7 @@ class ShowUserController extends Controller
         $opinionAvailable = 0;
         $blocked = $user->is_blocked;
 
-        if(auth()->user()->id_account_type == 1)
+        if(auth()->check() && auth()->user()->id_account_type == 1)
         {
             $applications = auth()->user()->myApplications;
             
@@ -27,7 +27,7 @@ class ShowUserController extends Controller
                 }
             }
         }
-        elseif(auth()->user()->id_account_type == 2)
+        elseif(auth()->check() && auth()->user()->id_account_type == 2)
         {
             if(DB::table('users_advertisements')->where([['id_user', $user->id], ['accepted', 1], ['time_to', '<', now()]])->count() > 0)
             {

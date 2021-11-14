@@ -76,13 +76,13 @@
                                 </div>
                             </li>
 
-                            @if (Auth::user()->id_account_type == '3')
+                            @admin
 
-                            <li class="nav-item mx-2">
-                                <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('admin.users.index') }}">{{ __('Administrator') }}</a>
-                            </li>
+                                <li class="nav-item mx-2">
+                                    <a class=" btn btn-outline-danger font-weight-bold" href="{{ route('admin.users.index') }}">{{ __('Administrator') }}</a>
+                                </li>
 
-                            @endif
+                            @endadmin
 
 
                             <li class="nav-item mx-2">
