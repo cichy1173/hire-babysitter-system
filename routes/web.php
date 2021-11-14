@@ -49,13 +49,13 @@ Route::get('/advertisement/{advert}', [AdvertisementController::class, 'showSing
 Route::get('/advertisement/edit/{advert}', [AdvertisementController::class, 'editShow'])->middleware('auth')->name('edit_advert');
 Route::post('/advertisement/edit/{advert}', [AdvertisementController::class, 'editSave'])->middleware('auth');
 Route::post('/advertisement/accept/{advert}', [AdvertisementController::class, 'addApplication'])->middleware('auth')->name('addApplication');
-Route::get('/advertisements/sendApplications', [AdvertisementController::class, 'sendApplications'])->middleware('auth')->name('sendApplications');
-Route::get('/advertisements/receivedApplications', [AdvertisementController::class, 'receivedApplications'])->middleware('auth')->name('receivedApplications');
+Route::get('/advertisements/showApplications', [AdvertisementController::class, 'showApplications'])->middleware('auth')->name('showApplications');
 Route::post('/advertisements/accept', [AdvertisementController::class, 'acceptUser'])->middleware('auth')->name('acceptUser');
 //show another user profile
-Route::get('/profile/{user}', [ShowUserController::class, 'index'])->name('showUser');
+Route::get('/profile/{user}', [ShowUserController::class, 'index'])->middleware('auth')->name('showUser');
+Route::delete('/profile/{user}', [ShowUserController::class, 'destroy'])->name('showUser.destroy');
 //User opinions
-Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->name('userOpinions');
+Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->middleware('auth')->name('userOpinions');
 Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
 
 //editing user profile
@@ -84,15 +84,11 @@ Route::get('/messages/badges', [MessageController::class, 'countBadges'])->middl
 
 
 //Administator
-Route::prefix('admin')->name('admin.')->group(function (){
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
     Route::resource('/users', UserController::class);
     
 });
 
-Route::post('admin/users/{user}', [UserController::class, 'block'])->name('admin.users.block');
-Route::put('admin/users/{user}', [UserController::class, 'unblock'])->name('admin.users.unblock');
-Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('admin.users.makeadmin');
-
-
-//Calendar
-Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->name('calendar');
+Route::post('admin/users/{user}/block', [UserController::class, 'block'])->middleware('admin')->name('admin.users.block');
+Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->middleware('admin')->name('admin.users.unblock');
+Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->middleware('admin')->name('admin.users.makeadmin');

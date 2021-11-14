@@ -15,7 +15,7 @@ class ShowUserController extends Controller
         $opinionAvailable = 0;
         $blocked = $user->is_blocked;
 
-        if(auth()->user()->id_account_type == 1)
+        if(auth()->check() && auth()->user()->id_account_type == 1)
         {
             $applications = auth()->user()->myApplications;
             
@@ -27,7 +27,7 @@ class ShowUserController extends Controller
                 }
             }
         }
-        elseif(auth()->user()->id_account_type == 2)
+        elseif(auth()->check() && auth()->user()->id_account_type == 2)
         {
             if(DB::table('users_advertisements')->where([['id_user', $user->id], ['accepted', 1], ['time_to', '<', now()]])->count() > 0)
             {
@@ -35,12 +35,32 @@ class ShowUserController extends Controller
             }
         }
    
-        $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about')
+        $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about', 'is_blocked', 'id_account_type')
                         ->where('id', $user->id)->get();
         return view('User.showUser', [
             'user' => $user[0],
             'opinionAvailable' => $opinionAvailable,
             'blocked' => $blocked
         ]);
+    }
+
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        foreach ($user->sendMessages as $key => $value) {
+            $value->from_id_user = 1;
+            $value->save();
+        }
+        //$user->recievedMessages()->delete();
+        foreach ($user->recievedMessages as $key => $value) {
+            $value->to_id_user = 1;
+            $value->save();
+        }
+
+        
+         User::destroy($id);
+         return redirect()->route('homePage')->with('status', 'Użytkownik został usunięty');
     }
 }

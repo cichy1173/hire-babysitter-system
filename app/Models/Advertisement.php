@@ -48,6 +48,13 @@ class Advertisement extends Model
 
     public function applications()
     {
-        return $this -> belongsToMany(User::class, 'users_advertisements', 'id_advertisement', 'id_user');
+        return $this -> belongsToMany(User::class, 'users_advertisements', 'id_advertisement', 'id_user')
+            ->withPivot('time_from', 
+                            'time_to', 
+                            'accepted', 
+                            'read_by_parent', 
+                            'read_by_nanny', 
+                            'created_user_opinion', 
+                            'created_supervisor_opinion');
     }
 }
