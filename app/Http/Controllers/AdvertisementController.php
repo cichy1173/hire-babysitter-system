@@ -342,17 +342,18 @@ class AdvertisementController extends Controller
                 else
                 {
                     $item['application_type'] = 'S';
-                    $item['application'] = $advert->applications->where('id', $USER_ID)[0];
+                    $item['application'] = $advert->applications->where('id', $USER_ID)->first();
+                    $item['advert_user'] = User::find($item['advert']->id_user);
 
                     if(auth()->user()->id_account_type == 1)
                         {
-                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny == 0)
+                            if($advert->applications->where('id', $USER_ID)->first()->pivot->read_by_nanny == 0)
                             {
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny = 1;
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->read_by_nanny = 1;
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->save();
                             }                            
 
-                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                            $notifications += $advert->applications->where('id', $USER_ID)->first()->pivot->where([
                                 ['accepted', 1],
                                 ['read_by_parent', 1],
                                 ['read_by_nanny', 1],
@@ -362,13 +363,13 @@ class AdvertisementController extends Controller
                         }
                         elseif(auth()->user()->id_account_type == 2)
                         {
-                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent == 0)
+                            if($advert->applications->where('id', $USER_ID)->first()->pivot->read_by_parent == 0)
                             {
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent = 1;
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->read_by_parent = 1;
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->save();
                             }                            
 
-                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                            $notifications += $advert->applications->where('id', $USER_ID)->first()->pivot->where([
                                 ['accepted', 1],
                                 ['read_by_parent', 1],
                                 ['read_by_nanny', 1],

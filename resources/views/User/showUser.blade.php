@@ -16,6 +16,12 @@
                     </div>                       
                 @endif
                 
+                @if (session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>                       
+                @endif
+
                 @if (@isset($user))
                     <div class="card-body">
                         @if ($blocked == 1)
