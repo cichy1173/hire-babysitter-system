@@ -9,7 +9,7 @@
                
             </div>
             @endif
-            <div class="card text-center">
+            <div class="card text-center @if($blocked == 1) border-danger @endif">
                 @if (session('status'))
                     <div class="alert alert-info" role="alert">
                         {{ session('status') }}
@@ -17,7 +17,7 @@
                 @endif
                 
                 @if (@isset($user))
-                    <div class="card-body @if($blocked == 1) bg-danger @endif">
+                    <div class="card-body">
                         @if ($blocked == 1)
                             <div class="row mb-3">
                                 <div class="col">
