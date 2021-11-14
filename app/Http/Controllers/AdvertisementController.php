@@ -38,53 +38,24 @@ class AdvertisementController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
-        if(auth()->user()->id_account_type == 2)
-        {
-            $this->validate($request, [
-                'advert_type_select' => 'required|exists:advertisement_types,id|int|same:'.'1',
-                'input_advert_title' => 'required|string|max:50',
-                'input_advert_content' => 'required|string|max:5000',
-                'input_hour_rate' => 'required|numeric|min:0|max:100',
-                'input_min_child_age' => 'required|numeric|min:0|max:18',
-                'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
-                'input_number_of_childs' => 'required|numeric|min:0|max:10',
-                'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_advert_to' => 'required|date|after:input_advert_from',
-                'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_supervise_to' => 'required|date|after:input_supervise_from',
-                'input_country' => 'required|exists:countries,id',
-                'input_voivodeship' => 'required|exists:voivodeships,id',
-                'input_city' => 'required|exists:cities,id',
-                'input_district' => 'required|exists:districts,id',
-                'input_skill' => 'required|array|exists:skills,id'
-            ]);
-        }
-        elseif(auth()->user()->id_account_type == 1)
-        {
-            $this->validate($request, [
-                'advert_type_select' => 'required|exists:advertisement_types,id|int|same:'.'2',
-                'input_advert_title' => 'required|string|max:50',
-                'input_advert_content' => 'required|string|max:5000',
-                'input_hour_rate' => 'required|numeric|min:0|max:100',
-                'input_min_child_age' => 'required|numeric|min:0|max:18',
-                'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
-                'input_number_of_childs' => 'required|numeric|min:0|max:10',
-                'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_advert_to' => 'required|date|after:input_advert_from',
-                'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_supervise_to' => 'required|date|after:input_supervise_from',
-                'input_country' => 'required|exists:countries,id',
-                'input_voivodeship' => 'required|exists:voivodeships,id',
-                'input_city' => 'required|exists:cities,id',
-                'input_district' => 'required|exists:districts,id',
-                'input_skill' => 'required|array|exists:skills,id'
-            ]);
-        }
-        else
-        {
-            return redirect()->back();
-        }
+        $this->validate($request, [
+            'advert_type_select' => 'required|exists:advertisement_types,id|int',
+            'input_advert_title' => 'required|string|max:50',
+            'input_advert_content' => 'required|string|max:5000',
+            'input_hour_rate' => 'required|numeric|min:0|max:100',
+            'input_min_child_age' => 'required|numeric|min:0|max:18',
+            'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
+            'input_number_of_childs' => 'required|numeric|min:0|max:10',
+            'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
+            'input_advert_to' => 'required|date|after:input_advert_from',
+            'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
+            'input_supervise_to' => 'required|date|after:input_supervise_from',
+            'input_country' => 'required|exists:countries,id',
+            'input_voivodeship' => 'required|exists:voivodeships,id',
+            'input_city' => 'required|exists:cities,id',
+            'input_district' => 'required|exists:districts,id',
+            'input_skill' => 'required|array|exists:skills,id'
+        ]);
         
 
         $advert_id = auth()->user()->advertisements()->create([
