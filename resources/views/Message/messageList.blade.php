@@ -1,5 +1,6 @@
 @extends('layouts.app')
 <script>
+
     function newMessage()
     {
         let id = $('#select_user').find(":selected").val();
@@ -64,7 +65,29 @@
                         });
                     }
 
-                    htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                    if(element['photo'] != null)
+                    {
+                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                                        <div class="col">\
+                                            <div class="card list-group-item-success" style="max-width: 15rem">\
+                                                <a href="{{asset("/")}}'+element['photo']+'" target="_blank">\
+                                                    <img class="card-img-top" src="{{asset("/")}}'+element['photo']+'" alt="Message photo">\
+                                                </a>\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                    }
+                    else
+                    {
+                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card list-group-item-success" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -78,13 +101,43 @@
                                             </div>\
                                         </div>\
                                     </div>';
+                    }
+                    
 
                 }
                 else
                 {
                     if(element['read'] == 1)
                     {
-                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                        if(element['photo'] != null)
+                        {
+                            htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                                        <div class="col">\
+                                            <div class="card float-right" style="max-width: 15rem">\
+                                                <a href="{{asset("/")}}'+element['photo']+'" target="_blank">\
+                                                    <img class="card-img-top" src="{{asset("/")}}'+element['photo']+'" alt="Message photo">\
+                                                </a>\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                    <div class="float-right">\
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">\
+  <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>\
+  <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>\
+</svg>\
+                                                    </div>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                        }
+                        else
+                        {
+                            htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card float-right" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -104,10 +157,33 @@
                                             </div>\
                                         </div>\
                                     </div>';
+                        }
                     }
                     else
                     {
-                        htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                        if(element['photo'] != null)
+                        {
+                            htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
+                                        <div class="col">\
+                                            <div class="card float-right" style="max-width: 15rem">\
+                                                <a href="{{asset("/")}}'+element['photo']+'" target="_blank">\
+                                                    <img class="card-img-top" src="{{asset("/")}}'+element['photo']+'" alt="Message photo">\
+                                                </a>\
+                                                <div class="card-body">\
+                                                    <p class="fs-6">\
+                                                        '+element['content']+'\
+                                                    </p>\
+                                                </div>\
+                                                <div class="card-footer text-muted">\
+                                                    '+element['created_at']+'\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>';
+                        }
+                        else
+                        {
+                            htmlToShow +=   '<div class="row mb-3" id="'+element['from_id_user']+'">\
                                         <div class="col">\
                                             <div class="card float-right" style="max-width: 15rem">\
                                                 <div class="card-body">\
@@ -121,6 +197,7 @@
                                             </div>\
                                         </div>\
                                     </div>';
+                        }
                     }
                 }
             }
@@ -141,6 +218,21 @@
                 <div class="card-header">{{ __('Wiadomości') }}</div>
 
                 <div class="card-body">
+                    @error('userTo')
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{$message}}</strong>
+                        </div>
+                    @enderror
+                    @error('userMessage')
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{$message}}</strong>
+                        </div>
+                    @enderror
+                    @error('photo')
+                        <div class="alert alert-danger" role="alert">
+                            <strong>{{$message}}</strong>
+                        </div>
+                    @enderror
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <div class="card">
@@ -154,7 +246,7 @@
                                                 </div>
                                             </div>
 
-                                            <div style="max-height: 30rem; overflow-y: auto; overflow-x: hidden;">
+                                            <div style="max-height: 34rem; overflow-y: auto; overflow-x: hidden;">
                                                 @if (count($messages) > 0)
                                                     @foreach ($messages as $message)
                                                         {{-- {{dd($message)}} --}}
@@ -206,19 +298,35 @@
                                 <div class="card-header" id="selectedUser" name="selectedUser">{{__('Wybierz rozmowę z listy')}}</div>
                                 <div class="card-body">
                                     <div class="card mb-3">
-                                        <div class="card-body scrollingContainer" id="conversationDiv" name="conversationDiv" style="max-height: 30rem; overflow-y: auto; overflow-x: hidden;">
+                                        <div class="card-body scrollingContainer" id="conversationDiv" name="conversationDiv" style="max-height: 34rem; overflow-y: auto; overflow-x: hidden;">
                                             {{__('Wybierz rozmowę z listy lub utwórz nową wiadomość')}}
                                         </div>
                                     </div>
-                                    <form class="form mb-0" action="{{route('newMessage', auth()->user())}}" method="POST">
+                                    <form class="form mb-0" action="{{route('newMessage', auth()->user())}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="input-group">
                                             <input type="text" name="userTo" id="userTo" value="-1" hidden>
                                             <div class="input-group">
-                                                <input class="form-control" type="text" id="userMessage" name="userMessage" required aria-describedby="buttonSend">
+                                                <button class="btn btn-dark" type="button" data-toggle="modal" data-target="#addFile">{{__('+')}}</button>
+                                                <input class="form-control" type="text" id="userMessage" name="userMessage" aria-describedby="buttonSend">
                                                 <button class="btn btn-dark" type="submit" id="buttonSend">{{__('Wyślij')}}</button>
                                             </div>
-                                        </div>                                        
+                                        </div> 
+                                        <div class="modal fade" id="addFile" tabindex="-1"   role="dialog" aria-labelledby="addFileLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="addFileLabel">{{__("Wybierz plik")}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <input type="file" name="photo" accept="image/png, image/jpeg, image/jpg, image/gif" class="form-control-file" id="photo">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                      
                                     </form>
                                 </div>                                
                             </div>

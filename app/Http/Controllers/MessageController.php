@@ -94,17 +94,37 @@ class MessageController extends Controller
 
     public function newMessage(Request $request)
     {
+        //dd($request);
         $this->validate($request, [
-            'userTo' => 'required|int|exists:users,id|different:1',
-            'userMessage' => 'required|string|max:2000'
+            'userTo' => 'required|int|exists:users,id|min:2',
+            'userMessage' => 'required|string|max:2000',
+            'photo' => 'nullable|file|max:4096'
         ]);
-
+        
         $content = Crypt::encryptString($request->userMessage);
 
+        
+
+        if($request->file('photo') == null)
+        {
+            Message::create([
+                'from_id_user' => auth()->user()->id,
+                'to_id_user' => $request->userTo,
+                'content' =>  $content,
+                'send_date' => now()
+            ]);
+    
+            return redirect()->back();
+        }
+
+        $path = $request->file('photo')->store('public/messageFiles');
+        $pathDatabase = str_replace('public', 'storage', $path);
+        
         Message::create([
             'from_id_user' => auth()->user()->id,
             'to_id_user' => $request->userTo,
             'content' =>  $content,
+            'photo' => $pathDatabase,
             'send_date' => now()
         ]);
 
