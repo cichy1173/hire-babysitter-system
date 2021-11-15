@@ -127,6 +127,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         $user = User::find($id);
@@ -135,7 +136,6 @@ class UserController extends Controller
             $value->from_id_user = 1;
             $value->save();
         }
-        //$user->recievedMessages()->delete();
         foreach ($user->recievedMessages as $key => $value) {
             $value->to_id_user = 1;
             $value->save();
