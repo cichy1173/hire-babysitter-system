@@ -4,6 +4,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center">
+                @if (session('status'))
+                    <div class="alert alert-info" role="alert">
+                        {{ session('status') }}
+                    </div>                       
+                @endif
+                
+                @if (session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>                       
+                @endif
                 @if (@isset($advert))
                     <div class="card-header border-success">                       
                         <div class="d-inline font-weight-bold mb-0">{{$advert->title}}</div>

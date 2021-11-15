@@ -238,13 +238,13 @@ class AdvertisementController extends Controller
             ['id_advertisement', $advert->id]
             ])->exists())
         {
-            return redirect()->route('showApplications')->with('error', 'Takie zgłoszenie już istnieje');
+            return redirect()->back()->with('error', 'Takie zgłoszenie już istnieje');
         }
         else
         {
             auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);       
 
-            return redirect()->route('showApplications')->with('status', 'Pomyślnie dodano zgłoszenie');
+            return redirect()->back()->with('status', 'Pomyślnie dodano zgłoszenie');
         }
         
     }

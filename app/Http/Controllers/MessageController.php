@@ -94,17 +94,37 @@ class MessageController extends Controller
 
     public function newMessage(Request $request)
     {
+        //dd($request);
         $this->validate($request, [
-            'userTo' => 'required|int|exists:users,id|different:1',
-            'userMessage' => 'required|string|max:2000'
+            'userTo' => 'required|int|exists:users,id|min:2',
+            'userMessage' => 'required|string|max:2000',
+            'photo' => 'nullable|file|max:4096'
         ]);
-
+        
         $content = Crypt::encryptString($request->userMessage);
 
+        
+
+        if($request->file('photo') == null)
+        {
+            Message::create([
+                'from_id_user' => auth()->user()->id,
+                'to_id_user' => $request->userTo,
+                'content' =>  $content,
+                'send_date' => now()
+            ]);
+    
+            return redirect()->back();
+        }
+
+        $path = $request->file('photo')->store('public/messageFiles');
+        $pathDatabase = str_replace('public', 'storage', $path);
+        
         Message::create([
             'from_id_user' => auth()->user()->id,
             'to_id_user' => $request->userTo,
             'content' =>  $content,
+            'photo' => $pathDatabase,
             'send_date' => now()
         ]);
 
@@ -135,10 +155,19 @@ class MessageController extends Controller
             foreach (auth()->user()->advertisements as $key => $advertisement) {
                 $applicationCounter += DB::table('users_advertisements')->where([['id_advertisement', $advertisement->id], ['accepted', 0], ['read_by_parent', 0]])->count();
             }
+            foreach (auth()->user()->myApplications as $key => $value) {
+                if($value->pivot->accepted == 1 && $value->pivot->read_by_parent == 0)
+                {
+                    $applicationCounter += 1;
+                }
+            }
         }
         elseif(auth()->user()->id_account_type == 1)
         {
             $applicationCounter = DB::table('users_advertisements')->where([['id_user', auth()->id()], ['accepted', 1], ['read_by_nanny', 0]])->count();
+            foreach (auth()->user()->advertisements as $key => $advertisement) {
+                $applicationCounter += DB::table('users_advertisements')->where([['id_advertisement', $advertisement->id], ['accepted', 0], ['read_by_nanny', 0]])->count();
+            }
         }
         $count['applications'] = $applicationCounter;
 
