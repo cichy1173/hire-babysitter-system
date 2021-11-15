@@ -7,13 +7,7 @@ use Illuminate\Http\Request;
 
 class CheckAdmin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
+   
     public function handle(Request $request, Closure $next)
     {
         if(auth()->check() && auth()->user()->id_account_type != '3') {
@@ -26,3 +20,4 @@ class CheckAdmin
         return $next($request);
     }
 }
+
