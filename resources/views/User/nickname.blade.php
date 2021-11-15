@@ -15,18 +15,18 @@
                         <div  class="alert alert-info" role="alert">
                         {{__('Twój aktualny nick to:  ') }}   <strong>{{ Auth::user()->nickname }}</strong>
                         </div> 
+                        
+                        @error('nickname')
+                        <div class="alert alert-danger" role="alert">
+                          <strong>{{$message}}</strong>
+                        </div>
+                        @enderror
                         <form method="POST" action=" {{route('addNickname')}} ">
                            
                             @csrf
                             <div class="form-group">
                                 <input id="nickname" type="nickname" class="form-control" value="{{  Auth::user()->nickname }}"  name="nickname" autocomplete="nickname" autofocus>
-                             
-                                @error('nickname')
-                                    <span class="invalid-feedback alert alert-warning" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            
+ 
                             </div>
 
                             <div class="mb-1 row">
