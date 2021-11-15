@@ -147,11 +147,14 @@ class UserController extends Controller
     }
 
     /**
+     * 
      * Block the specified user 
      * '0' means unblocked user
      * '1' means blocked user
      * @param int $id
      */
+
+
 
     public function block($id)
     {
@@ -159,10 +162,7 @@ class UserController extends Controller
 
        $user->is_blocked = '1';
        $user->save();
-
-       
-
-       //return redirect()->route('admin.users.index')->with('success', "Użytkownik pomyślnie zablokowany!");
+ 
        return back()->with('success', "Użytkownik pomyślnie zablokowany!");
 
     }
@@ -182,8 +182,7 @@ class UserController extends Controller
        $user->is_blocked = '0';
        $user->save();
 
-      // return redirect()->route('admin.users.index')->with('success', "Użytkownik pomyślnie odblokowany!");
-
+      
       return back()->with('success', "Użytkownik pomyślnie odblokowany!");
 
     }
@@ -198,3 +197,5 @@ class UserController extends Controller
         return back()->with('success', "Użytkownik pomyślnie mianowany administratorem!");
     }
 }
+
+
