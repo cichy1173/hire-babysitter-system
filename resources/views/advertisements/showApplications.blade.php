@@ -168,16 +168,16 @@
                                         <div class="row">
                                             <div class="col">
                                                 <p class="card-text text-muted d-inline">{{__('Użytkownik')}}</p>
-                                                <a class="card-link d-inline" href="{{route('showUser', $item['application'])}}">
+                                                <a class="card-link d-inline" href="{{route('showUser', $item['advert_user'])}}">
                                                     <p class="card-text d-inline">
-                                                        {{$item['application']->nickname}}
+                                                        {{$item['advert_user']->nickname}}
                                                     </p>
                                                 </a>
                                                 <div class="input-group flex-nowrap d-inline">
-                                                    @for ($i = 0; $i < $item['application']->reputation; $i++)
+                                                    @for ($i = 0; $i < $item['advert_user']->reputation; $i++)
                                                         <span class="fa fa-star star-checked"></span>
                                                     @endfor
-                                                    @for ($i = $item['application']->reputation; $i < 5; $i++)
+                                                    @for ($i = $item['advert_user']->reputation; $i < 5; $i++)
                                                     <span class="fa fa-star"></span>
                                                     @endfor
                                                 </div>

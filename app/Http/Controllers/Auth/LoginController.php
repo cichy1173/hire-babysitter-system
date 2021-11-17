@@ -37,12 +37,6 @@ class LoginController extends Controller
             
         ]);
 
-
-
-
-
-
-
        if (!(auth()->attempt($request->only('email', 'password'), $request->remember))) {
            return back()->with('status', 'Błędne dane logowania');
        }

@@ -38,52 +38,24 @@ class AdvertisementController extends Controller
 
     public function store(Request $request)
     {
-        if(auth()->user()->id_account_type == 2)
-        {
-            $this->validate($request, [
-                'advert_type_select' => 'required|exists:advertisement_types,id|int|same:'.'1',
-                'input_advert_title' => 'required|string|max:50',
-                'input_advert_content' => 'required|string|max:5000',
-                'input_hour_rate' => 'required|numeric|min:0|max:100',
-                'input_min_child_age' => 'required|numeric|min:0|max:18',
-                'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
-                'input_number_of_childs' => 'required|numeric|min:0|max:10',
-                'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_advert_to' => 'required|date|after:input_advert_from',
-                'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_supervise_to' => 'required|date|after:input_supervise_from',
-                'input_country' => 'required|exists:countries,id',
-                'input_voivodeship' => 'required|exists:voivodeships,id',
-                'input_city' => 'required|exists:cities,id',
-                'input_district' => 'required|exists:districts,id',
-                'input_skill' => 'required|array|exists:skills,id'
-            ]);
-        }
-        elseif(auth()->user()->id_account_type == 1)
-        {
-            $this->validate($request, [
-                'advert_type_select' => 'required|exists:advertisement_types,id|int|same:'.'2',
-                'input_advert_title' => 'required|string|max:50',
-                'input_advert_content' => 'required|string|max:5000',
-                'input_hour_rate' => 'required|numeric|min:0|max:100',
-                'input_min_child_age' => 'required|numeric|min:0|max:18',
-                'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
-                'input_number_of_childs' => 'required|numeric|min:0|max:10',
-                'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_advert_to' => 'required|date|after:input_advert_from',
-                'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
-                'input_supervise_to' => 'required|date|after:input_supervise_from',
-                'input_country' => 'required|exists:countries,id',
-                'input_voivodeship' => 'required|exists:voivodeships,id',
-                'input_city' => 'required|exists:cities,id',
-                'input_district' => 'required|exists:districts,id',
-                'input_skill' => 'required|array|exists:skills,id'
-            ]);
-        }
-        else
-        {
-            return redirect()->back();
-        }
+        $this->validate($request, [
+            'advert_type_select' => 'required|exists:advertisement_types,id|int',
+            'input_advert_title' => 'required|string|max:50',
+            'input_advert_content' => 'required|string|max:5000',
+            'input_hour_rate' => 'required|numeric|min:0|max:100',
+            'input_min_child_age' => 'required|numeric|min:0|max:18',
+            'input_max_child_age' => 'required|numeric|min:0|max:18|gte:input_min_child_age',
+            'input_number_of_childs' => 'required|numeric|min:0|max:10',
+            'input_advert_from' => 'required|date|after_or_equal:-5 minutes',
+            'input_advert_to' => 'required|date|after:input_advert_from',
+            'input_supervise_from' => 'required|date|after_or_equal:-5 minutes',
+            'input_supervise_to' => 'required|date|after:input_supervise_from',
+            'input_country' => 'required|exists:countries,id',
+            'input_voivodeship' => 'required|exists:voivodeships,id',
+            'input_city' => 'required|exists:cities,id',
+            'input_district' => 'required|exists:districts,id',
+            'input_skill' => 'required|array|exists:skills,id'
+        ]);
         
 
         $advert_id = auth()->user()->advertisements()->create([
@@ -266,13 +238,13 @@ class AdvertisementController extends Controller
             ['id_advertisement', $advert->id]
             ])->exists())
         {
-            return redirect()->route('showApplications')->with('error', 'Takie zgłoszenie już istnieje');
+            return redirect()->back()->with('error', 'Takie zgłoszenie już istnieje');
         }
         else
         {
             auth()->user()->myApplications()->attach($advert->id, ['time_from' => $advert->supervise_from, 'time_to' => $advert->supervise_to, 'created_at' => now(), 'updated_at' => now()]);       
 
-            return redirect()->route('showApplications')->with('status', 'Pomyślnie dodano zgłoszenie');
+            return redirect()->back()->with('status', 'Pomyślnie dodano zgłoszenie');
         }
         
     }
@@ -342,17 +314,18 @@ class AdvertisementController extends Controller
                 else
                 {
                     $item['application_type'] = 'S';
-                    $item['application'] = $advert->applications->where('id', $USER_ID)[0];
+                    $item['application'] = $advert->applications->where('id', $USER_ID)->first();
+                    $item['advert_user'] = User::find($item['advert']->id_user);
 
                     if(auth()->user()->id_account_type == 1)
                         {
-                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny == 0)
+                            if($advert->applications->where('id', $USER_ID)->first()->pivot->read_by_nanny == 0)
                             {
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_nanny = 1;
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->read_by_nanny = 1;
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->save();
                             }                            
 
-                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                            $notifications += $advert->applications->where('id', $USER_ID)->first()->pivot->where([
                                 ['accepted', 1],
                                 ['read_by_parent', 1],
                                 ['read_by_nanny', 1],
@@ -362,13 +335,13 @@ class AdvertisementController extends Controller
                         }
                         elseif(auth()->user()->id_account_type == 2)
                         {
-                            if($advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent == 0)
+                            if($advert->applications->where('id', $USER_ID)->first()->pivot->read_by_parent == 0)
                             {
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->read_by_parent = 1;
-                                $advert->applications->where('id', $USER_ID)[0]->pivot->save();
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->read_by_parent = 1;
+                                $advert->applications->where('id', $USER_ID)->first()->pivot->save();
                             }                            
 
-                            $notifications += $advert->applications->where('id', $USER_ID)[0]->pivot->where([
+                            $notifications += $advert->applications->where('id', $USER_ID)->first()->pivot->where([
                                 ['accepted', 1],
                                 ['read_by_parent', 1],
                                 ['read_by_nanny', 1],
