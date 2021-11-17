@@ -11,32 +11,57 @@
     
                     <div class="card-body">
                         @auth
-                         
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Godzina rozpoczęcia</th>
-                                    <th scope="col">Godzina zakończenia</th>
-                                    <th scope="col">Czy akceptowane?</th>
-                                    
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($cals as $cal)
-                                    @if(Auth::user()->id == $cal->id_user)
-                                        <tr>
-                                            <th scope="row">{{ $cal->time_from }}</th>
-                                            <th scope="row">{{ $cal->time_to }}</th>
-                                            <th scope="row">@if($cal->accepted == '1')Tak</th> @endif
-                                            
+                        @foreach ($cals as $cal)
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="d-inline mb-0 text-muted">{{__('Zleceniodawca ')}}</div>
+                                            <a href="{{route('showUser', $cal->id_user)}}" class="font-weight-bold mb-0">{{$cal->nickname}}</a>                                            
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="row h-auto" style="margin-left:1px">                                                                                                   
+                                                <div class="col h-auto">
+                                                    <div class="row d-inline-block" style="font-size: large">
+                                                        <div class=" d-inline mb-0 text-muted" style="font-weight:bold">{{__('Rozpoczęcie: ')}}</div>                                                        
+                                                        <div class="d-inline mb-0" >{{ \Carbon\Carbon::parse($cal->time_from)->translatedFormat('d F Y H:i') }}</div>                                                       
+                                                    </div>
+                                                    
+                                                    <div class="row ">
+                                                        <div class="d-inline mb-0 text-muted">{{__('Stawka: ')}}</div>
+                                                        <div class="d-inline mb-0 ">{{$cal->hour_rate}}</div>
+                                                        <div class="d-inline mb-0 text-muted">{{__('zl/h ')}}</div>
+                                                    </div>
 
-                                        </tr>
-                                    @endif
-                                        
-                                    @endforeach
-                              
-                                </tbody>
-                            </table>
+                                                    <div class="row ">
+                                                        <div class="d-inline mb-0 text-muted">{{__('Liczba dzieci: ')}}</div>
+                                                        <div class="d-inline mb-0">{{$cal->child_num}}</div>
+                                                    </div>
+                                                </div>
+                                                                                                                                                             
+                                                                                              
+                                                <div class="col h-auto">                                            
+                                                    <div class="row d-inline-block" style="font-size: large">
+                                                        <div class="d-inline mb-0 text-muted" style="font-weight:bold">{{__(' Zakończenie: ')}}</div>
+                                                        <div class="d-inline mb-0" >{{\Carbon\Carbon::parse($cal->time_to)->translatedFormat('d F Y H:i')}}</div>
+                                                    </div>
+                                                    <div class="row d-inline-block">
+                                                        <div class=" d-inline mb-0 text-muted">{{__('Lokalizacja: ')}}</div>
+                                                        <div class=" d-inline mb-0">{{$cal->district_name}}</div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="d-inline mb-0 text-muted">{{__('Zaakceptowane: ')}}</div>
+                                                        <div class="d-inline mb-0">Tak</div> 
+                                                    </div>
+                                                </div>                                                 
+                                            </div>     
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                     
+                        @endforeach
+                        
+                        
 
                         @endauth
 

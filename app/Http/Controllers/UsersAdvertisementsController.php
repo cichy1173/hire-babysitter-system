@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users_Advertisements;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Users_Advertisements;
+use Illuminate\Support\Facades\Auth;
 
 
 class UsersAdvertisementsController extends Controller
@@ -15,9 +18,20 @@ class UsersAdvertisementsController extends Controller
      */
     public function index()
     {
+        
+        $data = DB::table('users_advertisements AS pivot')
+                        ->join('advertisements AS advert', 'advert.id', '=', 'pivot.id_advertisement')
+                        ->join('users', 'users.id', '=', 'advert.id_user')
+                        ->join('districts_advertisements', 'districts_advertisements.id_advertisement', '=', 'pivot.id_advertisement')
+                        ->join('districts', 'districts.id', '=', 'districts_advertisements.id_district')
+                        ->where('pivot.id_user', '=', Auth::user()->id)
+                        ->where('pivot.time_to', '>', now())
+                        ->get();
+        //dd($data);
         return view('calendar', [
 
-            'cals' =>Users_Advertisements::paginate(7)
+            'cals' =>$data
+            
         ]);
     }
 

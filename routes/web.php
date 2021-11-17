@@ -92,3 +92,6 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
 Route::post('admin/users/{user}/block', [UserController::class, 'block'])->middleware('admin')->name('admin.users.block');
 Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->middleware('admin')->name('admin.users.unblock');
 Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->middleware('admin')->name('admin.users.makeadmin');
+
+//Calendar
+Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->name('calendar');
