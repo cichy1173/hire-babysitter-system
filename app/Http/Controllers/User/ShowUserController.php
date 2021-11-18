@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Opinion;
 use Illuminate\Support\Facades\Auth;
 
 class ShowUserController extends Controller
@@ -37,9 +38,13 @@ class ShowUserController extends Controller
    
         $user = User::select('id' ,'name', 'surname', 'nickname', 'reputation', 'photo', 'about', 'is_blocked', 'id_account_type')
                         ->where('id', $user->id)->get();
+        
+        $opinions = Opinion::where('to_id_user', $user[0]->id)->paginate(4);
+
         return view('User.showUser', [
             'user' => $user[0],
             'opinionAvailable' => $opinionAvailable,
+            'opinions' => $opinions,
             'blocked' => $blocked
         ]);
     }

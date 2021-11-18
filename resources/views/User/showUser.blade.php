@@ -99,6 +99,7 @@
                                     <div class="col">
                                         <div class="float-right">
                                             @if ($blocked == 0)
+                                                <button class="btn btn-outline-warning text-dark" type="button" id="button_opinion" data-toggle="modal" data-target="#showOpinions">{{__('Pokaż opinie')}}</button>
                                                 <button class="btn btn-outline-primary" type="button" id="button_message" data-toggle="modal" data-target="#sendToUser">{{__('Wyślij wiadomość')}}</button>
                                                 @if ($opinionAvailable > 0)
                                                     <button class="btn btn-outline-success" type="button" id="button_addOpinion" data-toggle="modal" data-target="#addOpinion">{{__('Dodaj opinię')}}</button>
@@ -132,8 +133,8 @@
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
                                                             <button type="button" class="btn btn-danger"
                                                             onclick="event.preventDefault();  document.getElementById('delete-user-form-{{ $user->id }}').submit() " >
-                                                            Usuń użytkownika
-                                                        </button> 
+                                                                {{__('Usuń użytkownika')}}
+                                                            </button> 
                                                             <form id="delete-user-form-{{ $user->id }}" action="{{ route('showUser.destroy', $user->id) }}" method="POST" style="display: none">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -251,6 +252,54 @@
                                                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Anuluj')}}</button>
                                                 </div>                                       
                                             </form>                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="showOpinions" tabindex="-1" role="dialog" aria-labelledby="showOpinionsTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="showOpinionsTitle">{{__('Opinie użytkownika')}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    @if (isset($opinions)  && count($opinions) > 0)
+                                                        @foreach ($opinions as $item)
+                                                            <div class="card mb-3">
+                                                                <div class="card-header">
+                                                                    <p class="float-center mb-0">{{$item->created_at->translatedFormat('Y F d H:i')}}</p>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <p class="text-muted d-inline">
+                                                                        {{__('Ocena')}}
+                                                                    </p>
+                                                                    <p class="d-inline">
+                                                                        <div class="mx-auto d-inline">
+                                                                            @for ($i = 0; $i < $item->grade; $i++)
+                                                                                <span class="fa fa-star star-checked d-inline"></span>
+                                                                            @endfor
+                                                                            @for ($i = $item->grade; $i < 5; $i++)
+                                                                            <span class="fa fa-star d-inline"></span>
+                                                                            @endfor
+                                                                        </div>
+                                                                    </p>
+                                                                    <p class="text-justify mb-0">{{$item->content}}</p>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                        <div class="d-flex justify-content-end">
+                                                            {{ $opinions->links() }}
+                                                        </div>                                                      
+                                                    @else
+                                                        <p class="mb-0">{{__('Użytkownik nie ma jeszcze opinii')}}</p>
+                                                    @endif
+                                            </div> 
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Zamknij')}}</button>
+                                            </div>                                               
                                         </div>
                                     </div>
                                 </div>
