@@ -30,8 +30,8 @@ class UserEditProfileController extends Controller
             $value->from_id_user = 1;
             $value->save();
         }
-        //$user->recievedMessages()->delete();
-        foreach ($user->recievedMessages as $key => $value) {
+        //$user->receivedMessages()->delete();
+        foreach ($user->receivedMessages as $key => $value) {
             $value->to_id_user = 1;
             $value->save();
         }

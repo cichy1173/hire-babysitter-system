@@ -11,18 +11,27 @@ class OpinionController extends Controller
 {
     public function index()
     {
-        $opinions = Opinion::where('to_id_user', auth()->id())->get();
 
-        $array = array();
-        
-        foreach ($opinions as $key => $value) {
-            $item['user'] = User::find($value->from_id_user);
-            $item['opinion'] = $value;
-            array_push($array, $item);
+        $items = array();
+
+        $user = User::find(auth()->id());
+
+        $items['receivedOpinions'] = $user->receivedOpinions->sortByDesc('created_at');
+        $items['sendOpinions'] = $user->sendOpinions->sortByDesc('created_at');
+
+        foreach ($items['receivedOpinions'] as $key => $opinion) 
+        {
+            $opinion['user'] = User::find($opinion->from_id_user);
         }
 
+        foreach ($items['sendOpinions'] as $key => $opinion) 
+        {
+            $opinion['user'] = User::find($opinion->to_id_user);
+        }
+        
+
         return view('User.userOpinion', [
-            'opinions' => $array
+            'items' => $items
         ]);
     }
 
@@ -68,7 +77,7 @@ class OpinionController extends Controller
                         'to_id_user' => $user->id
                     ]);
             
-                    $opinions = $user->recievedOpinions;
+                    $opinions = $user->receivedOpinions;
                     $counter = $opinions->count();
                     $sum = 0;
             
@@ -118,7 +127,7 @@ class OpinionController extends Controller
                         'to_id_user' => $user->id
                     ]);
             
-                    $opinions = $user->recievedOpinions;
+                    $opinions = $user->receivedOpinions;
                     $counter = $opinions->count();
                     $sum = 0;
             
@@ -170,7 +179,7 @@ class OpinionController extends Controller
                         'to_id_user' => $user->id
                     ]);
             
-                    $opinions = $user->recievedOpinions;
+                    $opinions = $user->receivedOpinions;
                     $counter = $opinions->count();
                     $sum = 0;
             
@@ -220,7 +229,7 @@ class OpinionController extends Controller
                         'to_id_user' => $user->id
                     ]);
             
-                    $opinions = $user->recievedOpinions;
+                    $opinions = $user->receivedOpinions;
                     $counter = $opinions->count();
                     $sum = 0;
             

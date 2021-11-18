@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md">
             <div class="card">
                 <div class="card-header">{{ __('Opinie') }}</div>
                 <div class="card-body">
@@ -12,42 +12,104 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @if (isset($opinions) && count($opinions) > 0)
-                        @foreach ($opinions as $item)
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <div class="card">
-                                        <div class="card-header">                                            
-                                            <div class="d-inline mb-0">
-                                                <p class="d-inline float-left mx-auto mb-0">
-                                                    {{__('Opublikował ')}}
-                                                    <a href="{{route('showUser', $item['user'])}}">{{$item['user']->nickname}}</a>
-                                                </p>                                             
-                                                <p class="d-inline mx-auto float-right mb-0">
-                                                    {{$item['opinion']->created_at->translatedFormat('d F Y')}}
-                                                </p>  
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="mb-3">
-                                                <p class="d-inline mx-auto mb-0 text-muted">
-                                                    {{__('Ocena ')}}
-                                                </p>
-                                                <div class="d-inline mx-auto mb-0">
-                                                    @for ($i = 0; $i < $item['opinion']->grade; $i++)
-                                                        <span class="fa fa-star star-checked"></span>
-                                                    @endfor
-                                                    @for ($i = $item['opinion']->grade; $i < 5; $i++)
-                                                    <span class="fa fa-star"></span>
-                                                    @endfor
+                    @if (isset($items) && count($items) > 0)
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <p class="mb-0 text-center">
+                                            {{__('Otrzymane opinie')}}
+                                        </p>
+                                    </div>
+                                    <div class="card-body">
+                                        @if (isset($items['receivedOpinions']) && count($items['receivedOpinions']) > 0)
+                                            @foreach ($items['receivedOpinions'] as $received)
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <a href="{{route('showUser', $received['user'])}}">
+                                                            <p class="d-inline mb-0">{{$received['user']->nickname}}</p>
+                                                        </a>
+                                                        <p class="mb-0 d-inline float-right">{{$received->created_at->translatedFormat('Y F d H:i')}}</p>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="text-muted d-inline">
+                                                            {{__('Ocena')}}
+                                                        </p>
+                                                        <p class="d-inline">
+                                                            <div class="mx-auto d-inline">
+                                                                @for ($i = 0; $i < $received->grade; $i++)
+                                                                    <span class="fa fa-star star-checked d-inline"></span>
+                                                                @endfor
+                                                                @for ($i = $received->grade; $i < 5; $i++)
+                                                                <span class="fa fa-star d-inline"></span>
+                                                                @endfor
+                                                            </div>
+                                                        </p>
+                                                        <p class="text-justify mb-0">
+                                                            {{$received->content}}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <p class=" text-justify mb-0">{{$item['opinion']->content}}</p>
-                                        </div>
+                                            @endforeach
+                                        @else
+                                            <p class="text-center mb-0">{{__('Na razie nie otrzymałeś żadnych opinii')}}</p>                                 
+                                        @endif
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <p class="mb-0 text-center">
+                                            {{__('Wysłane opinie')}}
+                                        </p>
+                                    </div>
+                                    <div class="card-body">
+                                        @if (isset($items['sendOpinions']) && count($items['sendOpinions']) > 0)
+                                            @foreach ($items['sendOpinions'] as $send)
+                                                <div class="card mb-3">
+                                                    <div class="card-header">
+                                                        <a href="{{route('showUser', $send['user'])}}">
+                                                            <p class="d-inline mb-0">{{$send['user']->nickname}}</p>
+                                                        </a>
+                                                        <p class="mb-0 d-inline float-right">{{$send->created_at->translatedFormat('Y F d H:i')}}</p>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="text-muted d-inline">
+                                                            {{__('Ocena')}}
+                                                        </p>
+                                                        <p class="d-inline">
+                                                            <div class="mx-auto d-inline">
+                                                                @for ($i = 0; $i < $send->grade; $i++)
+                                                                    <span class="fa fa-star star-checked d-inline"></span>
+                                                                @endfor
+                                                                @for ($i = $send->grade; $i < 5; $i++)
+                                                                <span class="fa fa-star d-inline"></span>
+                                                                @endfor
+                                                            </div>
+                                                        </p>
+                                                        <p class="text-justify mb-0">
+                                                            {{$send->content}}
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="float-right">
+                                                            <a class="btn btn-sm btn-warning d-inlnie" href="">{{__('Edytuj')}}</a>
+                                                            <button class="btn btn-sm btn-danger d-inlnie">{{__('Usuń')}}</button>
+                                                        </div>                                                        
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <p class="text-center mb-0">{{__('Na razie nie wysłałeś żadnych opinii')}}</p>                                 
+                                        @endif
+                                        
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
                     @else
                         <div class="text-center">
                             {{__('Na razie nie masz żadnych opinii')}}

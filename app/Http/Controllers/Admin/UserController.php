@@ -136,7 +136,7 @@ class UserController extends Controller
             $value->from_id_user = 1;
             $value->save();
         }
-        foreach ($user->recievedMessages as $key => $value) {
+        foreach ($user->receivedMessages as $key => $value) {
             $value->to_id_user = 1;
             $value->save();
         }

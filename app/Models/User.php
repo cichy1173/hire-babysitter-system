@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Message::class, 'from_id_user');
     }
 
-    public function recievedMessages()
+    public function receivedMessages()
     {
         return $this->hasMany(Message::class, 'to_id_user');
     }
@@ -82,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Opinion::class, 'from_id_user');
     }
 
-    public function recievedOpinions()
+    public function receivedOpinions()
     {
         return $this->hasMany(Opinion::class, 'to_id_user');
     }
