@@ -58,6 +58,7 @@ Route::delete('/profile/{user}', [ShowUserController::class, 'destroy'])->name('
 Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->middleware('auth')->name('userOpinions');
 Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
 Route::put('/profile/editOpinion/{opinion}', [OpinionController::class, 'editOpinion'])->middleware('auth')->name('editOpinion');
+Route::delete('profile/deleteOpinion/{opinion}', [OpinionController::class, 'deleteOpinion'])->middleware('auth')->name('deleteOpinion');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');

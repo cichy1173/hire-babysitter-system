@@ -12,6 +12,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="alert alert-error" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     @if (isset($items) && count($items) > 0)
                         <div class="row">
                             <div class="col">
@@ -96,9 +101,92 @@
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="float-right">
-                                                            <a class="btn btn-sm btn-warning d-inlnie" href="">{{__('Edytuj')}}</a>
-                                                            <button class="btn btn-sm btn-danger d-inlnie">{{__('Usuń')}}</button>
+                                                            <button class="btn btn-sm btn-warning d-inlnie" data-toggle="modal" data-target="#editPopUp{{$send->id}}">{{__('Edytuj')}}</button>
+                                                            <button class="btn btn-sm btn-danger d-inlnie" data-toggle="modal" data-target="#deletePopUp{{$send->id}}">{{__('Usuń')}}</button>
                                                         </div>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="editPopUp{{$send->id}}" name="{{$send->id}}" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="editPopUpTitle{{$send->id}}">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="editPopUpTitle{{$send->id}}">{{__('Edycja opinii')}}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="form mb-0 text-center" id="{{$send->id}}" name="{{$send->id}}" action="{{route('editOpinion', $send)}}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="modal-body">
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col">
+                                                                            <div class="input-group-text mb-3">{{__('Ocena')}}</div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio0" value="0" @if($send->grade == 0) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">0</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio1" value="1" @if($send->grade == 1) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">1</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio2" value="2" @if($send->grade == 2) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">2</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio3" value="3" @if($send->grade == 3) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">3</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio4" value="4" @if($send->grade == 4) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">4</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="opinionGradeRadio" id="opinionGradeRadio5" value="5" @if($send->grade == 5) checked @endif>
+                                                                                <label class="form-check-label" for="opinionGradeRadio1">5</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col">
+                                                                            <div class="input-group-text">{{__('Treść opinii')}}</div>
+                                                                            <textarea class="form-control" name="opinionContent" id="opinionContent" cols="30" rows="5" aria-label="Treść opinii">{{$send->content}}</textarea>                                                                                                                                                                                 
+                                                                        </div>
+                                                                    </div>                                                    
+                                                                </div> 
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" id="buttonSend" class="btn btn-outline-success">{{__('Wyślij')}}</button>
+                                                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{__('Anuluj')}}</button>
+                                                                </div>                                       
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="deletePopUp{{$send->id}}" name="{{$send->id}}" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deletePopUpTitle{{$send->id}}">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deletePopUpTitle{{$send->id}}">{{__('Usuwanie opinii')}}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form class="form mb-0 text-center" id="{{$send->id}}" name="{{$send->id}}" action="{{route('deleteOpinion', $send)}}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <div class="modal-body bg-warning">
+                                                                    <p>{{__('Czy jesteś pewien, że chcesz usunąć opinię?')}}</p>
+                                                                    <p>{{__('Po usunięciu opinii tego działania nie da się cofnąć')}}</p>
+                                                                    <p>{{__('Usuwająć opinię tracisz również możliwość jej ponownego dodania')}}</p>
+                                                                    <p>{{__('Chcąc edytować swoją opinię użyj opcji "Edytuj" zamiast "Usuń"')}}</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" id="buttonSend" class="btn btn-outline-danger">{{__('Usuń')}}</button>
+                                                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{__('Anuluj')}}</button>
+                                                                </div>                                       
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @endforeach

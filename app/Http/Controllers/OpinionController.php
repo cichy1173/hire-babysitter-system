@@ -252,4 +252,72 @@ class OpinionController extends Controller
 
         return redirect()->back()->with('error', 'Nie możesz wystawić opinii temu użytkownikowi');
     }
+
+    public function editOpinion(Request $request, Opinion $opinion)
+    {
+        if($opinion->from_id_user == auth()->id())
+        {
+            $this->validate($request, [
+                'opinionGradeRadio' => 'required|int|min:0|max:5',
+                'opinionContent' => 'required|string|max:500'
+            ]);
+
+            $opinion->grade = $request->opinionGradeRadio;
+            $opinion->content = $request->opinionContent;
+            $opinion->save();
+
+            $user = User::find($opinion->to_id_user);
+            $userOpinions = $user->receivedOpinions;
+
+            $counter = $userOpinions->count();
+            $sum = 0;
+
+            foreach ($userOpinions as $key => $item) {
+                $sum += $item->grade;
+            }
+
+            $avarage = round($sum / $counter);
+            $avarage = intval($avarage);
+            
+            $user->reputation = $avarage;
+            $user->save();
+
+            return redirect()->back()->with('status', 'Pomyślnie edytowano opinię');
+        }
+        
+        return redirect()->back()->with('error', 'Nie możesz edytować nie swoich opinii');
+    }
+
+    public function deleteOpinion(Opinion $opinion)
+    {
+        if($opinion->from_id_user == auth()->id())
+        {
+            $user = User::find($opinion->to_id_user);
+            $opinion->delete();
+
+            $userOpinions = $user->receivedOpinions;
+
+            $counter = $userOpinions->count();
+            $sum = 0;
+
+            if($counter > 0)
+            {
+                foreach ($userOpinions as $key => $item) {
+                    $sum += $item->grade;
+                }
+    
+                $avarage = round($sum / $counter);
+                $avarage = intval($avarage);
+                
+                $user->reputation = $avarage;
+                $user->save();
+    
+                return redirect()->back()->with('status', 'Pomyślnie usunięto opinię');
+            }
+
+            return redirect()->back()->with('status', 'Pomyślnie usunięto opinię');
+
+        }
+        return redirect()->back()->with('error', 'Nie możesz usunąc nie swojej opinii');
+    }
 }
