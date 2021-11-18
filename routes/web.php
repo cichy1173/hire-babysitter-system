@@ -57,6 +57,7 @@ Route::delete('/profile/{user}', [ShowUserController::class, 'destroy'])->name('
 //User opinions
 Route::get('/profile/{user}/opinions', [OpinionController::class, 'index'])->middleware('auth')->name('userOpinions');
 Route::post('/profile/{user}/opinions', [OpinionController::class, 'addOpinion'])->middleware('auth')->name('addOpinion');
+Route::put('/profile/editOpinion/{opinion}', [OpinionController::class, 'editOpinion'])->middleware('auth')->name('editOpinion');
 
 //editing user profile
 Route::get('/user/edit', [App\Http\Controllers\User\UserEditProfileController::class, 'index'])->name('userEdit');
@@ -94,4 +95,4 @@ Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->mi
 Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->middleware('admin')->name('admin.users.makeadmin');
 
 //Calendar
-Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->name('calendar');
+Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->middleware('auth')->name('calendar');
