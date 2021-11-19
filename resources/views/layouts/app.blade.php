@@ -69,7 +69,7 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('calendar') }}">{{__('Grafik')}}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="alert alert-warning dropdown-item m-0" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
+                                        <a class="alert alert-warning dropdown-item m-0 text-dark" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
                                       </div>
                                 </div>
                             </li>
