@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\UsersAdvertismentController;
 use App\Http\Controllers\User\UserEditProfileController;
@@ -97,3 +98,6 @@ Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])
 
 //Calendar
 Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->middleware('auth')->name('calendar');
+
+//Search
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');

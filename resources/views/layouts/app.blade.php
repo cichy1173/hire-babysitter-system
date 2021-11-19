@@ -45,8 +45,8 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto w-auto">
                         <li class="nav-item mx-2">
-                            <form class="form-inline">
-                                <input type="search" class="form-control mr-1" >
+                            <form class="form-inline" action="{{route('search')}}" method="GET">
+                                <input type="text" class="form-control mr-1" id="search" name="search">
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__("Wyszukaj")}}</button>
                             </form>
                         </li>

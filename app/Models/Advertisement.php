@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\District;
+use App\Models\City;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Advertisement extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'id_advertisement_type',
@@ -56,5 +60,22 @@ class Advertisement extends Model
                             'read_by_nanny', 
                             'created_user_opinion', 
                             'created_supervisor_opinion');
+    }
+
+    public function searchableAs()
+    {
+        return 'advertisements_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $this->districts;
+        $array = $this->toArray();
+        $array['city'] = City::find($this->districts[0]->id_city);
+        $array['month'] = $this->created_at->translatedFormat('F');
+        $array['user_nick'] = User::find($this->id_user)->nickname;
+        $array['user_name'] = User::find($this->id_user)->name;
+        $array['user_surname'] = User::find($this->id_user)->surname;
+        return $array;
     }
 }

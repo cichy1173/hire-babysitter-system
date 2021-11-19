@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use App\Models\Advertisement;
+use Laravel\Scout\Searchable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -85,5 +88,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function receivedOpinions()
     {
         return $this->hasMany(Opinion::class, 'to_id_user');
+    }
+
+    public function searchableAs()
+    {
+        return 'users_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $array = array();
+
+        $array['nickname'] = $this->nickname;
+        $array['name'] = $this->name;
+        $array['surname'] = $this->surname;
+        $array['about'] = $this->about;
+
+        return $array;
     }
 }

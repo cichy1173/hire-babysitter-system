@@ -71,6 +71,14 @@ services:
             MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
             PMA_HOST: mariadb
         restart: unless-stopped
+    
+    meilisearch:
+        image: getmeili/meilisearch
+        command: ./meilisearch --master-key='${DB_PASSWORD}' --no-analytics=true
+        ports:
+            - '7700:7700'
+        networks:
+            - sail
 
 networks:
     sail:
