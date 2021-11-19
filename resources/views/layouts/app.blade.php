@@ -60,15 +60,16 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="bg-info dropdown-item" href="{{route('add_advert')}}">{{__('Dodaj ogłoszenie')}}</a>
+                                        <a class="alert alert-info dropdown-item m-0" href="{{route('add_advert')}}">{{__('Dodaj ogłoszenie')}}</a>
                                         <a class="dropdown-item" href="{{route('show_advert')}}">{{__('Moje ogłoszenia')}}</a>
                                         <a class="dropdown-item" href="{{route('userOpinions', auth()->user())}}">{{__('Moje opinie')}}</a>
                                         <a class="dropdown-item" href="{{route('showApplications')}}" id="applications" name="applications">{{__('Zgłoszenia')}}</a>
-                                        <a class="dropdown-item" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
+                                        <div class="dropdown-divider"></div>                                        
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('calendar') }}">{{__('Grafik')}}</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">{{__('Dodatki')}}</a>
+                                        <a class="alert alert-warning dropdown-item m-0" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
                                       </div>
                                 </div>
                             </li>
