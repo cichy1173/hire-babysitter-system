@@ -100,8 +100,8 @@ class AvailabilityController extends Controller
         $available = Availability::where('day', $day)->where('id_user', $id)->first();
 
         $this->validate($request, [
-            'start_time' => 'required|date',  
-            'stop_time' => 'required|date|after:start_time',
+            'start_time' => 'required',  
+            'stop_time' => 'required|after:start_time',
         ]);
     
 
