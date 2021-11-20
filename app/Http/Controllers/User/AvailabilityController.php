@@ -16,7 +16,25 @@ class AvailabilityController extends Controller
      */
     public function index()
     {
-        return view('User.Availability.index');
+        $user = Auth::user()->id;
+        $monday = Availability::where('day', '1')->where('id_user', $user)->first();
+        $tuesday = Availability::where('day', '2')->where('id_user', $user)->first();
+        $wednesday = Availability::where('day', '3')->where('id_user', $user)->first();
+        $thursday = Availability::where('day', '4')->where('id_user', $user)->first();
+        $friday = Availability::where('day', '5')->where('id_user', $user)->first();
+        $saturday = Availability::where('day', '6')->where('id_user', $user)->first();
+        $sunday = Availability::where('day', '7')->where('id_user', $user)->first();
+
+
+        return view('User.Availability.index', [
+            'monday' => $monday,
+            'tuesday' => $tuesday,
+            'wednesday' => $wednesday,
+            'thursday' => $thursday,
+            'friday' => $friday,
+            'saturday' => $saturday,
+            'sunday' => $sunday,
+        ]);
     }
 
     /**
