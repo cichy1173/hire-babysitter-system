@@ -58,48 +58,48 @@
                                                         <li class="list-group-item">
                                                             <b>Poniedziałek: </b>
                                                             @if($monday == null) <i>Nie podano dostępności</i>
-                                                            @else Od {{$monday->start_time}} do {{ $monday->stop_time }}
+                                                            @else Od {{$monday->start_time->format("H:i")}} do {{ $monday->stop_time->format('H:i') }}
                                                             @endif 
                                                         </li>
                                                         
                                                         <li class="list-group-item">
                                                          <b>Wtorek: </b>
                                                             @if($tuesday == null) <i>Nie podano dostępności</i>
-                                                            @else Od {{$tuesday->start_time}} do {{ $tuesday->stop_time }}
+                                                            @else Od {{$tuesday->start_time->format('H:i')}} do {{ $tuesday->stop_time->format("H:i") }}
                                                             @endif 
                                                         </li>
                                                         <li class="list-group-item">
                                                                <b>Środa: </b>
                                                                 @if($wednesday == null) <i>Nie podano dostępności</i>
-                                                                @else Od {{$wednesday->start_time}} do {{ $wednesday->stop_time }}
+                                                                @else Od {{$wednesday->start_time->format('H:i')}} do {{ $wednesday->stop_time->format('H:i') }}
                                                                 @endif
                                                         
                                                         </li>
                                                         <li class="list-group-item">
                                                          <b>Czwartek: </b>
                                                         @if($thursday == null) <i>Nie podano dostępności</i>
-                                                        @else Od {{$thursday->start_time}} do {{ $thursday->stop_time }}
+                                                        @else Od {{$thursday->start_time->format('H:i')}} do {{ $thursday->stop_time->format('H:i') }}
                                                         @endif 
                                                         </li>
 
                                                         <li class="list-group-item">
                                                          <b>Piątek: </b>
                                                   @if($friday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$friday->start_time}} do {{ $friday->stop_time }}
+                                                  @else Od {{$friday->start_time->format('H:i')}} do {{ $friday->stop_time->format('H:i') }}
                                                   @endif 
                                                         </li>
 
                                                         <li class="list-group-item">
                                                       <b>Sobota: </b>
                                                   @if($saturday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$saturday->start_time}} do {{ $saturday->stop_time }}
+                                                  @else Od {{$saturday->start_time->format('H:i')}} do {{ $saturday->stop_time->format('H:i') }}
                                                   @endif
                                                         </li>
 
                                                         <li class="list-group-item">
                                                              <b>Niedziela: </b>
                                                   @if($sunday == null)  <i>Nie podano dostępności</i>
-                                                  @else Od {{$sunday->start_time}} do {{ $sunday->stop_time }}
+                                                  @else Od {{$sunday->start_time->format('H:i')}} do {{ $sunday->stop_time->format('H:i') }}
                                                   @endif 
                                                         </li>
                                                     </ul>

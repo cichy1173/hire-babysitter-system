@@ -22,6 +22,12 @@
                         @endif
                        </div>
 
+                        @error('stop_time')
+                              <div class="alert alert-danger" role="alert">
+                                <strong>{{$message}}</strong>
+                              </div>
+                        @enderror
+
                         <form method="post" action="{{route('availability.availability.update', $day)}}">
                         @csrf
                         @method('PUT')

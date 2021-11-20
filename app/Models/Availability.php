@@ -17,4 +17,9 @@ class Availability extends Model
         'day',
         'id_user',
     ];
+
+    protected $dates = [
+        'start_time',
+        'stop_time',
+    ];
 }
