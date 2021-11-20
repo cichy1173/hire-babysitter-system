@@ -73,7 +73,7 @@ services:
         restart: unless-stopped
     
     meilisearch:
-        image: getmeili/meilisearch
+        image: getmeili/meilisearch:test-arm2
         command: ./meilisearch --master-key='${DB_PASSWORD}' --no-analytics=true
         ports:
             - '7700:7700'

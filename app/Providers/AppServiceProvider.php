@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Advertisement;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -30,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('admin', function() {
             return auth()->check() && auth()->user()->id_account_type == '3';
         });
+
+        Advertisement::disableSearchSyncing();
+        User::disableSearchSyncing();
     }
 }
