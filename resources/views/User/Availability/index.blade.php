@@ -44,46 +44,65 @@
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title font-weight-bold" id="showAvailability">{{__('Twoja dostępność w dane dni: ')}}</h5>
+                                                    <h5 class="modal-title font-weight-bold" id="showAvailability">
+                                                    {{__('Twoja dostępność w ciągu tygodnia')}}
+                                                    </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                               <p> <b>Poniedziałek: </b>
-                                                  @if($monday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$monday->start_time}} do {{ $monday->stop_time }}
-                                                  @endif </p>
+                                               
 
-                                                 <p> <b>Wtorek: </b>
-                                                  @if($tuesday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$tuesday->start_time}} do {{ $tuesday->stop_time }}
-                                                  @endif <p>
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">
+                                                            <b>Poniedziałek: </b>
+                                                            @if($monday == null) <i>Nie podano dostępności</i>
+                                                            @else Od {{$monday->start_time}} do {{ $monday->stop_time }}
+                                                            @endif 
+                                                        </li>
+                                                        
+                                                        <li class="list-group-item">
+                                                         <b>Wtorek: </b>
+                                                            @if($tuesday == null) <i>Nie podano dostępności</i>
+                                                            @else Od {{$tuesday->start_time}} do {{ $tuesday->stop_time }}
+                                                            @endif 
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                               <b>Środa: </b>
+                                                                @if($wednesday == null) <i>Nie podano dostępności</i>
+                                                                @else Od {{$wednesday->start_time}} do {{ $wednesday->stop_time }}
+                                                                @endif
+                                                        
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                         <b>Czwartek: </b>
+                                                        @if($thursday == null) <i>Nie podano dostępności</i>
+                                                        @else Od {{$thursday->start_time}} do {{ $thursday->stop_time }}
+                                                        @endif 
+                                                        </li>
 
-                                                    <p> <b>Środa: </b>
-                                                  @if($wednesday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$wednesday->start_time}} do {{ $wednesday->stop_time }}
-                                                  @endif <p>
-
-                                                  <p> <b>Czwartek: </b>
-                                                  @if($thursday == null) <i>Nie podano dostępności</i>
-                                                  @else Od {{$thursday->start_time}} do {{ $thursday->stop_time }}
-                                                  @endif <p>
-
-                                                <p> <b>Piątek: </b>
+                                                        <li class="list-group-item">
+                                                         <b>Piątek: </b>
                                                   @if($friday == null) <i>Nie podano dostępności</i>
                                                   @else Od {{$friday->start_time}} do {{ $friday->stop_time }}
-                                                  @endif <p>
+                                                  @endif 
+                                                        </li>
 
-                                                    <p> <b>Sobota: </b>
+                                                        <li class="list-group-item">
+                                                      <b>Sobota: </b>
                                                   @if($saturday == null) <i>Nie podano dostępności</i>
                                                   @else Od {{$saturday->start_time}} do {{ $saturday->stop_time }}
-                                                  @endif <p>
+                                                  @endif
+                                                        </li>
 
-                                                    <p> <b>Niedziela: </b>
+                                                        <li class="list-group-item">
+                                                             <b>Niedziela: </b>
                                                   @if($sunday == null)  <i>Nie podano dostępności</i>
                                                   @else Od {{$sunday->start_time}} do {{ $sunday->stop_time }}
-                                                  @endif <p>
+                                                  @endif 
+                                                        </li>
+                                                    </ul>
                                                     
                                                 </div>
                                                 <div class="modal-footer">
