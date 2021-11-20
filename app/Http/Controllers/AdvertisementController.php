@@ -80,6 +80,8 @@ class AdvertisementController extends Controller
             $skill_id->advertisements()->attach($advert_id, ['is_deleted' => 0]);
         }
 
+        Advertisement::find($advert_id)->searchable();
+
         return redirect()->route('show_advert');
     }
 
