@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\UsersAdvertismentController;
+use App\Http\Controllers\User\AvailabilityController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
 
@@ -101,3 +102,8 @@ Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::cla
 
 //Search
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+//Availability
+Route::prefix('availability')->name('availability.')->middleware('auth')->group(function (){
+    Route::resource('/availability', AvailabilityController::class);
+    
+});
