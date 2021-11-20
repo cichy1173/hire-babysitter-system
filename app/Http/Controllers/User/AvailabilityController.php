@@ -93,10 +93,16 @@ class AvailabilityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $day)
     {
         $id = Auth::user()->id;
         $available = Availability::where('day', $day)->where('id_user', $id)->first();
+
+        $this->validate($request, [
+            'start_time' => 'required|date',  
+            'stop_time' => 'required|date|after:start_time',
+        ]);
     
 
         if($available == null) {
