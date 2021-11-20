@@ -77,7 +77,30 @@ class AvailabilityController extends Controller
      */
     public function update(Request $request, $day)
     {
-        dd($request->start_time);
+        $id = Auth::user()->id;
+        $available = Availability::where('day', $day)->where('id_user', $id)->first();
+    
+
+        if($available == null) {
+            Availability::create([
+                'start_time' => $request -> start_time,
+                'stop_time' => $request -> stop_time,
+                'day' => $day,
+                'id_user' => $id,
+                
+            ]);
+        }
+
+        else {
+            $available->update([
+                'start_time' => $request -> start_time,
+                'stop_time' => $request -> stop_time,
+               
+            ]);
+        }
+
+        return redirect()->route('availability.availability.index')
+            ->with('success', 'Pomyślnie zaktualizowano dostępność!');
     }
 
     /**

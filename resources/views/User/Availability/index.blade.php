@@ -7,10 +7,20 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+
+
+            @if (session('success'))
+            <div class="text-center alert alert-success ">
+                {{ session('success') }}    
+               
+            </div>
+            @endif
                 <div class="card">
                     <div class="card-header">{{ __('Dostępność') }}</div>
     
                     <div class="card-body">
+
+                    
                         <div class="list-group text-center">
         
                             <a href="{{ route('availability.availability.edit', $day = '1') }}" class="list-group-item list-group-item-action list-group-item-info">Poniedziałek</a>
