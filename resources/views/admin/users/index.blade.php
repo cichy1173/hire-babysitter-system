@@ -52,7 +52,7 @@
                                                 <div class="modal-body">
                                                     @if ($user->id_account_type == '3')
                                                     <div class="alert alert-info text-center" role="alert">
-                                                        Ten użytkownik jest adminem
+                                                        Ten użytkownik jest administratorem
                                                       </div>
                                                     @endif
 
