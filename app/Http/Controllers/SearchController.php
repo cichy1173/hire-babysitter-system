@@ -11,6 +11,10 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
+        $this->validate($request, [
+            'search' => 'required|string|max:100'
+        ]);
+        
         $adverts = Advertisement::search($request->search)->paginate(5);
 
         foreach ($adverts as $key => $value) {
