@@ -65,6 +65,7 @@
                                         <a class="dropdown-item" href="{{route('userOpinions', auth()->user())}}">{{__('Moje opinie')}}</a>
                                         <a class="dropdown-item" href="{{route('showApplications')}}" id="applications" name="applications">{{__('Zgłoszenia')}}</a>
                                         <a class="dropdown-item" href="{{ route('userEdit') }}">{{__('Edytuj konto')}}</a>
+                                        <a class="dropdown-item" href="{{ route('availability.availability.index') }}">{{__('Dostępność')}}</a>
                                         <a class="dropdown-item" href="{{route('messageList', auth()->user())}}" id="userMessages" name="userMessages">{{__('Wiadomości')}}</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">{{__('Dodatki')}}</a>

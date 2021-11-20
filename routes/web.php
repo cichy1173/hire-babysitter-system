@@ -4,14 +4,15 @@ use App\Models\Advertisement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\User\ShowUserController;
+use App\Http\Controllers\User\AvailabilityController;
 use App\Http\Controllers\User\UserEditProfileController;
 use App\Http\Controllers\User\UserEditResetPasswordController;
 
@@ -91,3 +92,9 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
 Route::post('admin/users/{user}/block', [UserController::class, 'block'])->middleware('admin')->name('admin.users.block');
 Route::put('admin/users/{user}/unblock', [UserController::class, 'unblock'])->middleware('admin')->name('admin.users.unblock');
 Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])->middleware('admin')->name('admin.users.makeadmin');
+
+//Availability
+Route::prefix('availability')->name('availability.')->middleware('auth')->group(function (){
+    Route::resource('/availability', AvailabilityController::class);
+    
+});
