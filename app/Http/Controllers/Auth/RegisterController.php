@@ -33,8 +33,8 @@ class RegisterController extends Controller
             'id_account_type' => 'required',
             'nickname' => 'required|unique:users|max:15'
         ]);
-        
-        User::create([
+
+        $id = User::create([
             'name' => $request -> name,
             'surname' => $request -> surname,
             'email' => $request -> email,
@@ -42,7 +42,9 @@ class RegisterController extends Controller
             'password'=> Hash::make($request -> password),
             'id_account_type' => $request -> id_account_type,
             
-        ]);
+        ])->id;
+
+        User::find($id)->searchable();
 
         return back()->with('registered', 'Pomyślnie zarejestrowano!');
 
