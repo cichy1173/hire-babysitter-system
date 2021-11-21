@@ -8,8 +8,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header text-center">{{ __('Grafik') }}</div>
-    
                     <div class="card-body">
+                        
                         @auth
                             @if(isset($cals) && count($cals) > 0)
                                 @foreach ($cals as $cal)
@@ -56,7 +56,8 @@
                                             </div>
                                         </div>
                                     </div>                     
-                                @endforeach
+                                @endforeach  
+                                <div style="float: right"><a class="btn btn-primary" href="{{ route('calendarsend') }}" role="button">{{__('Wyślij Grafik')}}</a></div>
                             @else
                                 <p class="text-center alert alert-info mb-0">{{__('Obecnie nie masz żadnych zaakceptowanych zgłoszeń. Grafik niedostepny')}}</p>
                             @endif

@@ -99,7 +99,7 @@ Route::put('admin/users/{user}/makeadmin', [UserController::class, 'makeadmin'])
 
 //Calendar
 Route::get('/calendar', [App\Http\Controllers\UsersAdvertisementsController::class, 'index'])->middleware('auth')->name('calendar');
-
+Route::get('/calendarsend', [App\Http\Controllers\UsersAdvertisementsController::class, 'send'])->middleware('auth')->name('calendarsend');
 //Search
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 //Availability

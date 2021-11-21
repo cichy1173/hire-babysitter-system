@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use App\Mail\Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Users_Advertisements;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 class UsersAdvertisementsController extends Controller
@@ -19,6 +21,29 @@ class UsersAdvertisementsController extends Controller
     public function index()
     {
         
+        $user=auth()->user();
+        $data = DB::table('users_advertisements AS pivot')
+                        ->join('advertisements AS advert', 'advert.id', '=', 'pivot.id_advertisement')
+                        ->join('users', 'users.id', '=', 'advert.id_user')
+                        ->join('districts_advertisements', 'districts_advertisements.id_advertisement', '=', 'pivot.id_advertisement')
+                        ->join('districts', 'districts.id', '=', 'districts_advertisements.id_district')
+                        ->where('pivot.id_user', '=', Auth::user()->id)
+                        ->where('pivot.time_to', '>', now())
+                        ->get();
+       
+        
+        
+
+        return view('calendar', [
+
+            'cals' =>$data
+            
+        ]);
+    }
+
+    public function send()
+    {
+        $user=auth()->user();
         $data = DB::table('users_advertisements AS pivot')
                         ->join('advertisements AS advert', 'advert.id', '=', 'pivot.id_advertisement')
                         ->join('users', 'users.id', '=', 'advert.id_user')
@@ -28,21 +53,17 @@ class UsersAdvertisementsController extends Controller
                         ->where('pivot.time_to', '>', now())
                         ->get();
         //dd($data);
+        
+        
+        Mail::to($user)->send(new Calendar( auth()->user(), $data));
+        
+
         return view('calendar', [
 
             'cals' =>$data
             
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        
     }
 
     /**
