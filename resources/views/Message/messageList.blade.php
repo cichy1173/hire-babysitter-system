@@ -324,6 +324,9 @@
                                                     <div class="modal-body">
                                                         <input type="file" name="photo" accept="image/png, image/jpeg, image/jpg, image/gif" class="form-control-file" id="photo">
                                                     </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{__('Zamknij')}}</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>                                      
@@ -353,6 +356,7 @@
                 @endforeach
             </select>
             <button type="button" class="btn btn-primary float-right" data-dismiss="modal" onclick="newMessage()">{{__('Wybierz')}}</button>
+            
         </div>
       </div>
     </div>

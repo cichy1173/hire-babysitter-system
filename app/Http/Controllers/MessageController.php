@@ -98,7 +98,7 @@ class MessageController extends Controller
         $this->validate($request, [
             'userTo' => 'required|int|exists:users,id|min:2',
             'userMessage' => 'required|string|max:2000',
-            'photo' => 'nullable|file|max:4096'
+            'photo' => 'nullable|file|image|max:4096'
         ]);
         
         $content = Crypt::encryptString($request->userMessage);
