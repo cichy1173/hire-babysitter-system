@@ -15,6 +15,7 @@
 - MorganMLGMan
 - ShogunPB
 
+*This repository is mirrored from [MorganMLG/niania_corp_2](https://gitlab.com/MorganMLG/niania_corp_2)*
 
 
 
